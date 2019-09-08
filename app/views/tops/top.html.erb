@@ -8,28 +8,48 @@
 						<div class="display-tc js-fullheight animate-box" data-animate-effect="fadeIn">
 							<h1>ここにタイトルが入ります</h1>
 							<h2>Free html5 templates Made by <a href="http://freehtml5.co/" target="_blank">freehtml5.co</a></h2>
-							<p><a class="btn btn-primary btn-lg btn-demo" href="#"></i> View Demo</a> <a class="btn btn-primary btn-lg btn-learn">Learn More</a></p>
+							<p><button class="btn btn-primary btn-lg btn-demo" data-toggle="modal" data-target="#sampleModal"></i> ログイン</button> <button class="btn btn-primary btn-lg btn-learn" data-toggle="modal" data-target="#sampleModal2">新規登録</button></p>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</header>
-<!-- 呼び出しボタン aタグでもOK -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sampleModal">
-	モーダル・ダイアログ開く
-</button>
 
-<!-- モーダル・ダイアログ -->
-<div class="modal fade" id="sampleModal" tabindex="-1">
+<!-- モーダル：新規登録 -->
+<div class="modal fade" id="sampleModal2" tabindex="-1">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-				<h4 class="modal-title">タイトル</h4>
+				<h4 class="modal-title">新規登録</h4>
 			</div>
 			<div class="modal-body">
-				本文
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3">
+            <%= form_with url: users_path, method: :post, local: true do |f| %>
+              <%= f.label :name %>
+              <%= f.text_field :name, class: 'form-control' %>
+
+              <%= f.label :email %>
+              <%= f.email_field :email, class: 'form-control' %>
+
+              <%= f.label :age %>
+              <%= f.number_field :age, class: 'form-control' %>
+
+              <%= f.label :area_kbn %>
+              <%= f.select :area_kbn, [['sample1', 1], ['sample2', 2], ['sample3', 3]], class: 'form-control' %><br>
+
+              <%= f.label :password %>
+              <%= f.password_field :password, class: 'form-control' %>
+
+              <%= f.label :password_confirmation %>
+              <%= f.password_field :password_confirmation, class: 'form-control' %>
+
+              <%= f.submit '登録', class: 'btn btn-primary' %> 
+            <% end %>
+          </div>
+        </div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
