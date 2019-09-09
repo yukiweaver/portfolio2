@@ -1042,9 +1042,9 @@ h1, h2, h3, h4, h5, h6, figure {
   border: 2px solid rgba(0, 0, 0, 0.8);
 }
 
-input[type="text"] {
+/* input[type="text"] {
   height: 50px;
-}
+} */
 
 .form-group {
   margin-bottom: 30px;
@@ -1446,7 +1446,7 @@ input[type="text"] {
   box-shadow: none;
   background: transparent;
   border: 2px solid rgba(0, 0, 0, 0.1);
-  height: 54px;
+  /* height: 54px; */
   font-size: 18px;
   font-weight: 300;
 }

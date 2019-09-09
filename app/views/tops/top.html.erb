@@ -34,26 +34,30 @@
               <%= f.label :email %>
               <%= f.email_field :email, class: 'form-control' %>
 
+              <%= f.radio_button :sex_kbn, '1' %>
+              <%= f.label :sex_kbn, '男性', {value: :male, style: "display: inline-block;"} %>
+              <%= f.radio_button :sex_kbn, '2' %>
+              <%= f.label :sex_kbn, '女性', {value: :female, style: "display: inline-block;"} %><br>
+
               <%= f.label :age %>
               <%= f.number_field :age, class: 'form-control' %>
 
               <%= f.label :area_kbn %>
-              <%= f.select :area_kbn, [['sample1', 1], ['sample2', 2], ['sample3', 3]], class: 'form-control' %><br>
+              <%= f.select :area_kbn, ApplicationHelper::AREA_KBN, {include_blank: '選択してください'}, class: 'form-control' %><br>
 
               <%= f.label :password %>
               <%= f.password_field :password, class: 'form-control' %>
 
               <%= f.label :password_confirmation %>
-              <%= f.password_field :password_confirmation, class: 'form-control' %>
-
-              <%= f.submit '登録', class: 'btn btn-primary' %> 
+              <%= f.password_field :password_confirmation, class: 'form-control' %> 
+            
+              <div class="modal-footer" style="text-align: center">
+                <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+                <%= f.submit '登録', class: 'btn btn-primary' %>
+              </div>
             <% end %>
           </div>
         </div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
-				<button type="button" class="btn btn-primary">ボタン</button>
 			</div>
 		</div>
 	</div>
