@@ -1,18 +1,3 @@
-<!--
-<header class="navbar navbar-fixed-top navbar-inverse">
-  <div class="container">
-    <%= link_to "sample app", root_path, id: "logo" %>
-    <nav>
-      <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "Home", root_path %></li>
-        <li><%= link_to "Help", '#' %></li>
-        <li><%= link_to "Log in", '#' %></li>
-      </ul>
-    </nav>
-  </div>
-</header>
--->
-
 <%# <div id="page"> %>
 	<nav class="fh5co-nav" role="navigation">
 		<div class="top-menu">
@@ -36,7 +21,11 @@
 							</li>
 							<li><a href="about.html">About</a></li>
 							<li><a href="contact.html">Contact</a></li>
-							<li class="btn-cta"><a href="#"><span>Login</span></a></li>
+              <% if user_id %>
+              <li class="btn-cta"><a href="#"><span>ログアウト</span></a></li>
+              <% else %>
+              <li class="btn-cta"><a href="#"><span>ログイン</span></a></li>
+              <% end %>
 						</ul>
 					</div>
 				</div>
