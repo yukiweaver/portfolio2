@@ -1,4 +1,4 @@
-<% provide(:title, 'Top') %>
+<% provide(:title, 'トップ') %>
 <header id="fh5co-header" class="fh5co-cover js-fullheight" role="banner">
 		<div class="overlay"></div>
 		<div class="container">
@@ -27,12 +27,12 @@
 			<div class="modal-body">
         <div class="row">
           <div class="col-md-6 col-md-offset-3">
-            <%= form_with url: users_path, method: :post, local: true do |f| %>
+            <%= form_with model: @user, method: :post, local: true do |f| %>
               <%= f.label :name %>
-              <%= f.text_field :name, class: 'form-control' %>
+              <%= f.text_field :name, class: 'form-control', required: true %>
 
               <%= f.label :email %>
-              <%= f.email_field :email, class: 'form-control' %>
+              <%= f.email_field :email, class: 'form-control', required: true %>
 
               <%= f.radio_button :sex_kbn, '1' %>
               <%= f.label :sex_kbn, '男性', {value: :male, style: "display: inline-block;"} %>
@@ -40,16 +40,16 @@
               <%= f.label :sex_kbn, '女性', {value: :female, style: "display: inline-block;"} %><br>
 
               <%= f.label :age %>
-              <%= f.number_field :age, class: 'form-control' %>
+              <%= f.number_field :age, class: 'form-control', required: true %>
 
               <%= f.label :area_kbn %>
-              <%= f.select :area_kbn, ApplicationHelper::AREA_KBN, {include_blank: '選択してください'}, class: 'form-control' %><br>
+              <%= f.select :area_kbn, ApplicationHelper::AREA_KBN, {include_blank: '選択してください'}, class: 'form-control', required: true %><br>
 
               <%= f.label :password %>
-              <%= f.password_field :password, class: 'form-control' %>
+              <%= f.password_field :password, class: 'form-control', required: true %>
 
               <%= f.label :password_confirmation %>
-              <%= f.password_field :password_confirmation, class: 'form-control' %> 
+              <%= f.password_field :password_confirmation, class: 'form-control', required: true %> 
             
               <div class="modal-footer" style="text-align: center">
                 <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
