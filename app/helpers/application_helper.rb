@@ -10,8 +10,17 @@ module ApplicationHelper
     ['熊本県', '43'],['大分県', '44'],['宮崎県', '45'],['鹿児島県', '46'],['沖縄県', '47']
   ]
 
+  # ログインユーザーのidを返す
   def user_id
     @user_id ||= session[:user_id]
     return @user_id
+  end
+
+  # 現在ログイン中のユーザーを返す
+  def current_user
+    if session[:user_id]
+      @current_user ||= User.find_by(id: session[:user_id])
+    end
+    return @current_user
   end
 end

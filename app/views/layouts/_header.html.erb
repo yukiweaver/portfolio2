@@ -21,10 +21,18 @@
 							</li>
 							<li><a href="about.html">About</a></li>
 							<li><a href="contact.html">Contact</a></li>
-              <% if user_id %>
-              <li class="btn-cta"><a href="#"><span>ログアウト</span></a></li>
+              <% if current_user %>
+              <li class="btn-cta">
+                <%= link_to logout_path, method: :delete do %>
+                  <span>ログアウト</span>
+                <% end %>
+              </li>
               <% else %>
-              <li class="btn-cta"><a href="#"><span>ログイン</span></a></li>
+              <li class="btn-cta">
+                <%= link_to login_path do %>
+                  <span>ログイン</span>
+                <% end %>
+              </li>
               <% end %>
 						</ul>
 					</div>
