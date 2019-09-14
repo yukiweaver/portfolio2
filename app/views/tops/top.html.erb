@@ -1,20 +1,20 @@
 <% provide(:title, 'トップ') %>
-<header id="fh5co-header" class="fh5co-cover js-fullheight" role="banner">
-		<div class="overlay"></div>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-8 col-md-offset-2 text-center">
-					<div class="display-t js-fullheight">
-						<div class="display-tc js-fullheight animate-box" data-animate-effect="fadeIn">
-							<h1>ここにタイトルが入ります</h1>
-							<h2>Free html5 templates Made by <a href="http://freehtml5.co/" target="_blank">freehtml5.co</a></h2>
-							<p><button class="btn btn-primary btn-lg btn-demo" data-toggle="modal" data-target="#sampleModal"></i> ログイン</button> <button class="btn btn-primary btn-lg btn-learn" data-toggle="modal" data-target="#sampleModal2">新規登録</button></p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</header>
+<header id="fh5co-header" class="fh5co-cover js-fullheight" role="banner" style="padding-top:100px">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2 text-center">
+        <div class="display-t js-fullheight">
+          <div class="display-tc js-fullheight animate-box" data-animate-effect="fadeIn">
+            <h1>ここにタイトルが入ります</h1>
+            <h2>Free html5 templates Made by <a href="http://freehtml5.co/" target="_blank">freehtml5.co</a></h2>
+            <p><button class="btn btn-primary btn-lg btn-demo" data-toggle="modal" data-target="#sampleModal"></i> ログイン</button> <button class="btn btn-primary btn-lg btn-learn" data-toggle="modal" data-target="#sampleModal2">新規登録</button></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
 
 <!-- モーダル：新規登録 -->
 <div class="modal fade" id="sampleModal2" tabindex="-1">
@@ -54,6 +54,37 @@
               <div class="modal-footer" style="text-align: center">
                 <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
                 <%= f.submit '登録', class: 'btn btn-primary' %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- モーダル：ログインフォーム -->
+<div class="modal fade" id="sampleModal" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+				<h4 class="modal-title">ログイン</h4>
+			</div>
+			<div class="modal-body">
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3">
+            <%= form_with url: login_path, method: :post, local: true do |f| %>
+
+              <%= f.label :email %>
+              <%= f.email_field :email, class: 'form-control', required: true %>
+
+              <%= f.label :password %>
+              <%= f.password_field :password, class: 'form-control', required: true %>
+            
+              <div class="modal-footer" style="text-align: center">
+                <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+                <%= f.submit 'ログイン', class: 'btn btn-primary' %>
               </div>
             <% end %>
           </div>

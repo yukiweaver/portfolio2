@@ -28,11 +28,12 @@
                 <% end %>
               </li>
               <% else %>
-              <li class="btn-cta">
-                <%= link_to login_path do %>
-                  <span>ログイン</span>
-                <% end %>
-              </li>
+              <button class="btn btn-primary btn-demo" data-toggle="modal" data-target="#sampleModal"></i> ログイン</button>
+              <%# <li class="btn-cta"> %>
+                <%#= link_to login_path do %>
+                  <%# <span>ログイン</span> %>
+                <%# end %>
+              <%# </li> %>
               <% end %>
 						</ul>
 					</div>

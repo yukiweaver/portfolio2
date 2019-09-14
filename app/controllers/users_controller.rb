@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :logged_out_user, only:[:show]
   # 新規登録処理
   def create
     @user = User.new(user_params)

@@ -23,4 +23,14 @@ module ApplicationHelper
     end
     return @current_user
   end
+
+  # before_action：ユーザーがログイン中なら検索ページへ遷移
+  def logged_in_user
+    redirect_to user_path(id: session[:user_id]) unless session[:user_id].nil?
+  end
+
+  # before_action：ユーザーがログアウト中ならトップページへ遷移
+  def logged_out_user
+    redirect_to root_path if session[:user_id].nil?
+  end
 end
