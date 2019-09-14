@@ -18,7 +18,7 @@ class UsersController < ApplicationController
     sex_kbn = user_sex_kbn
     user_id = user_id
     search = params[:area_kbn]
-    @users = User.search(sex_kbn, user_id,  search)
+    @users = User.search(sex_kbn, user_id, search)
   end
 
 
