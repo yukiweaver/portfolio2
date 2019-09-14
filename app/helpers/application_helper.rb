@@ -10,27 +10,31 @@ module ApplicationHelper
     ['熊本県', '43'],['大分県', '44'],['宮崎県', '45'],['鹿児島県', '46'],['沖縄県', '47']
   ]
 
-  # ログインユーザーのidを返す
+  # ログインユーザーのidを返す（return int）
   def user_id
-    @user_id ||= session[:user_id]
-    return @user_id
+    @user_id ||= session[:login]['user_id']
+  end
+
+  # ログインユーザーの性別を返す（return string）
+  def user_sex_kbn
+    @sex_kbn ||= session[:login]['sex_kbn']
   end
 
   # 現在ログイン中のユーザーを返す
   def current_user
-    if session[:user_id]
-      @current_user ||= User.find_by(id: session[:user_id])
+    if session[:login]
+      @current_user ||= User.find_by(id: session[:login]['user_id'])
     end
     return @current_user
   end
 
   # before_action：ユーザーがログイン中なら検索ページへ遷移
   def logged_in_user
-    redirect_to user_path(id: session[:user_id]) unless session[:user_id].nil?
+    redirect_to user_path(id: [:login]['user_id']) unless session[:login].nil?
   end
 
   # before_action：ユーザーがログアウト中ならトップページへ遷移
   def logged_out_user
-    redirect_to root_path if session[:user_id].nil?
+    redirect_to root_path if session[:login].nil?
   end
 end

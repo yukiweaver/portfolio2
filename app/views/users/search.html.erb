@@ -1,0 +1,33 @@
+<% provide(:title, '検索ページ') %>
+<h1>検索ページ</h1>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3", style="text-align:center">
+    <%= form_with url:'/search', method: :get, local: true do |f| %>
+      <%= f.label :area_kbn, 'エリア' %>
+      <%= f.select :area_kbn, ApplicationHelper::AREA_KBN, {include_blank: '選択してください'}, class: 'form-control' %>
+      <%= f.submit 'マッチング', class: 'btn btn-primary btn-lg matching-btn', style: 'font-size:18px' %>
+    <% end %>
+  </div>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Place name</th>
+      <th>Weather</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= link_to 'Show', '#' %></td>
+        <td><%= link_to 'Edit', '#' %></td>
+        <td><%= link_to 'Destroy', '#', method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
