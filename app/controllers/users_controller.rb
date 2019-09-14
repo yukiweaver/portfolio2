@@ -17,8 +17,9 @@ class UsersController < ApplicationController
   def search
     sex_kbn = user_sex_kbn
     user_id = user_id
+    page = params[:page]
     search = params[:area_kbn]
-    @users = User.search(sex_kbn, user_id, search)
+    @users = User.search(sex_kbn, user_id, page, search)
   end
 
 
