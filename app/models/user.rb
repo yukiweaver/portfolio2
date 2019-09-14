@@ -14,13 +14,13 @@ class User < ApplicationRecord
   # エリアで検索
   def self.search(sex_kbn, user_id,  search)
     if sex_kbn == '1'
-      if search
+      if search.present?
         User.where('sex_kbn = ? and area_kbn = ?', '2', search).where.not(id: user_id)
       else
         User.where(sex_kbn: '2').where.not(id: user_id)
       end
     elsif sex_kbn == '2'
-      if search
+      if search.present?
         User.where('sex_kbn = ? and area_kbn = ?', '1', search).where.not(id: user_id)
       else
         User.where(sex_kbn: '1').where.not(id: user_id)
