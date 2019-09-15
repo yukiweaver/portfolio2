@@ -7,5 +7,6 @@ Rails.application.routes.draw do
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
   get    '/search',  to: 'users#search'
+  get    '/mypage',  to: 'users#mypage'
   resources :users
 end

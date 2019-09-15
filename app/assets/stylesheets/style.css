@@ -16,7 +16,7 @@ body {
   font-size: 18px;
   line-height: 1.7;
   color: #333333;
-  background: #fff;
+  /* background: #fff; */
 }
 
 #page {
@@ -85,7 +85,7 @@ h1, h2, h3, h4, h5, h6, figure {
 }
 
 .fh5co-nav {
-  background: #fff;
+  /* background: #fff; */
 }
 .fh5co-nav .top-menu {
   padding: 28px 0;

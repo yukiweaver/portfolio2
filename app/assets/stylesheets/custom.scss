@@ -7,9 +7,10 @@
 
 // /* universal */
 
-// body {
-//   padding-top: 60px;
-// }
+body {
+  // padding-top: 60px;
+  background-color: rgb(248, 240, 245);
+}
 
 section {
   overflow: auto;
@@ -124,10 +125,6 @@ header {
   // background: rgba(255,255,255,0.5);
 }
 
-div.display-tc.js-fullheight.animate-box {
-  // background: rgba(255,255,255,0.5);
-}
-
 .matching-btn {
   margin-top: 30px;
 }
@@ -138,4 +135,21 @@ div.display-tc.js-fullheight.animate-box {
   overflow-x: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar;
   -webkit-overflow-scrolling: touch;
+}
+
+.register-box {
+  text-align: center;
+}
+
+.login-logo {
+  margin-bottom: 30px;
+}
+
+.mypage {
+  background-color: rgb(224, 220, 224);
+  padding: 40px;
+}
+
+.edit-mypage-btn {
+  text-align: center;
 }

@@ -11,7 +11,7 @@
 							<%# <li class="active"><a href="index.html">Home</a></li> %>
               <% if current_user %>
               <li class="active"><%= link_to 'ホーム', search_path %></li>
-              <li><%= link_to 'マイページ', '#' %></li>
+              <li><%= link_to 'マイページ', mypage_path %></li>
               <% else %>
               <li class="active"><%= link_to 'ホーム', root_path %></li>
               <% end %>
