@@ -1,35 +1,40 @@
 <% provide(:title, 'マイページ') %>
-<h1>マイページ編集</h1>
+<h2>マイページ編集</h2>
 
 <div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <%= form_with model: @user, method: :post, local: true do |f| %>
-      <%= f.label :name %>
-      <%= f.text_field :name, class: 'form-control', required: true %>
+  <div class="col-md-6 col-md-offset-3 mypage-edit">
+    <%= form_with model: @user, url: mypage_update_path(id: @user.id), method: :post, local: true do |f| %>
+      <div class="register-box">
+        <div class="login-logo">
+          <%= image_tag("/images/icon1.jpg", size: "100x100") %>
+        </div>
+        <div class="user_column">
+          <p class="column_title"><%= f.label :profile, '自己紹介' %></p>
+          <p class="column_content"><%= f.text_area :profile, class: 'form-control', placeholder: 'はじめまして！' %></p>
+        </div>
+        <p>------------------------------ 基本情報 --------------------------------</p>
+      </div>
+      <%= f.label :name, '名前' %>
+      <%= f.text_field :name, class: 'form-control', required: true %><br>
 
-      <%= f.label :email %>
-      <%= f.email_field :email, class: 'form-control', required: true %>
+      <%= f.label :age, '年齢' %>
+      <%= f.number_field :age, class: 'form-control', required: true %><br>
 
-      <%= f.radio_button :sex_kbn, '1' %>
-      <%= f.label :sex_kbn, '男性', {value: :male, style: "display: inline-block;"} %>
-      <%= f.radio_button :sex_kbn, '2' %>
-      <%= f.label :sex_kbn, '女性', {value: :female, style: "display: inline-block;"} %><br>
-
-      <%= f.label :age %>
-      <%= f.number_field :age, class: 'form-control', required: true %>
-
-      <%= f.label :area_kbn %>
+      <%= f.label :area_kbn, '居住区' %>
       <%= f.select :area_kbn, ApplicationHelper::AREA_KBN, {include_blank: '選択してください'}, class: 'form-control', required: true %><br>
 
-      <%= f.label :password %>
-      <%= f.password_field :password, class: 'form-control', required: true %>
+      <%= f.label :business_kbn, '職業' %>
+      <%= f.select :business_kbn, ApplicationHelper::BUSINESS_KBN, {include_blank: '選択してください'}, class: 'form-control' %><br>
 
-      <%= f.label :password_confirmation %>
-      <%= f.password_field :password_confirmation, class: 'form-control', required: true %> 
-    
+      <%= f.label :income_kbn, '年収' %>
+      <%= f.select :income_kbn, ApplicationHelper::INCOME_KBN, {include_blank: '選択してください'}, class: 'form-control' %><br>
+
+      <%= f.label :free_entry, '自由記入欄' %>
+      <%= f.text_area :free_entry, class: 'form-control', placeholder: '趣味、好きな本など' %>
+
       <div class="modal-footer" style="text-align: center">
-        <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
-        <%= f.submit '登録', class: 'btn btn-primary' %>
+        <%= link_to 'キャンセル', mypage_path, class: 'btn btn-default' %>
+        <%= f.submit '更新', class: 'btn btn-primary' %>
       </div>
     <% end %>
   </div>

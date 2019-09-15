@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :logged_out_user, only:[:show]
+  before_action :logged_out_user, only:[:search, :mypage, :edit, :update]
   # 新規登録処理
   def create
     @user = User.new(user_params)
@@ -40,10 +40,21 @@ class UsersController < ApplicationController
     @user = User.find(user_id)
   end
 
+  # マイページ更新
+  def update
+    @user = User.find(user_id)
+  end
+
 
   private
 
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation, :sex_kbn, :age, :area_kbn)
+  end
+
+  def mypage_params
+    params.require(:user).permit(
+      :name, :sex_kbn, :age, :area_kbn, :profile, :income_kbn, :business_kbn, :free_entry
+    )
   end
 end
