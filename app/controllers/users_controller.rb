@@ -35,6 +35,11 @@ class UsersController < ApplicationController
     @free_entry = user.free_entry
   end
 
+  # マイページ編集
+  def edit
+    @user = User.find(user_id)
+  end
+
 
   private
 
