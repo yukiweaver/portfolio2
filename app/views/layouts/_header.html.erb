@@ -8,8 +8,13 @@
 					</div>
 					<div class="col-xs-10 text-right menu-1">
 						<ul>
-							<li class="active"><a href="index.html">Home</a></li>
-							<li><a href="portfolio.html">Portfolio</a></li>
+							<%# <li class="active"><a href="index.html">Home</a></li> %>
+              <% if current_user %>
+              <li class="active"><%= link_to 'ホーム', search_path %></li>
+              <li><%= link_to 'マイページ', '#' %></li>
+              <% else %>
+              <li class="active"><%= link_to 'ホーム', root_path %></li>
+              <% end %>
 							<li class="has-dropdown">
 								<a href="blog.html">Blog</a>
 								<ul class="dropdown">
