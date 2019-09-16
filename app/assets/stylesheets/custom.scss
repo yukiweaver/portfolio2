@@ -158,3 +158,20 @@ header {
   background-color: rgb(240, 236, 240);
   padding: 40px;
 }
+
+// form エラーメッセージ
+#error_explanation {
+  color: red;
+  ul {
+    color: red;
+    margin: 0 0 30px 0;
+  }
+}
+
+.field_with_errors {
+  @extend .has-error;
+  .form-control {
+    color: red;
+  }
+}
+// ここまで

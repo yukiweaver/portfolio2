@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_09_124338) do
+ActiveRecord::Schema.define(version: 2019_09_16_051117) do
 
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.string "profile"
-    t.integer "age"
+    t.string "age"
     t.string "income_kbn"
     t.string "business_kbn"
     t.string "area_kbn"

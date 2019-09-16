@@ -43,6 +43,12 @@ class UsersController < ApplicationController
   # マイページ更新
   def update
     @user = User.find(user_id)
+    if @user.update_attributes(mypage_params)
+      flash[:success] = 'マイページを更新しました。'
+      redirect_to mypage_path
+    else
+      render 'edit'
+    end
   end
 
 

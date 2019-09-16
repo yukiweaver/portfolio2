@@ -9,6 +9,6 @@ Rails.application.routes.draw do
   get    '/search',  to: 'users#search'
   get    '/mypage',  to: 'users#mypage'
   get    '/mypage/edit',  to: 'users#edit'
-  post   '/mypage/:id/',  to: 'users#update',  as: 'mypage_update'
+  patch   '/mypage/:id/',  to: 'users#update',  as: 'mypage_update'
   resources :users
 end

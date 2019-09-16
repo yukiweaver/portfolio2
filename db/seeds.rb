@@ -10,7 +10,7 @@ User.create!(name:  "植野 裕樹",
              password:              "password",
              password_confirmation: "password",
              sex_kbn: "1",
-             age: 25,
+             age: '25',
              area_kbn: "13")
 
 # 男性ユーザー
@@ -21,7 +21,7 @@ a = 0
   email = "test#{n+1000}@gmail.com"
   password = "password"
   sex_kbn = "1"
-  age = 20
+  age = '20'
   area_kbn = "#{a}"
   User.create!(name:  name,
                email: email,
@@ -40,7 +40,7 @@ b = 0
   email = "test#{n+2000}@gmail.com"
   password = "password"
   sex_kbn = "2"
-  age = 25
+  age = '27'
   area_kbn = "#{b}"
   User.create!(name:  name,
                email: email,
