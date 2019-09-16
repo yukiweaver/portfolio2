@@ -34,7 +34,6 @@ class UsersController < ApplicationController
     @income = H_INCOME_KBN[@user.income_kbn]
     @business = H_BUSINESS_KBN[@user.business_kbn]
     @free_entry = @user.free_entry
-    binding.pry
   end
 
   # マイページ編集

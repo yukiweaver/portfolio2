@@ -49,13 +49,19 @@ class User < ApplicationRecord
     errors.add(:age, ": 年齢が不正な値です。") unless arr_age.include?(age)
   end
 
+  # 職業：空はOK
   def check_business_kbn
     arr_business_kbn = [*('1'..'9')]
-    errors.add(:business_kbn, ": 職業が不正な値です。") unless arr_business_kbn.include?(business_kbn)
+    if !business_kbn.empty?
+      errors.add(:business_kbn, ": 職業が不正な値です。") unless arr_business_kbn.include?(business_kbn)
+    end
   end
 
+  # 年収：空はOKOK
   def check_income_kbn
     arr_income_kbn = [*('1'..'11')]
-    errors.add(:income_kbn, ": 年収が不正な値です。") unless arr_income_kbn.include?(income_kbn)
+    if !income_kbn.empty?
+      errors.add(:income_kbn, ": 年収が不正な値です。") unless arr_income_kbn.include?(income_kbn)
+    end
   end
 end
