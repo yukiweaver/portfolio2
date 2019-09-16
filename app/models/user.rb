@@ -13,6 +13,7 @@ class User < ApplicationRecord
   validates :profile, length: { maximum: 255 }
   validates :free_entry, length: { maximum: 255 }
   validate :check_sex_kbn, :check_area_kbn, :check_age, :check_business_kbn, :check_income_kbn
+  mount_uploader :image, ImageUploader
 
   # エリアで検索
   def self.search(sex_kbn, user_id, page, search)

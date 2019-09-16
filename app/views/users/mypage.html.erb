@@ -4,7 +4,11 @@
   <div class="col-md-6 col-md-offset-3 mypage">
     <div class="register-box">
       <div class="login-logo">
-        <%= image_tag("/images/icon1.jpg", size: "100x100") %>
+        <% if @user.image? %>
+          <%= image_tag(@user.image.url) %>
+        <% else %>
+          <%= image_tag("/images/icon1.jpg", size: "100x100") %>
+        <% end %>
       </div>
       <div class="user_column">
         <p class="column_title">自己紹介</p>

@@ -7,11 +7,16 @@
       <%= render 'shared/error_messages' %>
       <div class="register-box">
         <div class="login-logo">
+        <% if @user.image? %>
+          <%= image_tag(@user.image.url) %>
+        <% else %>
           <%= image_tag("/images/icon1.jpg", size: "100x100") %>
+        <% end %>
+          <%= f.file_field :image, class: 'form-control' %>
         </div>
         <div class="user_column">
           <p class="column_title"><%= f.label :profile, '自己紹介' %></p>
-          <p class="column_content"><%= f.text_area :profile, class: 'form-control', placeholder: 'はじめまして！' %></p>
+          <p class="column_content"><%= f.text_area :profile, size: '20x10', class: 'form-control', placeholder: 'はじめまして！' %></p>
         </div>
         <p>------------------------------ 基本情報 --------------------------------</p>
       </div>
@@ -31,7 +36,7 @@
       <%= f.select :income_kbn, ApplicationHelper::INCOME_KBN, {include_blank: '選択してください'}, class: 'form-control' %><br>
 
       <%= f.label :free_entry, '自由記入欄' %>
-      <%= f.text_area :free_entry, class: 'form-control', placeholder: '趣味、好きな本など' %>
+      <%= f.text_area :free_entry, size: '20x10', class: 'form-control', placeholder: '趣味、好きな本など' %>
 
       <div class="modal-footer" style="text-align: center">
         <%= link_to 'キャンセル', mypage_path, class: 'btn btn-default' %>
