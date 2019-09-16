@@ -10,7 +10,7 @@
         <% if @user.image? %>
           <%= image_tag(@user.image.url) %>
         <% else %>
-          <%= image_tag("/images/icon1.jpg", size: "100x100") %>
+          <%= image_tag("/images/icon1.jpg", size: "150x150") %>
         <% end %>
           <%= f.file_field :image, class: 'form-control' %>
         </div>

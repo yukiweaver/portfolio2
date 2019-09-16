@@ -14,23 +14,29 @@
 <!-- テーブル -->
 <div class="alt-table-responsive">
   <table class="table"> 
-    <thead>
+    <!--<thead>
       <tr>
         <th class="col-xs-3 col-ms-3 col-md-4 col-lg-4">名前</th>
         <th class="col-xs-3 col-ms-3 col-md-4 col-lg-4">メールアドレス</th>
-        <th colspan="3"></th>
+        <%# <th colspan="3"></th> %>
       </tr>
-    </thead>
+    </thead>-->
 
     <tbody>
       <% @users.each do |user| %>
         <tr>
-          <td><%= user.name %></td>
-          <td><%= user.email %></td>
-          <td><%= link_to 'ユーザーページへ', '#' %></td>
+          <td>
+            <% if user.image? %>
+              <%= image_tag(user.image.url, size: "100x100") %>
+            <% else %>
+              <%= image_tag("/images/icon1.jpg", size: "100x100") %>
+            <% end %>
+            &emsp;<%= link_to user.name, user_page_path(id: user.id), class: 'user_name' %>
+          </td>
+          <!--<td><%#= user.email %></td>-->
         </tr>
       <% end %>
     </tbody>
-    <%= will_paginate @users %>
   </table>
+  <%= will_paginate @users %>
 </div>

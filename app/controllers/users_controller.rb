@@ -48,8 +48,13 @@ class UsersController < ApplicationController
       flash[:success] = 'マイページを更新しました。'
       redirect_to mypage_path
     else
-      render 'edit'
+      render action: :edit
     end
+  end
+
+  # ユーザーページ
+  def user_page
+    @user = User.find(params[:id])
   end
 
 
