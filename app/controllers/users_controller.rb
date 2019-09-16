@@ -15,6 +15,7 @@ class UsersController < ApplicationController
 
   # 検索ページ
   def search
+    @user = User.find(user_id)
     sex_kbn = user_sex_kbn
     user_id = user_id
     page = params[:page]
