@@ -12,57 +12,13 @@
       </div>
       <div class="user_column">
         <p class="column_title">自己紹介</p>
-        <p class="column_content"><%= @profile %></p>
+        <p class="column_content"><%= @user.profile %></p>
       </div>
       <p>------------------------------ 基本情報 --------------------------------</p>
     </div>
-
-    <div class="user_content">
-
-      <div class="user_column">
-        <p class="column_title">名前&emsp;
-          <span class="column_content"><%= @name %></span>
-        </p>
-      </div>
-      
-      <div class="user_column">
-        <p class="column_title">性別&emsp;
-          <span class="column_content"><%= @sex %></span>
-        </p>
-      </div>
-      
-      <div class="user_column">
-        <p class="column_title">年齢&emsp;
-        <span class="column_content"><%= @age %>歳</span>   
-        </p>
-      </div>  
-
-      <div class="user_column">
-        <p class="column_title">居住地&emsp;
-        <span class="column_content"><%= @area %></span>
-        </p>       
-      </div>
-      
-      <div class="user_column">
-        <p class="column_title">職業&emsp;
-        <span class="column_content"><%= @business %></span>
-        </p>
-      </div>
-
-      <div class="user_column">
-        <p class="column_title">年収&emsp;
-        <span class="column_content"><%= @income %></span>
-        </p>
-      </div>
-
-      <div class="user_column">
-        <p class="column_title">自由記入欄</p>
-        <p class="column_content"><%= @free_entry %></p>
-      </div>
-      
-      <div class="edit-mypage-btn">
-        <%= link_to 'マイページ編集', mypage_edit_path, class: 'btn btn-primary'%>　　
-      </div>
+    <%= render partial: 'user_info', locals: { user: @user } %>
+    <div class="edit-mypage-btn">
+      <%= link_to 'マイページ編集', mypage_edit_path, class: 'btn btn-primary'%>　　
     </div>
   </div>
 </div>

@@ -1,0 +1,43 @@
+<!--マイページ、ユーザーページ共通 パーシャル -->
+<div class="user_content">
+  <div class="user_column">
+    <p class="column_title">名前&emsp;
+      <span class="column_content"><%= @user.name %></span>
+    </p>
+  </div>
+  
+  <div class="user_column">
+    <p class="column_title">性別&emsp;
+      <span class="column_content"><%= ApplicationHelper::SEX_KBN[@user.sex_kbn] %></span>
+    </p>
+  </div>
+  
+  <div class="user_column">
+    <p class="column_title">年齢&emsp;
+    <span class="column_content"><%= @user.age %>歳</span>   
+    </p>
+  </div>  
+
+  <div class="user_column">
+    <p class="column_title">居住地&emsp;
+    <span class="column_content"><%= ApplicationHelper::H_AREA_KBN[@user.area_kbn] %></span>
+    </p>       
+  </div>
+  
+  <div class="user_column">
+    <p class="column_title">職業&emsp;
+    <span class="column_content"><%= ApplicationHelper::H_BUSINESS_KBN[@user.business_kbn] %></span>
+    </p>
+  </div>
+
+  <div class="user_column">
+    <p class="column_title">年収&emsp;
+    <span class="column_content"><%= ApplicationHelper::H_INCOME_KBN[@user.income_kbn] %></span>
+    </p>
+  </div>
+
+  <div class="user_column">
+    <p class="column_title">自由記入欄</p>
+    <p class="column_content"><%= @user.free_entry %></p>
+  </div>
+</div>

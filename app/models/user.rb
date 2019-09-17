@@ -15,7 +15,7 @@ class User < ApplicationRecord
   validate :check_sex_kbn, :check_area_kbn, :check_age, :check_business_kbn, :check_income_kbn
   mount_uploader :image, ImageUploader
 
-  # エリアで検索
+  # エリアで検索（ページネーション：10人ずつ）
   def self.search(sex_kbn, user_id, page, search)
     if sex_kbn == '1'
       if search.present?
@@ -34,16 +34,19 @@ class User < ApplicationRecord
 
   # カスタムメソッド
 
+  # 性別
   def check_sex_kbn
     arr_sex_kbn = ['1', '2']
     errors.add(:sex_kbn, ": 性別が不正な値です。") unless arr_sex_kbn.include?(sex_kbn)
   end
 
+  # 居住地
   def check_area_kbn
     arr_area_kbn = [*('1'..'47')]
     errors.add(:area_kbn, ": 居住地が不正な値です。") unless arr_area_kbn.include?(area_kbn)
   end
 
+  # 年齢
   def check_age
     arr_age = [*('18'..'100')]
     errors.add(:age, ": 年齢が不正な値です。") unless arr_age.include?(age)
@@ -57,7 +60,7 @@ class User < ApplicationRecord
     end
   end
 
-  # 年収：空はOKOK
+  # 年収：空はOK
   def check_income_kbn
     arr_income_kbn = [*('1'..'11')]
     if !income_kbn.empty?

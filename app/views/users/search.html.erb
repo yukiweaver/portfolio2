@@ -26,6 +26,7 @@
       <% @users.each do |user| %>
         <tr>
           <td>
+            <!-- ペア成立しているユーザーのみ画像表示のif分追加予定 -->
             <% if user.image? %>
               <%= image_tag(user.image.url, size: "100x100") %>
             <% else %>

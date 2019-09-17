@@ -1,2 +1,25 @@
 <% provide(:title, '検索ページ') %>
 <h2><%= @user.name %>さんのユーザーページ</h2>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3 mypage">
+    <div class="register-box">
+      <div class="login-logo">
+        <!-- Todo：ペア成立しているときのみ、画像表示条件追加予定 -->
+        <% if @user.image? %>
+          <%= image_tag(@user.image.url) %>
+        <% else %>
+          <%= image_tag("/images/icon1.jpg", size: "150x150") %>
+        <% end %>
+      </div>
+      <div class="event-button">
+        <%#= button_to 'メッセージを送る', {controller: '', action: ''}, {method: :get, params: {user_id: @user.id}} %>
+      </div>
+      <div class="user_column">
+        <p class="column_title">自己紹介</p>
+        <p class="column_content"><%= @user.profile %></p>
+      </div>
+      <p>------------------------------ 基本情報 --------------------------------</p>
+    </div>
+    <%= render partial: 'user_info', locals: { user: @user } %>
+  </div>
+</div>

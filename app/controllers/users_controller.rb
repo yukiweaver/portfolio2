@@ -26,14 +26,6 @@ class UsersController < ApplicationController
   # マイページ
   def mypage
     @user = User.find(user_id)
-    @profile = @user.profile
-    @name = @user.name
-    @sex = SEX_KBN[@user.sex_kbn]
-    @age = @user.age
-    @area = H_AREA_KBN[@user.area_kbn]
-    @income = H_INCOME_KBN[@user.income_kbn]
-    @business = H_BUSINESS_KBN[@user.business_kbn]
-    @free_entry = @user.free_entry
   end
 
   # マイページ編集
