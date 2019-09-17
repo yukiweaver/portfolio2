@@ -46,7 +46,7 @@ class UsersController < ApplicationController
 
   # ユーザーページ
   def user_page
-    @user = User.find(params[:id])
+    @user = User.find(Base64.decode64(params[:encoded_id]))
   end
 
 

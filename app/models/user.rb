@@ -15,6 +15,16 @@ class User < ApplicationRecord
   validate :check_sex_kbn, :check_area_kbn, :check_age, :check_business_kbn, :check_income_kbn
   mount_uploader :image, ImageUploader
 
+  # formのid属性をエンコード 参考：https://qiita.com/tyamagu2/items/36cba2c7ce9e941c37d3
+  def to_key
+    [Base64.encode64(id.to_s)]
+  end
+
+  # formのactionやhrefをエンコード
+  def to_param
+    Base64.encode64(id.to_s)
+  end
+
   # エリアで検索（ページネーション：10人ずつ）
   def self.search(sex_kbn, user_id, page, search)
     if sex_kbn == '1'

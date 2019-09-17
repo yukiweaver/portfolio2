@@ -32,7 +32,7 @@
             <% else %>
               <%= image_tag("/images/icon1.jpg", size: "100x100") %>
             <% end %>
-            &emsp;<%= link_to user.name, user_page_path(id: user.id), class: 'user_name' %>
+            &emsp;<%= link_to user.name, user_page_path(user), class: 'user_name' %>
           </td>
           <!--<td><%#= user.email %></td>-->
         </tr>

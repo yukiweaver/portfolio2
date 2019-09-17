@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get    '/search',  to: 'users#search'
   get    '/mypage',  to: 'users#mypage'
   get    '/mypage/edit',  to: 'users#edit'
-  patch  '/mypage/:id/',  to: 'users#update',  as: 'mypage_update'
-  get    '/user_page/:id',    to: 'users#user_page',  as: 'user_page'
+  patch  '/mypage/update',  to: 'users#update',  as: 'mypage_update'
+  get    '/user_page/:encoded_id',    to: 'users#user_page',  as: 'user_page'
   resources :users
 end
