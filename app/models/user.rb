@@ -1,4 +1,10 @@
 class User < ApplicationRecord
+  has_many :from_user_rooms, class_name: 'Room', :foreign_key => 'from_user_id'
+  has_many :to_user_rooms, class_name: 'Room', :foreign_key => 'to_user_id'
+
+  has_many :from_user_events, class_name: 'Event', :foreign_key => 'from_user_id'
+  has_many :to_user_events, class_name: 'Event', :foreign_key => 'to_user_id'
+
   before_save { email.downcase! }
   validates :name, presence: true, length: { maximum: 30 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i

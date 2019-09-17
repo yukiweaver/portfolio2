@@ -10,7 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_16_075136) do
+ActiveRecord::Schema.define(version: 2019_09_17_124454) do
+
+  create_table "events", force: :cascade do |t|
+    t.integer "room_id"
+    t.integer "from_user_id"
+    t.integer "to_user_id"
+    t.string "event_kbn"
+    t.text "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["from_user_id"], name: "index_events_on_from_user_id"
+    t.index ["room_id"], name: "index_events_on_room_id"
+    t.index ["to_user_id"], name: "index_events_on_to_user_id"
+  end
+
+  create_table "rooms", force: :cascade do |t|
+    t.string "from_user_status", default: "1"
+    t.string "to_user_status", default: "0"
+    t.datetime "exit_date", default: "9999-12-31 00:00:00"
+    t.datetime "close_date", default: "9999-12-31 00:00:00"
+    t.string "from_user_pair_status", default: "0"
+    t.string "to_user_pair_status", default: "0"
+    t.integer "from_user_id", null: false
+    t.integer "to_user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["from_user_id"], name: "index_rooms_on_from_user_id"
+    t.index ["to_user_id"], name: "index_rooms_on_to_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
