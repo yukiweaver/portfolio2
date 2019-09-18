@@ -11,5 +11,6 @@ Rails.application.routes.draw do
   get    '/mypage/edit',  to: 'users#edit'
   patch  '/mypage/update',  to: 'users#update',  as: 'mypage_update'
   get    '/user_page/:encoded_id',    to: 'users#user_page',  as: 'user_page'
+  get    '/first_msg/:encoded_id',    to: 'rooms#first_msg',  as: 'first_msg'
   resources :users
 end

@@ -1,0 +1,31 @@
+<% provide(:title, '検索ページ') %>
+<h2>from_userが<%= @from_user.name %>、to_userが<%= @to_user.name %>の初回メッセージページ</h2>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3 mypage-edit">
+    <%= form_with model: @user, url: mypage_update_path, method: :patch, local: true do |f| %>
+      <%= render 'shared/error_messages' %>
+      <div class="register-box">
+        <div class="login-logo">
+          <!-- Todo：ペア状態でのみ画像表示 -->
+          <!-- Todo：初回メッセージでペアになっていることはありえないか。。-->
+          <% if @to_user.image? %>
+            <%= image_tag(@to_user.image.url) %>
+          <% else %>
+            <%= image_tag("/images/icon1.jpg", size: "150x150") %>
+          <% end %>
+          <p class="p-first-msg"><%= @to_user.name %></p>
+        </div>
+        
+      </div>
+      <%= f.label :data, '初回メッセージ' %>
+      <%= f.text_area :data, size: '10x20', class: 'form-control', placeholder: 'はじめまして！' %>
+
+      <div class="modal-footer" style="text-align: center">
+        <%= link_to '戻る', user_page_path(@to_user), class: 'btn btn-default' %>
+        <%= f.submit '送信', class: 'btn btn-primary', data: 
+            {confirm: "#{@to_user.name}さんに初回メッセージを送信しますか？",
+             cancel: "キャンセル", commit: "送信する"}, title: "初回メッセージ送信" %>
+      </div>
+    <% end %>
+  </div>
+</div>

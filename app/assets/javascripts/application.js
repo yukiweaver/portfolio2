@@ -15,5 +15,6 @@
 //= require jquery.turbolinks
 //= require activestorage
 //= require bootstrap
+//= require data-confirm-modal
 //= require turbolinks
 //= require_tree .

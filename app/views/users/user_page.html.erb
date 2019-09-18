@@ -12,7 +12,11 @@
         <% end %>
       </div>
       <div class="event-button">
-        <%#= button_to 'メッセージを送る', {controller: '', action: ''}, {method: :get, params: {user_id: @user.id}} %>
+        <!-- Todo：4つのボタン、条件によって変化 -->
+        <p><%= link_to 'メッセージを送る', first_msg_path(@user), class: 'btn btn-primary' %></p>
+        <p><%= link_to 'ペアリクエストを送る', '#', class: 'btn btn-primary' %></p>
+        <p><%= link_to 'ペアリクエストを承認する', '#', class: 'btn btn-primary' %></p>
+        <p><%= link_to 'ペア状態を解除する', '#', class: 'btn btn-primary' %></p>
       </div>
       <div class="user_column">
         <p class="column_title">自己紹介</p>
