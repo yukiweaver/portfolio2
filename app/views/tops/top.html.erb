@@ -28,7 +28,7 @@
         <div class="row">
           <div class="col-md-6 col-md-offset-3">
             <%= form_with model: @user, method: :post, local: true do |f| %>
-              <%= render 'shared/error_messages' %>
+              <%= render 'shared/error_messages', object: f.object %>
               <%= f.label :name %>
               <%= f.text_field :name, class: 'form-control', required: true %>
 
@@ -76,7 +76,7 @@
         <div class="row">
           <div class="col-md-6 col-md-offset-3">
             <%= form_with url: login_path, method: :post, local: true do |f| %>
-              <%= render 'shared/error_messages' %>
+              <%= render 'shared/error_messages', object: f.object %>
 
               <%= f.label :email %>
               <%= f.email_field :email, class: 'form-control', required: true %>

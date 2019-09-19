@@ -4,7 +4,7 @@
 <div class="row">
   <div class="col-md-6 col-md-offset-3 mypage-edit">
     <%= form_with model: @user, url: mypage_update_path, method: :patch, local: true do |f| %>
-      <%= render 'shared/error_messages' %>
+      <%= render 'shared/error_messages', object: f.object %>
       <div class="register-box">
         <div class="login-logo">
         <% if @user.image? %>
