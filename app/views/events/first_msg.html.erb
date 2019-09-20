@@ -2,7 +2,7 @@
 <h2>from_userが<%= @from_user.name %>、to_userが<%= @to_user.name %>の初回メッセージページ</h2>
 <div class="row">
   <div class="col-md-6 col-md-offset-3 mypage-edit">
-    <%= form_with model: @event, url: first_send_path(@user), method: :post, local: true do |f| %>
+    <%= form_with model: @event, url: first_send_path(@to_user), method: :post, local: true do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
       <div class="register-box">
         <div class="login-logo">

@@ -4,4 +4,17 @@ class Event < ApplicationRecord
   belongs_to :room
 
   validates :data, length: { maximum: 250 }
+
+  # Eventオブジェクト生成
+  def self.event_data(room_id, from_user_id, to_user_id, event_kbn, data)
+    Event.new(
+      room_id: room_id, 
+      from_user_id: from_user_id, 
+      to_user_id: to_user_id,
+      event_kbn: event_kbn, 
+      data: data
+    )
+  end
+
+
 end
