@@ -1,7 +1,7 @@
 <% provide(:title, '初回メッセージ') %>
 <h2>from_userが<%= @from_user.name %>、to_userが<%= @to_user.name %>の初回メッセージページ</h2>
 <div class="row">
-  <div class="col-md-6 col-md-offset-3 mypage-edit">
+  <div class="col-md-10 col-md-offset-1 mypage-edit">
     <%= form_with model: @event, url: first_send_path(@to_user), method: :post, local: true do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
       <div class="register-box">
@@ -18,7 +18,7 @@
         
       </div>
       <%= f.label :data, '初回メッセージ' %>
-      <%= f.text_area :data, size: '10x20', class: 'form-control', placeholder: 'はじめまして！' %>
+      <%= f.text_area :data, size: '10x10', class: 'form-control', placeholder: 'はじめまして！' %>
 
       <div class="modal-footer" style="text-align: center">
         <%= link_to '戻る', user_page_path(@to_user), class: 'btn btn-default' %>

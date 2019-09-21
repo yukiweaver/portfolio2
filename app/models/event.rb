@@ -3,7 +3,7 @@ class Event < ApplicationRecord
   belongs_to :to_user, class_name: 'User', foreign_key: 'to_user_id', optional: true # null許可
   belongs_to :room
 
-  validates :data, length: { maximum: 250 }
+  validates :data, length: { maximum: 500 }
 
   # Eventオブジェクト生成
   def self.event_data(room_id, from_user_id, to_user_id, event_kbn, data)
