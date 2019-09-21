@@ -39,10 +39,13 @@ class RoomsController < ApplicationController
   def talk_room
     @from_user = User.find(user_id)
     @to_user = User.find(Base64.decode64(params[:encoded_id]))
+    # @to_user = User.find(params[:encoded_id])
+    @event = Event.new
+    @events = Event.all
   end
 
-  # def send
-  # end
+  def send_message
+  end
 
   private
 

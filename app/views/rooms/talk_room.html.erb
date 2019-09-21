@@ -1,35 +1,26 @@
 <% provide(:title, 'トークルーム') %>
-<h2>from_userが<%= @from_user.name %>、to_userが<%#= @to_user.name %>のトークルームページ</h2>
+<h2>from_userが<%= @from_user.name %>、to_userが<%= @to_user.name %>のトークルームページ</h2>
 <div class="row">
   <div class="col-md-10 col-md-offset-1 mypage-edit">
-    <%#= form_with model: @event, url: first_send_path(@to_user), method: :post, local: true do |f| %>
-      <%#= render 'shared/error_messages', object: f.object %>
-      <div class="register-box">
-        <div class="login-logo">
-          <div class="talk-image">
-            <!-- Todo：ペア状態でのみ画像表示 -->
-            <!-- Todo：初回メッセージでペアになっていることはありえないか。。-->
-            <% if @to_user.image? %>
-              <%= image_tag(@to_user.image.url, size: "70x70") %>
-            <% else %>
-              <%= image_tag("/images/icon1.jpg", size: "100x100") %>
-            <% end %>
-            <span class="p-talk-msg"><%= @to_user.name %></span>
-          </div>
+    <div class="register-box">
+      <div class="login-logo">
+        <div class="talk-image">
+          <!-- Todo：ペア状態でのみ画像表示 -->
+          <% if @to_user.image? %>
+            <%= image_tag(@to_user.image.url, size: "70x70") %>
+          <% else %>
+            <%= image_tag("/images/icon1.jpg", size: "70x70") %>
+          <% end %>
+          <span class="p-talk-msg"><%= @to_user.name %></span>
         </div>
       </div>
-      <%#= f.label :data, '初回メッセージ' %>
-      <%#= f.text_area :data, size: '10x20', class: 'form-control', placeholder: 'はじめまして！' %>
-
-      <!--<div class="modal-footer" style="text-align: center"> -->
-        <%#= link_to '戻る', user_page_path(@to_user), class: 'btn btn-default' %>
-        <%#= f.submit '送信', class: 'btn btn-primary', data: 
-            {confirm: "#{@to_user.name}さんに初回メッセージを送信しますか？",
-             cancel: "キャンセル", commit: "送信する"}, title: "初回メッセージ送信" %>
-      <!-- </div> -->
-    <%# end %>
-    <%#= form_with model: @event, url: send_path(@to_user), method: :post, local: true do |f| %>
-      <%#= f.text_field :data, class: 'form-control' %>
-    <%# end %>
+    </div>
+      <% @events.each do |event| %>
+        <%= event.data %><br>
+      <% end %>
+    <%= form_with model: @event, url: send_message_path(@to_user), method: :post, local: true do |f| %>
+      <%= f.text_area :data, size: '1x1', class: 'form-control' %>
+      <%= f.submit '送信', class: 'btn btn-primary' %>
+    <% end %>
   </div>
 </div>
