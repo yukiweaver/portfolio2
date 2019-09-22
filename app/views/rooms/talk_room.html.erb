@@ -15,9 +15,13 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="col-md-10 col-md-offset-1 mypage-edit">
+    <div style="width:900px;height:500px;overflow:auto;">
       <% @events.each do |event| %>
         <%= event.data %><br>
       <% end %>
+    </div>
     <%= form_with model: @event, url: send_message_path(@to_user), method: :post, local: true do |f| %>
       <%= f.text_area :data, size: '1x1', class: 'form-control' %>
       <%= f.submit '送信', class: 'btn btn-primary' %>

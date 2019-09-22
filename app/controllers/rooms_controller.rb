@@ -8,13 +8,13 @@ class RoomsController < ApplicationController
     # メッセージ空ならエラー
     data = params[:event][:data]
     if data.empty?
-      flash.now[:danger] = 'メッセージが空です。'
-      return render template: "events/first_msg" 
+      flash[:danger] = 'メッセージが空です。'
+      return redirect_to first_msg_path(@to_user)
     end
     # 500文字超える場合、エラー
     if data.length > 500
-      flash.now[:danger] = 'メッセージが長いです。'
-      return render template: "events/first_msg" 
+      flash[:danger] = 'メッセージが長いです。'
+      return redirect_to first_msg_path(@to_user)
     end
     if room.save
       events = []
@@ -25,10 +25,10 @@ class RoomsController < ApplicationController
       # BULK INSERT
       if Event.import events
         flash[:success] = 'event保存OK'
-        redirect_to talk_room_path(@to_user)
+        return redirect_to talk_room_path(@to_user)
       end
     else
-      render template: "events/first_msg"
+      return render template: "events/first_msg"
     end
     # roomsへインサート（1件）
     # eventsへインサート（3件）
