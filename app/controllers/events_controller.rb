@@ -44,7 +44,6 @@ class EventsController < ApplicationController
   def send_message
     @from_user = User.find(user_id)
     @to_user = User.find(Base64.decode64(params[:encoded_id]))
-    @events = Event.all
     @event = Event.new
     # メッセージ空ならエラー
     data = params[:event][:data]
@@ -57,12 +56,8 @@ class EventsController < ApplicationController
       flash[:danger] = 'メッセージが長いです。'
       return redirect_to talk_room_path(@to_user)
     end
-
-    room = Room.where(from_user_id: [@from_user.id, @to_user.id])
-               .where(to_user_id: [@from_user.id, @to_user.id])
-               .where.not('from_user_status = ? and to_user_status = ?', '9', '9')
-    room = room + []
-    room_id = room[0][:id]
+    
+    room_id = Room.get_room_id(@from_user_id, @to_user_id, '9', '9')
     data = params[:event][:data]
     send_message = Event.event_data(room_id, @from_user.id, @to_user.id, '12', data)
     if send_message.save
