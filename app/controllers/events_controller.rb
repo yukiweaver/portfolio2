@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :logged_out_user, only:[:first_msg]
+  before_action :logged_out_user
   # 初回メッセージページ
   def first_msg
     @from_user = User.find(user_id)
@@ -57,7 +57,7 @@ class EventsController < ApplicationController
       return redirect_to talk_room_path(@to_user)
     end
     
-    room_id = Room.get_room_id(@from_user_id, @to_user_id, '9', '9')
+    room_id = Room.get_room_id(@from_user.id, @to_user.id, '9', '9')
     data = params[:event][:data]
     send_message = Event.event_data(room_id, @from_user.id, @to_user.id, '12', data)
     if send_message.save
