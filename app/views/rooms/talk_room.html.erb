@@ -23,6 +23,7 @@
       <% end %>
     </div>
     <%= form_with model: @event, url: send_message_path(@to_user), method: :post, local: true do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
       <%= f.text_area :data, size: '1x1', class: 'form-control' %>
       <%= f.submit '送信', class: 'btn btn-primary' %>
     <% end %>

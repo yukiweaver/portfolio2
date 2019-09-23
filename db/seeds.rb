@@ -11,7 +11,10 @@ User.create!(name:  "植野 裕樹",
              password_confirmation: "password",
              sex_kbn: "1",
              age: '25',
-             area_kbn: "13")
+             area_kbn: "13",
+             business_kbn: nil,
+             income_kbn: nil
+            )
 
 # 男性ユーザー
 a = 0
@@ -29,7 +32,10 @@ a = 0
                password_confirmation: password,
                sex_kbn: sex_kbn,
                age: age,
-               area_kbn: area_kbn)
+               area_kbn: area_kbn,
+               business_kbn: nil,
+               income_kbn: nil
+              )
 end
 
 # 女性ユーザー

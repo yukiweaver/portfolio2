@@ -71,7 +71,7 @@ class User < ApplicationRecord
   # 職業：空はOK
   def check_business_kbn
     arr_business_kbn = [*('1'..'9')]
-    if !business_kbn.empty?
+    if !business_kbn.blank?
       errors.add(:business_kbn, ": 職業が不正な値です。") unless arr_business_kbn.include?(business_kbn)
     end
   end
@@ -79,7 +79,7 @@ class User < ApplicationRecord
   # 年収：空はOK
   def check_income_kbn
     arr_income_kbn = [*('1'..'11')]
-    if !income_kbn.empty?
+    if !income_kbn.blank?
       errors.add(:income_kbn, ": 年収が不正な値です。") unless arr_income_kbn.include?(income_kbn)
     end
   end
