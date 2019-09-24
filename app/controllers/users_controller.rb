@@ -46,7 +46,9 @@ class UsersController < ApplicationController
 
   # ユーザーページ
   def user_page
-    @user = User.find(Base64.decode64(params[:encoded_id]))
+    @from_user = User.find(user_id)
+    @user = @to_user = User.find(Base64.decode64(params[:encoded_id]))
+    @first_msg_flag = is_first_msg?(@from_user.id, @to_user.id, '9', '9')
   end
 
 

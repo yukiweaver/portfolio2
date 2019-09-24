@@ -25,10 +25,12 @@ class Room < ApplicationRecord
   end
 
   # 初回メッセージ送信済みか判定
-  def is_first_msg?(from_user_id, to_user_id, from_user_status='9', to_user_status='9')
-    room = Room.get_room_info(from_user_id, to_user_id, from_user_status, to_user_status)
-    if room.blank?
-      return false
-    end
-  end
+  # 9 9 以外のルームが存在するということは、どちらかが初回メッセージをすでに送っているということ
+  # def self.is_first_msg?(from_user_id, to_user_id, from_user_status='9', to_user_status='9')
+  #   room = Room.get_room_info(from_user_id, to_user_id, from_user_status, to_user_status)
+  #   if room.blank?
+  #     return false
+  #   end
+  #   return true
+  # end
 end

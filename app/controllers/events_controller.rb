@@ -5,6 +5,9 @@ class EventsController < ApplicationController
     @from_user = User.find(user_id)
     @to_user = User.find(Base64.decode64(params[:encoded_id]))
     @event = Event.new
+    if is_first_msg?(@from_user.id, @to_user.id, '9', '9')
+      return redirect_to user_page_path(@to_user)
+    end
   end
 
   # 初回メッセージ送信処理
@@ -12,6 +15,11 @@ class EventsController < ApplicationController
     @from_user = User.find(user_id)
     @to_user = User.find(Base64.decode64(params[:encoded_id]))
     @event = Event.new
+
+    if is_first_msg?(@from_user.id, @to_user.id, '9', '9')
+      return redirect_to user_page_path(@to_user)
+    end
+    
     room = Room.new(from_user_id: @from_user.id, to_user_id: @to_user.id)
     # メッセージ空ならエラー
     data = params[:event][:data]
