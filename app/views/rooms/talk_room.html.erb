@@ -2,10 +2,11 @@
 <h2>from_userが<%= @from_user.name %>、to_userが<%= @to_user.name %>のトークルームページ</h2>
 <div class="row">
   <div class="col-md-10 col-md-offset-1 mypage-edit">
+  <!--
     <div class="register-box">
       <div class="login-logo">
         <div class="talk-image">
-          <!-- Todo：ペア状態でのみ画像表示 -->
+           Todo：ペア状態でのみ画像表示
           <% if @to_user.image? %>
             <%= image_tag(@to_user.image.url, size: "70x70") %>
           <% else %>
@@ -26,6 +27,56 @@
       <%= render 'shared/error_messages', object: f.object %>
       <%= f.text_area :data, size: '1x1', class: 'form-control' %>
       <%= f.submit '送信', class: 'btn btn-primary' %>
-    <% end %>
+    <% end %> -->
+    <!-- ▼LINE風ここから -->
+  <div class="line__container">
+    <!-- タイトル -->
+    <div class="line__title">
+      <%= @to_user.name %>
+    </div>
+
+    <!-- ▼会話エリア scrollを外すと高さ固定解除 -->
+    <div class="line__contents scroll">
+      <% @events.each do |event| %>
+        <!-- 相手の吹き出し -->
+        <div class="line__left">
+          <figure>
+            <% if @to_user.image? %>
+              <%= image_tag(@to_user.image.url, size: "70x70") %>
+            <% else %>
+              <%= image_tag("/images/icon1.jpg", size: "70x70") %>
+            <% end %>
+          </figure>
+          <div class="line__left-text">
+            <div class="name">うさきち</div>
+            <div class="text">ねぇねぇ、帰ってくるのおそいんだけど！！今どこいまどこいまどこーー</div>
+          </div>
+        </div>
+
+        <!-- 相手の吹き出し -->
+        <div class="line__left">
+          <figure>
+            <% if @to_user.image? %>
+              <%= image_tag(@to_user.image.url, size: "70x70") %>
+            <% else %>
+              <%= image_tag("/images/icon1.jpg", size: "70x70") %>
+            <% end %>
+          </figure>
+          <div class="line__left-text">
+            <div class="name">うさきち</div>
+            <div class="text">今から帰るよー</div>
+          </div>
+        </div>
+
+        <!-- 自分の吹き出し -->
+        <div class="line__right">
+          <div class="text">了解！寝過ごさないようにだよ〜風呂ためとこ</div>
+          <span class="date">既読<br>0:30</span>
+        </div>
+      <% end %>
+    </div>
+    <!--　▲会話エリア ここまで -->
+  </div>
+  <!--　▲LINE風ここまで -->
   </div>
 </div>

@@ -16,6 +16,7 @@ class EventsController < ApplicationController
     @to_user = User.find(Base64.decode64(params[:encoded_id]))
     @event = Event.new
 
+    # 初回メッセージ済みならリダイレクト
     if is_first_msg?(@from_user.id, @to_user.id, '9', '9')
       return redirect_to user_page_path(@to_user)
     end
