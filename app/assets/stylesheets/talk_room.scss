@@ -13,7 +13,8 @@ $myTextColor:  #8de055; // 吹き出しの色
 
 .line__container {
   padding:0;
-  background: $baseColor;
+  // background: $baseColor;
+  background-color: rgb(207, 204, 207);
   overflow: hidden;
   // max-width: 400px;
   margin: 20px auto;
@@ -39,7 +40,7 @@ $myTextColor:  #8de055; // 吹き出しの色
     line-height: 135%;
 
     &.scroll {
-      height: 500px;
+      height: 600px;
       overflow-y: scroll;
     }
 

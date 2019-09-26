@@ -18,8 +18,9 @@ class Event < ApplicationRecord
 
   # ２ユーザーのメッセージ内容を返す
   def self.get_talk_content(room_id, from_user_id, to_user_id, event_kbn)
-    Event.where('room_id = ? and from_user_id = ? and to_user_id = ? and event_kbn = ?',
-                 room_id, from_user_id, to_user_id, event_kbn)
+    Event.where('room_id = ? and event_kbn = ?', room_id, event_kbn)
+         .where(from_user_id: [from_user_id, to_user_id])
+         .where(to_user_id: [from_user_id, to_user_id])
   end
 
 

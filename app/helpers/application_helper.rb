@@ -101,4 +101,9 @@ module ApplicationHelper
     end
     return true
   end
+
+  # 日時を文字列でフォーマット変換
+  def time_format(datetime)
+    return datetime.strftime("%H:%M")
+  end
 end
