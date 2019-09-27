@@ -15,5 +15,6 @@ Rails.application.routes.draw do
   post   '/first_msg/first_send/:encoded_id',  to: 'events#first_send',  as: 'first_send'
   get    '/room/talk_room/:encoded_id',  to: 'rooms#talk_room',  as: 'talk_room'
   post   '/event/send_message/:encoded_id',  to: 'events#send_message',  as: 'send_message'
+  get    '/room/room_index',  to:  'rooms#room_index',  as: 'room_index'
   resources :users
 end

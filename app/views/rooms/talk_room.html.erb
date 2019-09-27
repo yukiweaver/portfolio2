@@ -1,75 +1,49 @@
 <% provide(:title, 'トークルーム') %>
 <div class="row">
   <div class="col-md-10 col-md-offset-1">
-  <!--
-    <div class="register-box">
-      <div class="login-logo">
-        <div class="talk-image">
-           Todo：ペア状態でのみ画像表示
-          <% if @to_user.image? %>
-            <%= image_tag(@to_user.image.url, size: "70x70") %>
+    <!-- ▼LINE風ここから -->
+    <div class="line__container">
+      <!-- タイトル -->
+      <div class="line__title">
+        <%= @to_user.name %>
+      </div>
+
+      <!-- ▼会話エリア scrollを外すと高さ固定解除 -->
+      <div class="line__contents scroll">
+        <% @events.each do |event| %>
+          <% if event.from_user_id != @from_user.id %>
+            <!-- 相手の吹き出し -->
+            <div class="line__left">
+              <figure>
+                <% if @to_user.image? %>
+                  <%= image_tag(@to_user.image.url, size: "70x70") %>
+                <% else %>
+                  <%= image_tag("/images/icon1.jpg", size: "70x70") %>
+                <% end %>
+              </figure>
+              <div class="line__left-text">
+                <div class="name"><%= @to_user.name %></div>
+                <div class="text"><%= event.data %></div>
+              </div>
+            </div>
           <% else %>
-            <%= image_tag("/images/icon1.jpg", size: "70x70") %>
+            <!-- 自分の吹き出し -->
+            <div class="line__right">
+              <div class="text"><%= event.data %></div>
+              <span class="date">既読<br><%= time_format(event.created_at) %></span>
+            </div>
           <% end %>
-          <span class="p-talk-msg">&emsp;<%= @to_user.name %></span>
-        </div>
+        <% end %>
+      </div>
+      <!--　▲会話エリア ここまで -->
+      <div style="text-align: center;">
+        <%= form_with model: @event, url: send_message_path(@to_user), method: :post, local: true do |f| %>
+          <%= render 'shared/error_messages', object: f.object %>
+          <%= f.text_area :data, size: '1x1', class: 'form-control' %>
+          <%= f.submit '送信', class: 'btn btn-primary' %>
+        <% end %>
       </div>
     </div>
-  </div>
-  <div class="col-md-10 col-md-offset-1 mypage-edit">
-    <div style="width:900px;height:500px;overflow:auto;">
-      <% @events.each do |event| %>
-        <%= event.data %><br>
-      <% end %>
-    </div>
-    <%= form_with model: @event, url: send_message_path(@to_user), method: :post, local: true do |f| %>
-      <%= render 'shared/error_messages', object: f.object %>
-      <%= f.text_area :data, size: '1x1', class: 'form-control' %>
-      <%= f.submit '送信', class: 'btn btn-primary' %>
-    <% end %> -->
-    <!-- ▼LINE風ここから -->
-  <div class="line__container">
-    <!-- タイトル -->
-    <div class="line__title">
-      <%= @to_user.name %>
-    </div>
-
-    <!-- ▼会話エリア scrollを外すと高さ固定解除 -->
-    <div class="line__contents scroll">
-      <% @events.each do |event| %>
-        <% if event.from_user_id != @from_user.id %>
-          <!-- 相手の吹き出し -->
-          <div class="line__left">
-            <figure>
-              <% if @to_user.image? %>
-                <%= image_tag(@to_user.image.url, size: "70x70") %>
-              <% else %>
-                <%= image_tag("/images/icon1.jpg", size: "70x70") %>
-              <% end %>
-            </figure>
-            <div class="line__left-text">
-              <div class="name"><%= @to_user.name %></div>
-              <div class="text"><%= event.data %></div>
-            </div>
-          </div>
-        <% else %>
-          <!-- 自分の吹き出し -->
-          <div class="line__right">
-            <div class="text"><%= event.data %></div>
-            <span class="date">既読<br><%= time_format(event.created_at) %></span>
-          </div>
-        <% end %>
-      <% end %>
-    </div>
-    <!--　▲会話エリア ここまで -->
-    <div style="text-align: center;">
-      <%= form_with model: @event, url: send_message_path(@to_user), method: :post, local: true do |f| %>
-        <%= render 'shared/error_messages', object: f.object %>
-        <%= f.text_area :data, size: '1x1', class: 'form-control', style: 'background-color: white' %>
-        <%= f.submit '送信', class: 'btn btn-primary' %>
-      <% end %>
-    </div>
-  </div>
-  <!--　▲LINE風ここまで -->
+    <!--　▲LINE風ここまで -->
   </div>
 </div>

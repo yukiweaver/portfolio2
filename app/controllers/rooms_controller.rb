@@ -1,5 +1,5 @@
 class RoomsController < ApplicationController
-  before_action :logged_out_user, only:[:talk_room]
+  before_action :logged_out_user
 
   # トークルームページ
   def talk_room
@@ -8,6 +8,18 @@ class RoomsController < ApplicationController
     @event = Event.new
     room_id = Room.get_room_id(@from_user.id, @to_user.id, '9', '9')
     @events = Event.get_talk_content(room_id, @from_user.id, @to_user.id, '12')
+  end
+
+  # ルーム一覧
+  def room_index
+    @user = User.find(user_id)
+    # 自分宛のメッセージでかつ自分がまだ入室していないユーザーを取得
+    rooms = Room.get_no_entry_room(@user.id)
+    users_id = []
+    rooms.each do |room|
+      users_id.push(room.from_user_id)
+    end
+
   end
 
   private

@@ -8,7 +8,7 @@ class Room < ApplicationRecord
   def self.get_room_info(from_user_id, to_user_id, from_user_status='9', to_user_status='9')
     room = Room.where(from_user_id: [from_user_id, to_user_id])
                .where(to_user_id: [from_user_id, to_user_id])
-               .where.not('from_user_status = ? and to_user_status = ?', 'from_user_status', 'to_user_status')
+               .where.not('from_user_status = ? and to_user_status = ?', from_user_status, to_user_status)
     if room.blank?
       return []
     end
@@ -19,7 +19,7 @@ class Room < ApplicationRecord
   def self.get_room_id(from_user_id, to_user_id, from_user_status='9', to_user_status='9')
     room = Room.get_room_info(from_user_id, to_user_id, from_user_status, to_user_status)
     if room.blank?
-      return
+      return false
     end
     return room[0][:id]
   end
@@ -33,4 +33,14 @@ class Room < ApplicationRecord
   #   end
   #   return true
   # end
+
+  # ルームに招待されているかつ、自分が入室していないルームを取得
+  def self.get_no_entry_room(to_user_id)
+    rooms = Room.where('from_user_status = ? and to_user_status = ? and to_user_id = ?',
+                       '1', '0', to_user_id)
+    if rooms.blank?
+      return []
+    end
+    return rooms
+  end
 end
