@@ -34,10 +34,10 @@ class Room < ApplicationRecord
   #   return true
   # end
 
-  # ルームに招待されているかつ、自分が入室していないルームを取得
+  # ルームに招待されているかつ、自分が入室していないルームを取得（降順）
   def self.get_no_entry_room(to_user_id)
     rooms = Room.where('from_user_status = ? and to_user_status = ? and to_user_id = ?',
-                       '1', '0', to_user_id)
+                       '1', '0', to_user_id).order(created_at: 'DESC')
     if rooms.blank?
       return []
     end

@@ -13,12 +13,20 @@ class RoomsController < ApplicationController
   # ルーム一覧
   def room_index
     @user = User.find(user_id)
-    # 自分宛のメッセージでかつ自分がまだ入室していないユーザーを取得
+    # 自分が招待者かつ自分がまだ入室していないルームを取得
     rooms = Room.get_no_entry_room(@user.id)
-    users_id = []
-    rooms.each do |room|
-      users_id.push(room.from_user_id)
+    if !rooms.blank?
+      # ルーム作成者のuser_idを配列で取得して、ユーザーを取得(単数の場合もあり得る)
+      users_id = rooms.map{|room| room.from_user_id}
+      @users = users_id.map{|user_id| User.where(id: user_id)}.flatten
+
+      # ルームidを配列で取得して、ルームごとの最新のメッセージを取得(単数あり得る)
+      rooms_id = rooms.map{|room| room.id}
+      @messages = rooms_id.map{|room_id| Event.get_latest_message(room_id)}.flatten
     end
+    
+
+    
 
   end
 

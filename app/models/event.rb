@@ -23,5 +23,10 @@ class Event < ApplicationRecord
          .where(to_user_id: [from_user_id, to_user_id])
   end
 
+  #　特定のルームで最新メッセージを含むレコード一件取得
+  def self.get_latest_message(room_id)
+    Event.where('room_id = ? and event_kbn = ?', room_id, '12').order(created_at: 'DESC').limit(1)
+  end
+
 
 end
