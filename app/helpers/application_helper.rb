@@ -106,4 +106,10 @@ module ApplicationHelper
   def time_format(datetime)
     return datetime.strftime("%H:%M")
   end
+
+  # 送信者をキーとして最新のメッセージを含むレコード一件取得
+  def latest_message(from_user_id)
+    event = Event.where(from_user_id: from_user_id, event_kbn: '12').order(created_at: 'DESC').limit(1)
+    return event + []
+  end
 end

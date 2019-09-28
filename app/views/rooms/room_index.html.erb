@@ -13,18 +13,20 @@
               </tr>
             </thead>
             <tbody>
-              <% @users.each do |user| %>
-              <tr>
-                <td>
-                  <!-- Todo:ペア状態でのみ画像表示（条件入れずに初期画像固定でもあり） -->
-                  <% if user.image? %>
-                    <%= image_tag(user.image.url, size: "50x50") %>
-                  <% else %>
-                    <%= image_tag("/images/icon1.jpg", size: "50x50") %>
-                  <% end %>
-                  &emsp;<%= link_to user.name, '#', class: 'user_name', :data => {:toggle => "modal", :target => "##{user.id}"} %>
-                </td>
-              </tr>
+              <% if !@users.blank? %>
+                <% @users.each do |user| %>
+                <tr>
+                  <td>
+                    <!-- Todo:ペア状態でのみ画像表示（条件入れずに初期画像固定でもあり） -->
+                    <% if user.image? %>
+                      <%= image_tag(user.image.url, size: "50x50") %>
+                    <% else %>
+                      <%= image_tag("/images/icon1.jpg", size: "50x50") %>
+                    <% end %>
+                    &emsp;<%= link_to user.name, '#', class: 'user_name', :data => {:toggle => "modal", :target => "##{user.id}"} %>
+                  </td>
+                </tr>
+                <% end %>
               <% end %>
             </tbody>
           </table>
@@ -51,30 +53,37 @@
       </div>
     </div>
   </div>
-  <!-- モーダル・ダイアログ -->
-  <% @users.each do |user| %>
-    <div class="modal fade" id="<%= user.id %>" tabindex="-1">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-            <h4 class="modal-title">タイトル</h4>
-          </div>
-          <div class="modal-body">
-            <!-- Todo:ペア状態でのみ画像表示（条件入れずに初期画像固定でもあり） -->
-            <% if user.image? %>
-              <%= image_tag(user.image.url, size: "50x50") %>
-            <% else %>
-              <%= image_tag("/images/icon1.jpg", size: "50x50") %>
-            <% end %>
-            &emsp;<%= user.name %>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">拒否する</button>
-            <button type="button" class="btn btn-primary">入室する</button>
+  <!-- モーダル・相手からのメッセージ -->
+  <% if !@users.blank? %>
+    <% @users.each do |user| %>
+      <div class="modal fade" id="<%= user.id %>" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+              <h4 class="modal-title"><%= user.name %>さんからメッセージが届いています</h4>
+            </div>
+            <div class="modal-body">
+              <!-- Todo:ペア状態でのみ画像表示（条件入れずに初期画像固定でもあり） -->
+              <% if user.image? %>
+                <%= image_tag(user.image.url, size: "50x50") %>
+              <% else %>
+                <%= image_tag("/images/icon1.jpg", size: "50x50") %>
+              <% end %>
+              &emsp;<%= user.name %><br>
+              &emsp;&emsp;&emsp;&emsp;<%= latest_message(user.id)[0][:data] %>
+            </div>
+            <!-- Todo:ルームに入室できるのは10人まで -->
+            <div class="modal-footer">
+              <%= form_with url: '#', method: :post, local: true do |f| %>
+                <%= f.hidden_field :user_id, :value => user.id %>
+                <%= submit_tag "拒否する", name: "reject", class: "btn btn-default", formaction: '#' %>
+                <%= submit_tag "入室する", name: "entrance", class: "btn btn-primary", formaction: entrance_path %>
+              <% end %>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    <% end %>
   <% end %>
 </div>

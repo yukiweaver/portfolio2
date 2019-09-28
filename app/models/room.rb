@@ -24,16 +24,6 @@ class Room < ApplicationRecord
     return room[0][:id]
   end
 
-  # 初回メッセージ送信済みか判定
-  # 9 9 以外のルームが存在するということは、どちらかが初回メッセージをすでに送っているということ
-  # def self.is_first_msg?(from_user_id, to_user_id, from_user_status='9', to_user_status='9')
-  #   room = Room.get_room_info(from_user_id, to_user_id, from_user_status, to_user_status)
-  #   if room.blank?
-  #     return false
-  #   end
-  #   return true
-  # end
-
   # ルームに招待されているかつ、自分が入室していないルームを取得（降順）
   def self.get_no_entry_room(to_user_id)
     rooms = Room.where('from_user_status = ? and to_user_status = ? and to_user_id = ?',
