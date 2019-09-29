@@ -214,11 +214,25 @@ textarea.form-control {
       // color: #fff;
       text-decoration: none;
       display: inline-block;
-      margin-top: 18px;
+      // margin-top: 18px;
   }
 
 @media all and (min-width: 500px) {
-.wrapper {
-  display: flex;
+  .wrapper {
+    display: flex;
+  }
 }
+
+.exit-icon {
+  float: right;
+}
+
+.line__title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.td {
+  padding-bottom: 10px;
 }

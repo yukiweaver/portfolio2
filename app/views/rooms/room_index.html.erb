@@ -16,7 +16,7 @@
               <% if !@users.blank? %>
                 <% @users.each do |user| %>
                 <tr>
-                  <td>
+                  <td class="td">
                     <!-- Todo:ペア状態でのみ画像表示（条件入れずに初期画像固定でもあり） -->
                     <% if user.image? %>
                       <%= image_tag(user.image.url, size: "50x50") %>
@@ -42,7 +42,7 @@
             <% if !@talk_users.blank? %>
               <% @talk_users.each do |t_user| %>
                 <tr>
-                  <td>
+                  <td class="td">
                     <!-- Todo:ペア状態でのみ画像表示（条件入れずに初期画像固定でもあり） -->
                     <% if t_user.image? %>
                       <%= image_tag(t_user.image.url, size: "50x50") %>

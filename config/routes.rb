@@ -17,5 +17,6 @@ Rails.application.routes.draw do
   post   '/event/send_message/:encoded_id',  to: 'events#send_message',  as: 'send_message'
   get    '/room/room_index',  to:  'rooms#room_index',  as: 'room_index'
   post   '/room/entrance',  to:  'rooms#entrance',  as:  'entrance'
+  post   '/room/exit',  to:  'rooms#exit',  as:  'exit'
   resources :users
 end

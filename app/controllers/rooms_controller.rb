@@ -65,7 +65,12 @@ class RoomsController < ApplicationController
       flash[:danger] = '入室に失敗しました。'
       return redirect_to room_index_path
     end
+  end
 
+  # 退出処理
+  def exit
+    @user = User.find(user_id)
+    @to_user = User.find(decode(params[:user_id]))
   end
 
   private

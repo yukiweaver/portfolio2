@@ -112,4 +112,14 @@ module ApplicationHelper
     event = Event.where(from_user_id: from_user_id, event_kbn: '12').order(created_at: 'DESC').limit(1)
     return event + []
   end
+
+  # 文字列をBase64エンコードする
+  def encode(str)
+    Base64.encode64(str)
+  end
+
+  # Base64エンコードされたものをデコードする
+  def decode(str)
+    Base64.decode64(str)
+  end
 end
