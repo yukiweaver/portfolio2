@@ -15,25 +15,26 @@ class RoomsController < ApplicationController
     @user = User.find(user_id)
     # 自分が招待者かつ自分がまだ入室していないルームを取得
     rooms = Room.get_no_entry_room(@user.id)
+
     if !rooms.blank?
       # ルーム作成者のuser_idを配列で取得して、ユーザーを取得(単数の場合もあり得る)
       users_id = rooms.map{|room| room.from_user_id}
       @users = users_id.map{|user_id| User.where(id: user_id)}.flatten
-
-      # ルームidを配列で取得して、ルームごとの最新のメッセージを取得(単数あり得る)
-      # rooms_id = rooms.map{|room| room.id}
-      # @messages = rooms_id.map{|room_id| Event.get_latest_message(room_id)}.flatten
     end
+
+    # トーク中のユーザーを取得
+    @talk_users = Room.get_talk_users(@user.id)
   end
 
+  # トークルームから入室処理
   def entrance
-    @to_user = User.find(user_id)
-    @from_user = User.find(params[:user_id])
-
-    if params[:action] != 'entrance'
+    if not params[:user_id].match(/\A[0-9]+\z/)
       flash[:danger] = '不正なリクエストです。'
       return redirect_to room_index_path
     end
+
+    @to_user = User.find(user_id)
+    @from_user = User.find(params[:user_id])
 
     room_info = Room.get_room_info(@from_user.id, @to_user.id)
     if room_info.blank?
@@ -41,8 +42,12 @@ class RoomsController < ApplicationController
       return redirect_to room_index_path
     end
 
-    # すでに10ルーム入室していたらはじく
-    # ここまで
+    # すでに自分が10ルーム入室していたらエラー
+    room_count = Room.entry_status_count(@to_user.id)
+    if room_count >= 10
+      flash[:warning] = '入室できるルーム数は10ルームまでです。'
+      return redirect_to room_index_path
+    end
 
     room_id = room_info[0][:id]
     room = Room.find(room_id)

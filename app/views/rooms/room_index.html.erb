@@ -39,9 +39,21 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Bさん</td>
-              </tr>
+            <% if !@talk_users.blank? %>
+              <% @talk_users.each do |t_user| %>
+                <tr>
+                  <td>
+                    <!-- Todo:ペア状態でのみ画像表示（条件入れずに初期画像固定でもあり） -->
+                    <% if t_user.image? %>
+                      <%= image_tag(t_user.image.url, size: "50x50") %>
+                    <% else %>
+                      <%= image_tag("/images/icon1.jpg", size: "50x50") %>
+                    <% end %>
+                    &emsp;<%= link_to t_user.name, talk_room_path(t_user), class: 'user_name' %>
+                  </td>
+                </tr>
+              <% end %>
+            <% end %>
             </tbody>
           </table>
         </div>
@@ -73,12 +85,11 @@
               &emsp;<%= user.name %><br>
               &emsp;&emsp;&emsp;&emsp;<%= latest_message(user.id)[0][:data] %>
             </div>
-            <!-- Todo:ルームに入室できるのは10人まで -->
             <div class="modal-footer">
               <%= form_with url: '#', method: :post, local: true do |f| %>
                 <%= f.hidden_field :user_id, :value => user.id %>
-                <%= submit_tag "拒否する", name: "reject", class: "btn btn-default", formaction: '#' %>
-                <%= submit_tag "入室する", name: "entrance", class: "btn btn-primary", formaction: entrance_path %>
+                <%= submit_tag "拒否する", class: "btn btn-default", formaction: '#' %>
+                <%= submit_tag "入室する", class: "btn btn-primary", formaction: entrance_path %>
               <% end %>
             </div>
           </div>

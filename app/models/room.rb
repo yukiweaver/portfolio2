@@ -33,4 +33,32 @@ class Room < ApplicationRecord
     end
     return rooms
   end
+
+  # ユーザーidをキーとして、そのユーザーの入室しているルーム情報を返す（降順）
+  def self.get_entrance_room(user_id)
+    Room.where(from_user_id: user_id, from_user_status: '1').or(Room.where(to_user_id: user_id, to_user_status: '1')).order(created_at: 'DESC')
+  end
+
+  # ユーザーidをキーとして、そのユーザーのルーム入室状態の数を返す
+  def self.entry_status_count(user_id)
+    Room.where(from_user_id: user_id, from_user_status: '1').or(Room.where(to_user_id: user_id, to_user_status: '1')).count
+  end
+
+  # 入室中のルーム取得後、トーク中のユーザーを取得
+  def self.get_talk_users(user_id)
+    entrance_rooms = self.get_entrance_room(user_id)
+    if entrance_rooms.blank?
+      return []
+    end
+    talk_users = []
+    entrance_rooms.each do |room|
+      if user_id == room.from_user_id
+        user = User.find(room.to_user_id)
+      else
+        user = User.find(room.from_user_id)
+      end
+      talk_users.push(user)
+    end
+    return talk_users
+  end
 end
