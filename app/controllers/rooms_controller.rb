@@ -67,10 +67,23 @@ class RoomsController < ApplicationController
     end
   end
 
-  # 退出処理
+  # ルーム退出処理
+  # from_user_status, to_user_status, from_user_pair_status, to_user_pair_status
   def exit
     @user = User.find(user_id)
     @to_user = User.find(decode(params[:user_id]))
+    room = Room.get_room_info(@user.id, @to_user.id)
+    if room.blank?
+      flash[:warning] = 'ルームが存在しません。'
+      return redirect_to room_index_path
+    end
+    fu_status = room[0][:from_user_status]
+    tu_status = room[0][:to_user_status]
+    fup_status = room[0][:from_user_pair_status]
+    tup_status = room[0][:to_user_pair_status]
+    if fu_status == 0 || tu_status == 0
+      
+    end
   end
 
   private
