@@ -6,7 +6,7 @@ class Event < ApplicationRecord
   validates :data, length: { maximum: 500 }
 
   # Eventオブジェクト生成
-  def self.event_data(room_id, from_user_id, to_user_id, event_kbn, data)
+  def self.event_data(room_id, from_user_id, event_kbn, to_user_id=nil, data=nil)
     Event.new(
       room_id: room_id, 
       from_user_id: from_user_id, 

@@ -81,8 +81,23 @@ class RoomsController < ApplicationController
     tu_status = room[0][:to_user_status]
     fup_status = room[0][:from_user_pair_status]
     tup_status = room[0][:to_user_pair_status]
-    if fu_status == 0 || tu_status == 0
-      
+    room_id = room[0][:id]
+    
+    # 一方が1、一方が0のパターン（ペアは両方必ず0しかあり得ない）
+    if fu_status == '0' || tu_status == '0'
+      if room.update_exit_1()
+        exit_event = Event.event_data(room_id, @user.id, '19')
+        if exit_event.save
+          flash[:info] = '退出しました。'
+          return redirect_to room_index_path
+        else
+          flash[:warning] = 'roomはok、eventでng'
+          return redirect_to room_index_path
+        end
+      else
+        flash[:danger] = '退出に失敗しました。'
+        return redirect_to room_index_path
+      end
     end
   end
 
