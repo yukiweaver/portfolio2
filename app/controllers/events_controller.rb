@@ -35,9 +35,9 @@ class EventsController < ApplicationController
     end
     if room.save
       events = []
-      create_room = Event.event_data(room.id, @from_user.id, @to_user.id, '10', nil)
-      entering_room = Event.event_data(room.id, @from_user.id, nil, '11', nil)
-      send_message = Event.event_data(room.id, @from_user.id, @to_user.id, '12', data)
+      create_room = Event.event_data(room.id, @from_user.id, '10', @to_user.id)
+      entering_room = Event.event_data(room.id, @from_user.id, '11')
+      send_message = Event.event_data(room.id, @from_user.id, '12', @to_user.id, data)
       events.push(create_room, entering_room, send_message)
       # BULK INSERT
       if Event.import events
@@ -68,7 +68,7 @@ class EventsController < ApplicationController
     
     room_id = Room.get_room_id(@from_user.id, @to_user.id, '9', '9')
     data = params[:event][:data]
-    send_message = Event.event_data(room_id, @from_user.id, @to_user.id, '12', data)
+    send_message = Event.event_data(room_id, @from_user.id, '12', @to_user.id, data)
     if send_message.save
       return redirect_to talk_room_path(@to_user)
     else

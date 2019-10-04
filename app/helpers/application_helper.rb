@@ -108,9 +108,24 @@ module ApplicationHelper
   end
 
   # 送信者をキーとして最新のメッセージを含むレコード一件取得
-  def latest_message(from_user_id)
-    event = Event.where(from_user_id: from_user_id, event_kbn: '12').order(created_at: 'DESC').limit(1)
+  def latest_message(from_user_id, room_id)
+    event = Event.where(from_user_id: from_user_id, room_id: room_id, event_kbn: '12').order(created_at: 'DESC').limit(1)
+    if event.blank?
+      return []
+    end
     return event + []
+  end
+
+  # 自分が入室していないルームidを取得（複数取得できた場合、バグ）
+  # @param from_user_id ルーム作成者
+  # @param to_user_id ルーム招待者（ログインユーザー）
+  def room_id(from_user_id, to_user_id)
+    room = Room.where(from_user_id: from_user_id, to_user_id: to_user_id, from_user_status: '1', to_user_status: '0')
+    if room.blank?
+      return []
+    end
+    room = room + []
+    return room_id = room[0][:id]
   end
 
   # 文字列をBase64エンコードする

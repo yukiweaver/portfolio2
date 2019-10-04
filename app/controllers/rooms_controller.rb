@@ -8,17 +8,18 @@ class RoomsController < ApplicationController
     @event = Event.new
     room_id = Room.get_room_id(@from_user.id, @to_user.id, '9', '9')
     @events = Event.get_talk_content(room_id, @from_user.id, @to_user.id, '12')
+    # binding.pry
   end
 
   # ルーム一覧
   def room_index
     @user = User.find(user_id)
     # 自分が招待者かつ自分がまだ入室していないルームを取得
-    rooms = Room.get_no_entry_room(@user.id)
+    @rooms = Room.get_no_entry_room(@user.id)
 
-    if !rooms.blank?
+    if !@rooms.blank?
       # ルーム作成者のuser_idを配列で取得して、ユーザーを取得(単数の場合もあり得る)
-      users_id = rooms.map{|room| room.from_user_id}
+      users_id = @rooms.map{|room| room.from_user_id}
       @users = users_id.map{|user_id| User.where(id: user_id)}.flatten
     end
 
@@ -53,7 +54,7 @@ class RoomsController < ApplicationController
     room = Room.find(room_id)
     room.to_user_status = '1'
     if room.save
-      entering_room = Event.event_data(room_id, @to_user.id, nil, '11', nil)
+      entering_room = Event.event_data(room_id, @to_user.id, '11')
       if entering_room.save
         flash[:success] = '入室しました。'
         return redirect_to talk_room_path(@from_user)

@@ -83,7 +83,7 @@
                 <%= image_tag("/images/icon1.jpg", size: "50x50") %>
               <% end %>
               &emsp;<%= user.name %><br>
-              &emsp;&emsp;&emsp;&emsp;<%= latest_message(user.id)[0][:data] %>
+              &emsp;&emsp;&emsp;&emsp;<%= latest_message(user.id, room_id(user.id, @user.id))[0][:data] unless latest_message(user.id, room_id(user.id, @user.id)).blank? %>
             </div>
             <div class="modal-footer">
               <%= form_with url: '#', method: :post, local: true do |f| %>
