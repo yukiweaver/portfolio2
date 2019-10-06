@@ -49,8 +49,8 @@ class RoomsController < ApplicationController
     room_count = Room.entry_status_count(@to_user.id)
     return redirect_to room_index_path, flash: {warning: '入室できるルーム数は10ルームまでです。'} if room_count >= 10
 
-    room_id = room_info[0][:id]
-    room = Room.find(room_id)
+    room = nil
+    room_info.each {|r| room = r}
 
     # 相手からの初回メッセージから入室するパターン
     room.to_user_status = '1' if params[:status] == 'first_msg'
