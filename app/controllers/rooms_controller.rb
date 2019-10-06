@@ -29,13 +29,14 @@ class RoomsController < ApplicationController
 
   # トークルームから入室処理
   def entrance
-    if not params[:user_id].match(/\A[0-9]+\z/)
-      flash[:danger] = '不正なリクエストです。'
+    @to_user = User.find(user_id)
+    @from_user = User.find(decode(params[:user_id]))
+
+    # デコード失敗
+    if @from_user.blank?
+      flash[:warning] = '不正なリクエストです。'
       return redirect_to room_index_path
     end
-
-    @to_user = User.find(user_id)
-    @from_user = User.find(params[:user_id])
 
     room_info = Room.get_room_info(@from_user.id, @to_user.id)
     if room_info.blank?
@@ -78,15 +79,40 @@ class RoomsController < ApplicationController
       flash[:warning] = 'ルームが存在しません。'
       return redirect_to room_index_path
     end
-    fu_status = room[0][:from_user_status]
-    tu_status = room[0][:to_user_status]
-    fup_status = room[0][:from_user_pair_status]
-    tup_status = room[0][:to_user_pair_status]
-    room_id = room[0][:id]
+    if room.count != 1
+      flash[:warning] = 'ルーム数が不正です。'
+      return redirect_to room_index_path
+    end
+    room.each {|r| room = r}
+    fu_status = room.from_user_status
+    tu_status = room.to_user_status
+    fup_status = room.from_user_pair_status
+    tup_status = room.to_user_pair_status
+    fu_id = room.from_user_id
+    tu_id = room.to_user_id
+    room_id = room.id
+    is_from_user = (@user.id == fu_id) ? true : false
     
     # 一方が1、一方が0のパターン（ペアは両方必ず0しかあり得ない）
     if fu_status == '0' || tu_status == '0'
       if room.update_exit_1()
+        exit_event = Event.event_data(room_id, @user.id, '19')
+        if exit_event.save
+          flash[:info] = '退出しました。'
+          return redirect_to room_index_path
+        else
+          flash[:warning] = 'roomはok、eventでng'
+          return redirect_to room_index_path
+        end
+      else
+        flash[:danger] = '退出に失敗しました。'
+        return redirect_to room_index_path
+      end
+    end
+
+    # ユーザー間　１、１の場合（ペアはいかなる場合でも0,0に更新）
+    if fu_status == '1' && tu_status == '1'
+      if room.update_exit_2(is_from_user)
         exit_event = Event.event_data(room_id, @user.id, '19')
         if exit_event.save
           flash[:info] = '退出しました。'

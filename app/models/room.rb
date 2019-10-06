@@ -62,7 +62,7 @@ class Room < ApplicationRecord
     return talk_users
   end
 
-  # 退出処理（from_user_status、to_user_statusどちらか一方が「１」、一方が「２」の場合）
+  # 退出処理（from_user_status、to_user_statusどちらか一方が「１」、一方が「0」の場合）
   def update_exit_1
     if self.update_attributes(
         from_user_status: '9',
@@ -75,6 +75,36 @@ class Room < ApplicationRecord
       return true
     else
       return false
+    end
+  end
+
+  # 退出処理（from_user_status、to_user_statusともに「１」の場合）
+  # @param is_from_user: boolean
+  def update_exit_2(is_from_user)
+    if is_from_user
+      if self.update_attributes(
+        from_user_status: '9',
+        to_user_status: '1',
+        exit_date: Time.now,
+        from_user_pair_status: '0',
+        to_user_pair_status: '0'
+        )
+        return true
+      else
+        return false
+      end
+    else
+      if self.update_attributes(
+        from_user_status: '1',
+        to_user_status: '9',
+        exit_date: Time.now,
+        from_user_pair_status: '0',
+        to_user_pair_status: '0'
+        )
+        return true
+      else
+        return false
+      end
     end
   end
 end

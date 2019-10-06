@@ -84,7 +84,7 @@ module ApplicationHelper
 
   # before_action：ユーザーがログイン中なら検索ページへ遷移
   def logged_in_user
-    redirect_to user_path(id: [:login]['user_id']) unless session[:login].nil?
+    redirect_to search_path unless session[:login].nil?
   end
 
   # before_action：ユーザーがログアウト中ならトップページへ遷移

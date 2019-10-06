@@ -61,6 +61,7 @@
       <div class="column exit">
         <div class="info">
           <h2>退出中</h2>
+          
         </div>
       </div>
     </div>
@@ -87,8 +88,9 @@
             </div>
             <div class="modal-footer">
               <%= form_with url: '#', method: :post, local: true do |f| %>
-                <%= f.hidden_field :user_id, :value => user.id %>
-                <%= submit_tag "拒否する", class: "btn btn-default", formaction: '#' %>
+                <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                <%= f.hidden_field :user_id, :value => encode((user.id).to_s) %>
+                <%= submit_tag "拒否する", class: "btn btn-default", formaction: exit_path %>
                 <%= submit_tag "入室する", class: "btn btn-primary", formaction: entrance_path %>
               <% end %>
             </div>
