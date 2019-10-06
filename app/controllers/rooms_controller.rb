@@ -25,6 +25,9 @@ class RoomsController < ApplicationController
 
     # トーク中のユーザーを取得
     @talk_users = Room.get_talk_users(@user.id)
+
+    # 退出中のユーザー取得
+    @exit_users = Room.get_exit_users(@user.id)
   end
 
   # トークルームから入室処理

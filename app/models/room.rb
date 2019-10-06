@@ -41,7 +41,7 @@ class Room < ApplicationRecord
 
   # ユーザーidをキーとして、そのユーザーのルーム入室状態の数を返す
   def self.entry_status_count(user_id)
-    Room.where(from_user_id: user_id, from_user_status: '1').or(Room.where(to_user_id: user_id, to_user_status: '1')).count
+    Room.get_entrance_room(user_id).count
   end
 
   # 入室中のルーム取得後、トーク中のユーザーを取得
@@ -62,7 +62,7 @@ class Room < ApplicationRecord
     return talk_users
   end
 
-  # 退出処理（from_user_status、to_user_statusどちらか一方が「１」、一方が「0」の場合）
+  # 退出処理更新（from_user_status、to_user_statusどちらか一方が「１」、一方が「0」の場合）
   def update_exit_1
     if self.update_attributes(
         from_user_status: '9',
@@ -78,7 +78,7 @@ class Room < ApplicationRecord
     end
   end
 
-  # 退出処理（from_user_status、to_user_statusともに「１」の場合）
+  # 退出処理更新（from_user_status、to_user_statusともに「１」の場合）
   # @param is_from_user: boolean
   def update_exit_2(is_from_user)
     if is_from_user
@@ -106,5 +106,20 @@ class Room < ApplicationRecord
         return false
       end
     end
+  end
+
+  # 退出中のユーザーを取得（単数あり）
+  def self.get_exit_users(user_id)
+    exit_rooms = self.where(from_user_status: '9', to_user_status: '1', from_user_id: user_id)
+                .or(Room.where(from_user_status: '1', to_user_status: '9', to_user_id: user_id))
+                .order(exit_date: 'DESC')
+    return [] if exit_rooms.blank?
+    exit_users_id = []
+    exit_rooms.each do |e_room|
+      exit_users_id << e_room.from_user_id if e_room.from_user_id != user_id
+      exit_users_id << e_room.to_user_id if e_room.to_user_id != user_id
+    end
+    users = exit_users_id.map {|uid| User.find(uid)}
+    return users
   end
 end

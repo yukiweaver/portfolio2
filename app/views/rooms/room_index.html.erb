@@ -60,8 +60,30 @@
       </div>
       <div class="column exit">
         <div class="info">
-          <h2>退出中</h2>
-          
+          <h2>退出</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>ルーム退出中</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @exit_users.each do |e_user| %>
+              <tr>
+                <td>
+                  <!-- Todo:ペア状態でのみ画像表示（条件入れずに初期画像固定でもあり） -->
+                  <% if e_user.image? %>
+                    <%= image_tag(e_user.image.url, size: "50x50") %>
+                  <% else %>
+                    <%= image_tag("/images/icon1.jpg", size: "50x50") %>
+                  <% end %>
+                  &emsp;<%= link_to e_user.name, user_page_path(encoded_id: encode((e_user.id).to_s)), class: 'user_name' %>
+                  &emsp;<%= link_to '入室', '#', class: 'btn btn-sm btn-primary' %>
+                </td>
+              <tr>
+              <% end %>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

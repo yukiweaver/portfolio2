@@ -6,7 +6,7 @@ class User < ApplicationRecord
   has_many :to_user_events, class_name: 'Event', :foreign_key => 'to_user_id'
 
   before_save { email.downcase! }
-  validates :name, presence: true, length: { maximum: 30 }
+  validates :name, presence: true, length: { maximum: 20 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, length: { maximum: 100 },
                     format: { with: VALID_EMAIL_REGEX },
