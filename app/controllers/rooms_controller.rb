@@ -32,31 +32,35 @@ class RoomsController < ApplicationController
 
   # トークルームから入室処理
   def entrance
-    @to_user = User.find(user_id)
-    @from_user = User.find(decode(params[:user_id]))
-
-    # デコード失敗
-    if @from_user.blank?
-      flash[:warning] = '不正なリクエストです。'
-      return redirect_to room_index_path
+    return redirect_to room_index_path, flash: {warning: '不正なリクエストです。'} if params[:status].blank?
+    if not params[:status] == 'first_msg' || params[:status] == 'exit'
+      return redirect_to room_index_path, flash: {warning: '不正なリクエストです。'}
     end
+    @to_user = User.find(user_id)
+    @from_user = User.find(decode(params[:encoded_id]))
+
+    # ユーザー未取得
+    return redirect_to room_index_path, flash: {warning: '不正なリクエストです。'} if @from_user.blank?
 
     room_info = Room.get_room_info(@from_user.id, @to_user.id)
-    if room_info.blank?
-      flash[:danger] = 'ルームが存在しません。'
-      return redirect_to room_index_path
-    end
+    return redirect_to room_index_path, flash: {danger: 'ルームが存在しません。'} if room_info.blank?
 
     # すでに自分が10ルーム入室していたらエラー
     room_count = Room.entry_status_count(@to_user.id)
-    if room_count >= 10
-      flash[:warning] = '入室できるルーム数は10ルームまでです。'
-      return redirect_to room_index_path
-    end
+    return redirect_to room_index_path, flash: {warning: '入室できるルーム数は10ルームまでです。'} if room_count >= 10
 
     room_id = room_info[0][:id]
     room = Room.find(room_id)
-    room.to_user_status = '1'
+
+    # 相手からの初回メッセージから入室するパターン
+    room.to_user_status = '1' if params[:status] == 'first_msg'
+
+    # 退出中から入室するパターン
+    if params[:status] == 'exit'
+      room.to_user_status = '1' if room.to_user_id == @to_user.id
+      room.from_user_status = '1' if room.from_user_id == @to_user.id
+    end
+    
     if room.save
       entering_room = Event.event_data(room_id, @to_user.id, '11')
       if entering_room.save
@@ -95,8 +99,10 @@ class RoomsController < ApplicationController
     tu_id = room.to_user_id
     room_id = room.id
     is_from_user = (@user.id == fu_id) ? true : false
+
+    # Todo:退出処理　ペアを考慮していない。Eventの動きが変わってくる。
     
-    # 一方が1、一方が0のパターン（ペアは両方必ず0しかあり得ない）
+    # 一方が1、一方が0のパターン（ペアは両方必ず0しかあり得ない）完全退出
     if fu_status == '0' || tu_status == '0'
       if room.update_exit_1()
         exit_event = Event.event_data(room_id, @user.id, '19')
@@ -116,6 +122,23 @@ class RoomsController < ApplicationController
     # ユーザー間　１、１の場合（ペアはいかなる場合でも0,0に更新）
     if fu_status == '1' && tu_status == '1'
       if room.update_exit_2(is_from_user)
+        exit_event = Event.event_data(room_id, @user.id, '19')
+        if exit_event.save
+          flash[:info] = '退出しました。'
+          return redirect_to room_index_path
+        else
+          flash[:warning] = 'roomはok、eventでng'
+          return redirect_to room_index_path
+        end
+      else
+        flash[:danger] = '退出に失敗しました。'
+        return redirect_to room_index_path
+      end
+    end
+
+    # ユーザー間　1,9の場合 完全退出
+    if (fu_status == '1' && tu_status == '9') || (fu_status == '9' && tu_status == '1')
+      if room.update_exit_1()
         exit_event = Event.event_data(room_id, @user.id, '19')
         if exit_event.save
           flash[:info] = '退出しました。'

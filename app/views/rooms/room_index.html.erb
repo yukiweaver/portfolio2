@@ -70,7 +70,7 @@
             <tbody>
               <% @exit_users.each do |e_user| %>
               <tr>
-                <td>
+                <td class="td">
                   <!-- Todo:ペア状態でのみ画像表示（条件入れずに初期画像固定でもあり） -->
                   <% if e_user.image? %>
                     <%= image_tag(e_user.image.url, size: "50x50") %>
@@ -78,7 +78,7 @@
                     <%= image_tag("/images/icon1.jpg", size: "50x50") %>
                   <% end %>
                   &emsp;<%= link_to e_user.name, user_page_path(encoded_id: encode((e_user.id).to_s)), class: 'user_name' %>
-                  &emsp;<%= link_to '入室', '#', class: 'btn btn-sm btn-primary' %>
+                  &emsp;<%= link_to '入室', entrance_path(encoded_id: encode((e_user.id).to_s), status: 'exit'), method: :post, class: 'btn btn-sm btn-primary' %>
                 </td>
               <tr>
               <% end %>
@@ -111,7 +111,8 @@
             <div class="modal-footer">
               <%= form_with url: '#', method: :post, local: true do |f| %>
                 <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-                <%= f.hidden_field :user_id, :value => encode((user.id).to_s) %>
+                <%= f.hidden_field :encoded_id, :value => encode((user.id).to_s) %>
+                <%= f.hidden_field :status, :value => 'first_msg' %>
                 <%= submit_tag "拒否する", class: "btn btn-default", formaction: exit_path %>
                 <%= submit_tag "入室する", class: "btn btn-primary", formaction: entrance_path %>
               <% end %>
