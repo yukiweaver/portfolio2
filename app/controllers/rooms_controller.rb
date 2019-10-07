@@ -42,6 +42,7 @@ class RoomsController < ApplicationController
     # ユーザー未取得
     return redirect_to room_index_path, flash: {warning: '不正なリクエストです。'} if @from_user.blank?
 
+    # ルーム未取得
     room_info = Room.get_room_info(@from_user.id, @to_user.id)
     return redirect_to room_index_path, flash: {danger: 'ルームが存在しません。'} if room_info.blank?
 

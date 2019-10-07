@@ -13,10 +13,15 @@
       </div>
       <div class="event-button">
         <!-- Todo：4つのボタン、条件によって変化 -->
-        <p><%= link_to 'メッセージを送る', @first_msg_flag ? '' : first_msg_path(@to_user), class: 'btn btn-primary', disabled: @first_msg_flag ? true : false %></p>
-        <p><%= link_to 'ペアリクエストを送る', '#', class: 'btn btn-primary' %></p>
-        <p><%= link_to 'ペアリクエストを承認する', '#', class: 'btn btn-primary' %></p>
-        <p><%= link_to 'ペア状態を解除する', '#', class: 'btn btn-primary' %></p>
+        <% if @room_status == 'first_msg' %>
+          <p><%= link_to 'メッセージを送る', @first_msg_flag ? '' : first_msg_path(@to_user), class: 'btn btn-primary', disabled: @first_msg_flag ? true : false %></p>
+        <% elsif @room_status == 'pair_apply' %>
+          <p><%= link_to 'ペアリクエストを送る', '#', class: 'btn btn-primary' %></p>
+        <% elsif @room_status == 'pair_approval' %>
+          <p><%= link_to 'ペアリクエストを承認する', '#', class: 'btn btn-primary' %></p>
+        <% elsif @room_status == 'unpair' %>
+          <p><%= link_to 'ペア状態を解除する', '#', class: 'btn btn-primary' %></p>
+        <% end %>
       </div>
       <div class="user_column">
         <p class="column_title">自己紹介</p>

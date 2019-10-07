@@ -49,6 +49,23 @@ class UsersController < ApplicationController
     @from_user = User.find(user_id)
     @user = @to_user = User.find(Base64.decode64(params[:encoded_id]))
     @first_msg_flag = is_first_msg?(@from_user.id, @to_user.id, '9', '9')
+    room = Room.get_room_info(@from_user.id, @to_user.id)
+    room.each {|r| room = r}
+    is_approval_from_or_to = (@from_user.id == room.from_user_id) ? true : false unless room.blank?
+
+    if room.blank? || room.from_user_status == '1' && room.to_user_status == '0' || room.from_user_status == '0' && room.to_user_status == '1' || room.from_user_status == '1' && room.to_user_status == '9' || room.from_user_status == '9' && room.to_user_status == '1'
+      @room_status = 'first_msg'
+    elsif room.from_user_status == '1' && room.to_user_status == '1' && room.from_user_pair_status == '0' && room.to_user_pair_status == '0'
+      @room_status = 'pair_apply'
+    elsif # ペア承認条件 (自分がルーム作成者なのか、招待者なのかで変わる)
+      if is_approval_from_or_to == true && room.from_user_status == '1' && room.to_user_status == '1' && room.from_user_pair_status == '0' && room.to_user_pair_status == '1'
+        @room_status = 'pair_approval'
+      elsif is_approval_from_or_to == false && room.from_user_status == '1' && room.to_user_status == '1' && room.from_user_pair_status == '1' && room.to_user_pair_status == '0'
+        @room_status = 'pair_approval'
+      end
+    elsif room.from_user_status == '1' && room.to_user_status == '1' && room.from_user_pair_status == '1' && room.to_user_pair_status == '1'
+      @room_status = 'unpair'
+    end
   end
 
 
