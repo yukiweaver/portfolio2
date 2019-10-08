@@ -18,5 +18,6 @@ Rails.application.routes.draw do
   get    '/room/room_index',  to:  'rooms#room_index',  as: 'room_index'
   post   '/room/entrance',  to:  'rooms#entrance',  as:  'entrance'
   post   '/room/exit',  to:  'rooms#exit',  as:  'exit'
+  post   '/event/apply',  to:  'events#apply',  as:  'apply'
   resources :users
 end

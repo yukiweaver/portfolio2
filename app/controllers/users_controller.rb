@@ -52,20 +52,7 @@ class UsersController < ApplicationController
     room = Room.get_room_info(@from_user.id, @to_user.id)
     room.each {|r| room = r}
     is_approval_from_or_to = (@from_user.id == room.from_user_id) ? true : false unless room.blank?
-
-    if room.blank? || room.from_user_status == '1' && room.to_user_status == '0' || room.from_user_status == '0' && room.to_user_status == '1' || room.from_user_status == '1' && room.to_user_status == '9' || room.from_user_status == '9' && room.to_user_status == '1'
-      @room_status = 'first_msg'
-    elsif room.from_user_status == '1' && room.to_user_status == '1' && room.from_user_pair_status == '0' && room.to_user_pair_status == '0'
-      @room_status = 'pair_apply'
-    elsif # ペア承認条件 (自分がルーム作成者なのか、招待者なのかで変わる)
-      if is_approval_from_or_to == true && room.from_user_status == '1' && room.to_user_status == '1' && room.from_user_pair_status == '0' && room.to_user_pair_status == '1'
-        @room_status = 'pair_approval'
-      elsif is_approval_from_or_to == false && room.from_user_status == '1' && room.to_user_status == '1' && room.from_user_pair_status == '1' && room.to_user_pair_status == '0'
-        @room_status = 'pair_approval'
-      end
-    elsif room.from_user_status == '1' && room.to_user_status == '1' && room.from_user_pair_status == '1' && room.to_user_pair_status == '1'
-      @room_status = 'unpair'
-    end
+    @room_status = get_room_status(room)
   end
 
 
@@ -79,5 +66,21 @@ class UsersController < ApplicationController
     params.require(:user).permit(
       :name, :sex_kbn, :age, :area_kbn, :profile, :income_kbn, :business_kbn, :free_entry, :image
     )
+  end
+
+  def get_room_status(room)
+    if room.blank? || room.from_user_status == '1' && room.to_user_status == '0' || room.from_user_status == '0' && room.to_user_status == '1' || room.from_user_status == '1' && room.to_user_status == '9' || room.from_user_status == '9' && room.to_user_status == '1'
+      @room_status = 'first_msg'
+    elsif room.from_user_status == '1' && room.to_user_status == '1' && room.from_user_pair_status == '0' && room.to_user_pair_status == '0'
+      @room_status = 'pair_apply'
+    elsif # ペア承認条件 (自分がルーム作成者なのか、招待者なのかで変わる)
+      if is_approval_from_or_to == true && room.from_user_status == '1' && room.to_user_status == '1' && room.from_user_pair_status == '0' && room.to_user_pair_status == '1'
+        @room_status = 'pair_approval'
+      elsif is_approval_from_or_to == false && room.from_user_status == '1' && room.to_user_status == '1' && room.from_user_pair_status == '1' && room.to_user_pair_status == '0'
+        @room_status = 'pair_approval'
+      end
+    elsif room.from_user_status == '1' && room.to_user_status == '1' && room.from_user_pair_status == '2' && room.to_user_pair_status == '2'
+      @room_status = 'unpair'
+    end
   end
 end

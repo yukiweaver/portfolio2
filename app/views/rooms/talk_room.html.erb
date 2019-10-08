@@ -67,7 +67,7 @@
 			<div class="modal-footer">
         <%= form_with url: exit_path, method: :post, local: true do |f| %>
           <button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
-          <%= f.hidden_field :user_id, :value => encode((@to_user.id).to_s) %>
+          <%= f.hidden_field :encoded_id, :value => encode((@to_user.id).to_s) %>
 				  <%= submit_tag "退出する", class: "btn btn-primary" %>
         <% end %>
 			</div>

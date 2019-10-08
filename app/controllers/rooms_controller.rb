@@ -81,7 +81,7 @@ class RoomsController < ApplicationController
   # from_user_status, to_user_status, from_user_pair_status, to_user_pair_status
   def exit
     @user = User.find(user_id)
-    @to_user = User.find(decode(params[:user_id]))
+    @to_user = User.find(decode(params[:encoded_id]))
     room = Room.get_room_info(@user.id, @to_user.id)
     if room.blank?
       flash[:warning] = 'ルームが存在しません。'

@@ -1,4 +1,4 @@
-<% provide(:title, '検索ページ') %>
+<% provide(:title, 'ユーザーページ') %>
 <h2><%= @to_user.name %>さんのユーザーページ</h2>
 <div class="row">
   <div class="col-md-6 col-md-offset-3 mypage">
@@ -16,7 +16,7 @@
         <% if @room_status == 'first_msg' %>
           <p><%= link_to 'メッセージを送る', @first_msg_flag ? '' : first_msg_path(@to_user), class: 'btn btn-primary', disabled: @first_msg_flag ? true : false %></p>
         <% elsif @room_status == 'pair_apply' %>
-          <p><%= link_to 'ペアリクエストを送る', '#', class: 'btn btn-primary' %></p>
+          <p><%= link_to 'ペアリクエストを送る', '#', class: 'btn btn-primary', :data => {:toggle => "modal", :target => "#modal-apply"} %></p>
         <% elsif @room_status == 'pair_approval' %>
           <p><%= link_to 'ペアリクエストを承認する', '#', class: 'btn btn-primary' %></p>
         <% elsif @room_status == 'unpair' %>
@@ -30,5 +30,27 @@
       <p>------------------------------ 基本情報 --------------------------------</p>
     </div>
     <%= render partial: 'user_info', locals: { user: @user } %>
+  </div>
+
+  <!-- モーダル：ペアリクエスト -->
+  <div class="modal fade" id="modal-apply" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+          <h4 class="modal-title">ペアリクエスト</h4>
+        </div>
+        <div class="modal-body">
+          <%= @to_user.name %>さんにペアリクエストを送りますか？
+        </div>
+        <div class="modal-footer">
+          <%= form_with url: '#', method: :post, local: true do |f| %>
+            <%= f.hidden_field :encoded_id, :value => encode((@to_user.id).to_s) %>
+            <button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
+            <%= submit_tag 'ペアリクエストを送る', class: 'btn btn-primary' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

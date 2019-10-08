@@ -77,6 +77,25 @@ class EventsController < ApplicationController
     end
   end
 
+  # ペアリクエスト申請　処理
+  def apply
+    @user = User.find(user_id)
+    @to_user = User.find(decode(params[:encoded_id]))
+    room = Room.get_room_info(@user.id, @to_user.id)
+    room.each {|r| room = r}
+    return redirect_to user_page_path(@to_user), flash: {danger: 'ルームが存在しません。'} if room.blank?
+
+    fu_status = room.from_user_status  # 作成者ステータス
+    tu_status = room.to_user_status  # 招待者ステータス
+    p_fu_status = room.from_user_pair_status  # 作成者のペアステータス
+    p_tu_status = room.to_user_pair_status  # 招待者のペアステータス
+
+    # ステータスに誤りがあればエラー
+    if not fu_status == '1' && tu_status == '1' && p_fu_status == '0' && p_tu_status = '0'
+      return redirect_to user_page_path(@to_user), flash: {danger: 'ペアリクエストに失敗しました。'}
+    end
+  end
+
 
 
   private
