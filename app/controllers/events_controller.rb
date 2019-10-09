@@ -94,6 +94,11 @@ class EventsController < ApplicationController
     if not fu_status == '1' && tu_status == '1' && p_fu_status == '0' && p_tu_status = '0'
       return redirect_to user_page_path(@to_user), flash: {danger: 'ペアリクエストに失敗しました。'}
     end
+
+    # 画像と年収設定していなかったらエラー
+    if @user.income_kbn.blank? || @user.image.blank?
+      return redirect_to mypage_edit_path, flash: {warning: 'アイコン画像および年収を編集してください。'}
+    end
   end
 
 

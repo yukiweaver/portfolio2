@@ -44,7 +44,7 @@
           <%= @to_user.name %>さんにペアリクエストを送りますか？
         </div>
         <div class="modal-footer">
-          <%= form_with url: '#', method: :post, local: true do |f| %>
+          <%= form_with url: apply_path, method: :post, local: true do |f| %>
             <%= f.hidden_field :encoded_id, :value => encode((@to_user.id).to_s) %>
             <button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
             <%= submit_tag 'ペアリクエストを送る', class: 'btn btn-primary' %>
