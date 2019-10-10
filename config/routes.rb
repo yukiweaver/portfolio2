@@ -19,5 +19,6 @@ Rails.application.routes.draw do
   post   '/room/entrance',  to:  'rooms#entrance',  as:  'entrance'
   post   '/room/exit',  to:  'rooms#exit',  as:  'exit'
   post   '/event/apply',  to:  'events#apply',  as:  'apply'
+  post   '/event/approval',  to:  'events#approval',  as:  'approval'
   resources :users
 end

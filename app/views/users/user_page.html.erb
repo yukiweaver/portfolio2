@@ -18,9 +18,11 @@
         <% elsif @room_status == 'pair_apply' %>
           <p><%= link_to 'ペアリクエストを送る', '#', class: 'btn btn-primary', :data => {:toggle => "modal", :target => "#modal-apply"} %></p>
         <% elsif @room_status == 'pair_approval' %>
-          <p><%= link_to 'ペアリクエストを承認する', '#', class: 'btn btn-primary' %></p>
+          <p><%= link_to 'ペアリクエストを承認する', '#', class: 'btn btn-primary', :data => {:toggle => "modal", :target => "#modal-approval"} %></p>
         <% elsif @room_status == 'unpair' %>
           <p><%= link_to 'ペア状態を解除する', '#', class: 'btn btn-primary' %></p>
+        <% else %>
+          <p><%= link_to 'メッセージを送る', '#', class: 'btn btn-primary', disabled: true %></p>
         <% end %>
       </div>
       <div class="user_column">
@@ -45,6 +47,28 @@
         </div>
         <div class="modal-footer">
           <%= form_with url: apply_path, method: :post, local: true do |f| %>
+            <%= f.hidden_field :encoded_id, :value => encode((@to_user.id).to_s) %>
+            <button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
+            <%= submit_tag 'ペアリクエストを送る', class: 'btn btn-primary' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- モーダル：ペア承認 -->
+  <div class="modal fade" id="modal-approval" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+          <h4 class="modal-title">ペア承認</h4>
+        </div>
+        <div class="modal-body">
+          <%= @to_user.name %>さんからのペアリクエストを承認しますか？
+        </div>
+        <div class="modal-footer">
+          <%= form_with url: approval_path, method: :post, local: true do |f| %>
             <%= f.hidden_field :encoded_id, :value => encode((@to_user.id).to_s) %>
             <button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
             <%= submit_tag 'ペアリクエストを送る', class: 'btn btn-primary' %>

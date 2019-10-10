@@ -85,14 +85,59 @@ class EventsController < ApplicationController
     room.each {|r| room = r}
     return redirect_to user_page_path(@to_user), flash: {danger: 'ルームが存在しません。'} if room.blank?
 
+    fu_id = room.from_user_id  # ルーム作成者のid
     fu_status = room.from_user_status  # 作成者ステータス
     tu_status = room.to_user_status  # 招待者ステータス
     p_fu_status = room.from_user_pair_status  # 作成者のペアステータス
     p_tu_status = room.to_user_pair_status  # 招待者のペアステータス
+    is_from_user = (@user.id == fu_id) ? true : false
 
     # ステータスに誤りがあればエラー
     if not fu_status == '1' && tu_status == '1' && p_fu_status == '0' && p_tu_status = '0'
       return redirect_to user_page_path(@to_user), flash: {danger: 'ペアリクエストに失敗しました。'}
+    end
+
+    # 画像と年収設定していなかったらエラー
+    if @user.income_kbn.blank? || @user.image.blank?
+      return redirect_to mypage_edit_path, flash: {warning: 'アイコン画像および年収を編集してください。'}
+    end
+
+    if room.update_pair_apply(is_from_user)
+      pair_apply = Event.event_data(room.id, @user.id, '20', @to_user.id)
+      if pair_apply.save
+        return redirect_to user_page_path(@to_user), flash: {success: 'ペアリクエストを送りました。'}
+      else
+        return redirect_to user_page_path(@to_user), flash: {warning: 'roomはok、eventでng'}
+      end
+    else
+      return redirect_to user_page_path(@to_user), flash: {danger: 'ペアリクエストに失敗しました。'}
+    end
+  end
+
+  # ペア承認 処理
+  def approval
+    @user = User.find(user_id)
+    @to_user = User.find(decode(params[:encoded_id]))
+    room = Room.get_room_info(@user.id, @to_user.id)
+    room.each {|r| room = r}
+    return redirect_to user_page_path(@to_user), flash: {danger: 'ルームが存在しません。'} if room.blank?
+
+    fu_id = room.from_user_id  # ルーム作成者のid
+    fu_status = room.from_user_status  # 作成者ステータス
+    tu_status = room.to_user_status  # 招待者ステータス
+    p_fu_status = room.from_user_pair_status  # 作成者のペアステータス
+    p_tu_status = room.to_user_pair_status  # 招待者のペアステータス
+    is_from_user = (@user.id == fu_id) ? true : false
+
+    # ステータスに誤りがあればエラー
+    if is_from_user
+      if not fu_status == '1' && tu_status == '1' && p_fu_status == '0' && p_tu_status = '1'
+        return redirect_to user_page_path(@to_user), flash: {danger: 'ペアリクエストに失敗しました。'}
+      end
+    else
+      if not fu_status == '1' && tu_status == '1' && p_fu_status == '1' && p_tu_status = '0'
+        return redirect_to user_page_path(@to_user), flash: {danger: 'ペアリクエストに失敗しました。'}
+      end
     end
 
     # 画像と年収設定していなかったらエラー

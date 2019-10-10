@@ -63,7 +63,7 @@ class RoomsController < ApplicationController
     end
     
     if room.save
-      entering_room = Event.event_data(room_id, @to_user.id, '11')
+      entering_room = Event.event_data(room.id, @to_user.id, '11')
       if entering_room.save
         flash[:success] = '入室しました。'
         return redirect_to talk_room_path(@from_user)

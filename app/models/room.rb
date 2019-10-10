@@ -122,4 +122,14 @@ class Room < ApplicationRecord
     users = exit_users_id.map {|uid| User.find(uid)}
     return users
   end
+
+  # ペアリクエスト
+  # @param is_from_user: boolean
+  def update_pair_apply(is_from_user)
+    if is_from_user
+      return self.update_attributes(from_user_pair_status: '1', to_user_pair_status: '0') ? true : false
+    else
+      return self.update_attributes(from_user_pair_status: '0', to_user_pair_status: '1') ? true : false
+    end
+  end
 end

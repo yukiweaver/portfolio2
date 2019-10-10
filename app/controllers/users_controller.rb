@@ -52,7 +52,7 @@ class UsersController < ApplicationController
     room = Room.get_room_info(@from_user.id, @to_user.id)
     room.each {|r| room = r}
     is_approval_from_or_to = (@from_user.id == room.from_user_id) ? true : false unless room.blank?
-    @room_status = get_room_status(room)
+    @room_status = get_room_status(room, is_approval_from_or_to)
   end
 
 
@@ -68,7 +68,7 @@ class UsersController < ApplicationController
     )
   end
 
-  def get_room_status(room)
+  def get_room_status(room, is_approval_from_or_to)
     if room.blank? || room.from_user_status == '1' && room.to_user_status == '0' || room.from_user_status == '0' && room.to_user_status == '1' || room.from_user_status == '1' && room.to_user_status == '9' || room.from_user_status == '9' && room.to_user_status == '1'
       @room_status = 'first_msg'
     elsif room.from_user_status == '1' && room.to_user_status == '1' && room.from_user_pair_status == '0' && room.to_user_pair_status == '0'
