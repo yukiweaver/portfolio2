@@ -71,7 +71,7 @@
           <%= form_with url: approval_path, method: :post, local: true do |f| %>
             <%= f.hidden_field :encoded_id, :value => encode((@to_user.id).to_s) %>
             <button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
-            <%= submit_tag 'ペアリクエストを送る', class: 'btn btn-primary' %>
+            <%= submit_tag 'ペア承認する', class: 'btn btn-primary' %>
           <% end %>
         </div>
       </div>

@@ -150,15 +150,18 @@ class EventsController < ApplicationController
       return redirect_to mypage_edit_path, flash: {warning: 'アイコン画像および年収を編集してください。'}
     end
 
-    # 更新処理
-    if room.update_pair_approval()
-      pair_approval = Event.event_data(room.id, @user.id, '21', @to_user.id)
-      if pair_approval.save
-        return redirect_to user_page_path(@to_user), flash: {success: 'ペア承認しました。'}
-      else
-        return redirect_to user_page_path(@to_user), flash: {warning: 'room ok,event ng'}
-      end
-    else
+    # 更新
+    begin
+      ActiveRecord::Base.transaction {
+        room.update_pair_approval()
+        pair_approval = Event.event_data(room.id, @user.id, '21', @to_user.id)
+        pair_approval.save!
+        p 'Success'
+      }
+      return redirect_to user_page_path(@to_user), flash: {success: 'ペア承認しました。'}
+    rescue => exception
+      p 'Failed'
+      p exception
       return redirect_to user_page_path(@to_user), flash: {danger: 'ペア承認に失敗しました。'}
     end
   end
