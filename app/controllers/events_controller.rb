@@ -102,14 +102,19 @@ class EventsController < ApplicationController
       return redirect_to mypage_edit_path, flash: {warning: 'アイコン画像および年収を編集してください。'}
     end
 
-    if room.update_pair_apply(is_from_user)
-      pair_apply = Event.event_data(room.id, @user.id, '20', @to_user.id)
-      if pair_apply.save
-        return redirect_to user_page_path(@to_user), flash: {success: 'ペアリクエストを送りました。'}
-      else
-        return redirect_to user_page_path(@to_user), flash: {warning: 'roomはok、eventでng'}
-      end
-    else
+    # 更新
+    begin
+      ActiveRecord::Base.transaction {
+        room.update_pair_apply(is_from_user)
+        pair_apply = Event.event_data(room.id, @user.id, '20', @to_user.id)
+        pair_apply.save!
+        p 'Success'
+        # raise 'RollBack!!'
+      }
+      return redirect_to user_page_path(@to_user), flash: {success: 'ペアリクエストを送りました。'}
+    rescue => exception
+      p 'Failed'
+      p exception
       return redirect_to user_page_path(@to_user), flash: {danger: 'ペアリクエストに失敗しました。'}
     end
   end

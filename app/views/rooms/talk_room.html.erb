@@ -5,7 +5,7 @@
     <div class="line__container">
       <!-- タイトル -->
       <div class="line__title">
-        <%= @to_user.name %>
+        <%= link_to @to_user.name, user_page_path(@to_user), class: 'talk_room' %>
         <%# <span>&emsp; %>
         &emsp;
         <%= link_to '#', :data => {:toggle => "modal", :target => "##{@to_user.id}"} do %>
