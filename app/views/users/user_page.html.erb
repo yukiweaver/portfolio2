@@ -20,7 +20,7 @@
         <% elsif @room_status == 'pair_approval' %>
           <p><%= link_to 'ペアリクエストを承認する', '#', class: 'btn btn-primary', :data => {:toggle => "modal", :target => "#modal-approval"} %></p>
         <% elsif @room_status == 'unpair' %>
-          <p><%= link_to 'ペア状態を解除する', '#', class: 'btn btn-primary' %></p>
+          <p><%= link_to 'ペア状態を解除する', '#', class: 'btn btn-default' %></p>
         <% else %>
           <p><%= link_to 'メッセージを送る', '#', class: 'btn btn-primary', disabled: true %></p>
         <% end %>

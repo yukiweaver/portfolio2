@@ -132,4 +132,9 @@ class Room < ApplicationRecord
       return self.update_attributes(from_user_pair_status: '0', to_user_pair_status: '1') ? true : false
     end
   end
+
+  # ペア承認
+  def update_pair_approval
+    return self.update_attributes(from_user_pair_status: '2', to_user_pair_status: '2') ? true : false
+  end
 end

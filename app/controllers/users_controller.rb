@@ -82,5 +82,6 @@ class UsersController < ApplicationController
     elsif room.from_user_status == '1' && room.to_user_status == '1' && room.from_user_pair_status == '2' && room.to_user_pair_status == '2'
       @room_status = 'unpair'
     end
+    return @room_status
   end
 end

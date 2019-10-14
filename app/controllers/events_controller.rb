@@ -132,17 +132,29 @@ class EventsController < ApplicationController
     # ステータスに誤りがあればエラー
     if is_from_user
       if not fu_status == '1' && tu_status == '1' && p_fu_status == '0' && p_tu_status = '1'
-        return redirect_to user_page_path(@to_user), flash: {danger: 'ペアリクエストに失敗しました。'}
+        return redirect_to user_page_path(@to_user), flash: {danger: 'ペア承認に失敗しました。'}
       end
     else
       if not fu_status == '1' && tu_status == '1' && p_fu_status == '1' && p_tu_status = '0'
-        return redirect_to user_page_path(@to_user), flash: {danger: 'ペアリクエストに失敗しました。'}
+        return redirect_to user_page_path(@to_user), flash: {danger: 'ペア承認に失敗しました。'}
       end
     end
 
     # 画像と年収設定していなかったらエラー
     if @user.income_kbn.blank? || @user.image.blank?
       return redirect_to mypage_edit_path, flash: {warning: 'アイコン画像および年収を編集してください。'}
+    end
+
+    # 更新処理
+    if room.update_pair_approval()
+      pair_approval = Event.event_data(room.id, @user.id, '21', @to_user.id)
+      if pair_approval.save
+        return redirect_to user_page_path(@to_user), flash: {success: 'ペア承認しました。'}
+      else
+        return redirect_to user_page_path(@to_user), flash: {warning: 'room ok,event ng'}
+      end
+    else
+      return redirect_to user_page_path(@to_user), flash: {danger: 'ペア承認に失敗しました。'}
     end
   end
 
