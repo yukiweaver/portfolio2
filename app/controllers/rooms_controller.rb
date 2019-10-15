@@ -8,7 +8,6 @@ class RoomsController < ApplicationController
     @event = Event.new
     room_id = Room.get_room_id(@from_user.id, @to_user.id, '9', '9')
     @events = Event.get_talk_content(room_id, @from_user.id, @to_user.id, '12')
-    # binding.pry
   end
 
   # ルーム一覧
@@ -61,19 +60,20 @@ class RoomsController < ApplicationController
       room.to_user_status = '1' if room.to_user_id == @to_user.id
       room.from_user_status = '1' if room.from_user_id == @to_user.id
     end
-    
-    if room.save
-      entering_room = Event.event_data(room.id, @to_user.id, '11')
-      if entering_room.save
-        flash[:success] = '入室しました。'
-        return redirect_to talk_room_path(@from_user)
-      else
-        flash[:danger] = 'room保存成功、event保存失敗'
-        return redirect_to room_index_path
-      end
-    else
-      flash[:danger] = '入室に失敗しました。'
-      return redirect_to room_index_path
+
+    begin
+      ActiveRecord::Base.transaction {
+        room.save!
+        entering_room = Event.event_data(room.id, @to_user.id, '11')
+        entering_room.save!
+        p 'Success!'
+      }
+      # トランザクション成功
+      return redirect_to talk_room_path(@from_user), flash: {success: '入室しました。'}
+    rescue => exception
+      p 'Failed'
+      p exception
+      return redirect_to room_index_path, flash: {danger: '入室に失敗しました。'}
     end
   end
 
@@ -105,52 +105,52 @@ class RoomsController < ApplicationController
     
     # 一方が1、一方が0のパターン（ペアは両方必ず0しかあり得ない）完全退出
     if fu_status == '0' || tu_status == '0'
-      if room.update_exit_1()
-        exit_event = Event.event_data(room_id, @user.id, '19')
-        if exit_event.save
-          flash[:info] = '退出しました。'
-          return redirect_to room_index_path
-        else
-          flash[:warning] = 'roomはok、eventでng'
-          return redirect_to room_index_path
-        end
-      else
-        flash[:danger] = '退出に失敗しました。'
-        return redirect_to room_index_path
+      begin
+        ActiveRecord::Base.transaction {
+          room.update_exit_1()
+          exit_event = Event.event_data(room_id, @user.id, '19')
+          exit_event.save!
+          p 'Success!'
+        }
+        return redirect_to room_index_path, flash: {info: '退出しました。'}
+      rescue => exception
+        p 'Failed'
+        p exception
+        return redirect_to room_index_path, flash: {danger: '退出に失敗しました。'}
       end
     end
 
     # ユーザー間　１、１の場合（ペアはいかなる場合でも0,0に更新）
     if fu_status == '1' && tu_status == '1'
-      if room.update_exit_2(is_from_user)
-        exit_event = Event.event_data(room_id, @user.id, '19')
-        if exit_event.save
-          flash[:info] = '退出しました。'
-          return redirect_to room_index_path
-        else
-          flash[:warning] = 'roomはok、eventでng'
-          return redirect_to room_index_path
-        end
-      else
-        flash[:danger] = '退出に失敗しました。'
-        return redirect_to room_index_path
+      begin
+        ActiveRecord::Base.transaction {
+          room.update_exit_2(is_from_user)
+          exit_event = Event.event_data(room_id, @user.id, '19')
+          exit_event.save!
+          p 'Success!'
+        }
+        return redirect_to room_index_path, flash: {info: '退出しました。'}
+      rescue => exception
+        p 'Failed'
+        p exception
+        return redirect_to room_index_path, flash: {danger: '退出に失敗しました。'}
       end
     end
 
     # ユーザー間　1,9の場合 完全退出
     if (fu_status == '1' && tu_status == '9') || (fu_status == '9' && tu_status == '1')
-      if room.update_exit_1()
-        exit_event = Event.event_data(room_id, @user.id, '19')
-        if exit_event.save
-          flash[:info] = '退出しました。'
-          return redirect_to room_index_path
-        else
-          flash[:warning] = 'roomはok、eventでng'
-          return redirect_to room_index_path
-        end
-      else
-        flash[:danger] = '退出に失敗しました。'
-        return redirect_to room_index_path
+      begin
+        ActiveRecord::Base.transaction {
+          room.update_exit_1()
+          exit_event = Event.event_data(room_id, @user.id, '19')
+          exit_event.save!
+          p 'Success!'
+        }
+        return redirect_to room_index_path, flash: {info: '退出しました。'}
+      rescue => exception
+        p 'Failed'
+        p exception
+        return redirect_to room_index_path, flash: {danger: '退出に失敗しました。'}
       end
     end
   end

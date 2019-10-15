@@ -49,6 +49,7 @@ class EventsController < ApplicationController
         if !result.failed_instances.blank?
           raise 'RollBack!!'
         end
+        p 'Success'
       }
       return redirect_to talk_room_path(@to_user), flash: {success: 'メッセージを送信しました。'}
     rescue => exception

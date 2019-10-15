@@ -63,48 +63,37 @@ class Room < ApplicationRecord
   end
 
   # 退出処理更新（from_user_status、to_user_statusどちらか一方が「１」、一方が「0」の場合）
+  # 修正必要あり 1,9or9,1があり得る
   def update_exit_1
-    if self.update_attributes(
-        from_user_status: '9',
-        to_user_status: '9',
-        exit_date: Time.now,
-        close_date: Time.now,
-        from_user_pair_status: '0',
-        to_user_pair_status: '0'
-      )
-      return true
-    else
-      return false
-    end
+    self.update_attributes!(
+      from_user_status: '9',
+      to_user_status: '9',
+      exit_date: Time.now,
+      close_date: Time.now,
+      from_user_pair_status: '0',
+      to_user_pair_status: '0'
+    )
   end
 
   # 退出処理更新（from_user_status、to_user_statusともに「１」の場合）
   # @param is_from_user: boolean
   def update_exit_2(is_from_user)
     if is_from_user
-      if self.update_attributes(
+      self.update_attributes!(
         from_user_status: '9',
         to_user_status: '1',
         exit_date: Time.now,
         from_user_pair_status: '0',
         to_user_pair_status: '0'
-        )
-        return true
-      else
-        return false
-      end
+      )
     else
-      if self.update_attributes(
+      self.update_attributes!(
         from_user_status: '1',
         to_user_status: '9',
         exit_date: Time.now,
         from_user_pair_status: '0',
         to_user_pair_status: '0'
-        )
-        return true
-      else
-        return false
-      end
+      )
     end
   end
 
@@ -135,6 +124,6 @@ class Room < ApplicationRecord
 
   # ペア承認
   def update_pair_approval
-    return self.update_attributes!(from_user_pair_status: '2', to_user_pair_status: '2') ? true : false
+    return self.update_attributes!(from_user_pair_status: '2', to_user_pair_status: '2')
   end
 end
