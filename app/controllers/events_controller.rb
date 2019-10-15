@@ -33,18 +33,27 @@ class EventsController < ApplicationController
       flash[:danger] = 'メッセージが長いです。'
       return redirect_to first_msg_path(@to_user)
     end
-    if room.save
-      events = []
-      create_room = Event.event_data(room.id, @from_user.id, '10', @to_user.id)
-      entering_room = Event.event_data(room.id, @from_user.id, '11')
-      send_message = Event.event_data(room.id, @from_user.id, '12', @to_user.id, data)
-      events.push(create_room, entering_room, send_message)
-      # BULK INSERT
-      if Event.import events
-        flash[:success] = 'event保存OK'
-        return redirect_to talk_room_path(@to_user)
-      end
-    else
+
+    begin
+      ActiveRecord::Base.transaction {
+        room.save!
+        events = []
+        create_room = Event.event_data(room.id, @from_user.id, '10', @to_user.id)
+        entering_room = Event.event_data(room.id, @from_user.id, '11')
+        send_message = Event.event_data(room.id, @from_user.id, '12', @to_user.id, data)
+        events.push(create_room, entering_room, send_message)
+
+        # BULK INSERT
+        result = Event.import events
+        # failed_instances : validationに失敗したり、commit失敗でインスタンスを配列にして返す
+        if !result.failed_instances.blank?
+          raise 'RollBack!!'
+        end
+      }
+      return redirect_to talk_room_path(@to_user), flash: {success: 'メッセージを送信しました。'}
+    rescue => exception
+      p 'Failed'
+      p exception
       return render template: "events/first_msg"
     end
   end
