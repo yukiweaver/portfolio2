@@ -4,7 +4,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-xs-2">
-						<div id="fh5co-logo"><a href="index.html">Air<span>.</span></a></div>
+						<div id="fh5co-logo"><a href="index.html">A<span></span>i<span></span>r<span>.</span></a></div>
 					</div>
 					<div class="col-xs-10 text-right menu-1">
 						<ul>
@@ -18,7 +18,9 @@
 							<li class="has-dropdown">
 								<%= link_to 'トークルーム一覧', room_index_path %>
 							</li>
-							<li><a href="about.html">About</a></li>
+							<li>
+                <%= link_to 'ペア情報', pair_info_path %>
+              </li>
 							<li><a href="contact.html">Contact</a></li>
               <% if current_user %>
               <li class="btn-cta">

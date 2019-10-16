@@ -1,0 +1,93 @@
+<% provide(:title, 'ペア情報') %>
+<div class="row">
+  <h2>ペア情報</h2>
+  <div class="col-md-10 col-md-offset-1 mypage-edit">
+    <div class="wrapper">
+      <div class="column talk">
+        <div class="info">
+          <h2>ペア状況</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>相手からのペアリクエスト</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <br>
+          <table>
+            <thead>
+              <tr>
+                <th>あなたからのペアリクエスト</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="column exit">
+        <div class="info">
+          <h2>ペア</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>ペア中のユーザー</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td">
+                </td>
+              <tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- モーダル・相手からのメッセージ -->
+  <% if !@users.blank? %>
+    <% @users.each do |user| %>
+      <div class="modal fade" id="<%= user.id %>" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+              <h4 class="modal-title"><%= user.name %>さんからメッセージが届いています</h4>
+            </div>
+            <div class="modal-body">
+              <!-- Todo:ペア状態でのみ画像表示（条件入れずに初期画像固定でもあり） -->
+              <% if user.image? %>
+                <%= image_tag(user.image.url, size: "50x50") %>
+              <% else %>
+                <%= image_tag("/images/icon1.jpg", size: "50x50") %>
+              <% end %>
+              &emsp;<%= user.name %><br>
+              &emsp;&emsp;&emsp;&emsp;<%= latest_message(user.id, room_id(user.id, @user.id))[0][:data] unless latest_message(user.id, room_id(user.id, @user.id)).blank? %>
+            </div>
+            <div class="modal-footer">
+              <%= form_with url: '#', method: :post, local: true do |f| %>
+                <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                <%= f.hidden_field :encoded_id, :value => encode((user.id).to_s) %>
+                <%= f.hidden_field :status, :value => 'first_msg' %>
+                <%= submit_tag "拒否する", class: "btn btn-default", formaction: exit_path %>
+                <%= submit_tag "入室する", class: "btn btn-primary", formaction: entrance_path %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>

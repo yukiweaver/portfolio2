@@ -29,6 +29,11 @@ class RoomsController < ApplicationController
     @exit_users = Room.get_exit_users(@user.id)
   end
 
+  # ペア情報
+  def pair_info
+    @user = User.find(user_id)
+  end
+
   # トークルームから入室処理
   def entrance
     return redirect_to room_index_path, flash: {warning: '不正なリクエストです。'} if params[:status].blank?

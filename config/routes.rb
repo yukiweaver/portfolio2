@@ -20,5 +20,6 @@ Rails.application.routes.draw do
   post   '/room/exit',  to:  'rooms#exit',  as:  'exit'
   post   '/event/apply',  to:  'events#apply',  as:  'apply'
   post   '/event/approval',  to:  'events#approval',  as:  'approval'
+  get    '/room/pair_info',  to:  'rooms#pair_info',  as:  'pair_info'
   resources :users
 end
