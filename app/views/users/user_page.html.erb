@@ -4,8 +4,7 @@
   <div class="col-md-6 col-md-offset-3 mypage">
     <div class="register-box">
       <div class="login-logo">
-        <!-- Todo：ペア成立しているときのみ、画像表示条件追加予定 -->
-        <% if @to_user.image? %>
+        <% if pair_flg(@from_user.id, @to_user.id) %>
           <%= image_tag(@to_user.image.url) %>
         <% else %>
           <%= image_tag("/images/icon1.jpg", size: "150x150") %>

@@ -21,7 +21,7 @@
             <!-- 相手の吹き出し -->
             <div class="line__left">
               <figure>
-                <% if @to_user.image? %>
+                <% if pair_flg(@from_user.id, @to_user.id) %>
                   <%= image_tag(@to_user.image.url, size: "70x70") %>
                 <% else %>
                   <%= image_tag("/images/icon1.jpg", size: "70x70") %>

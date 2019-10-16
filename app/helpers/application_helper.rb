@@ -128,6 +128,27 @@ module ApplicationHelper
     return room_id = room[0][:id]
   end
 
+  # ペア状態か判定
+  # @param from_user_id ログインユーザーのid
+  # @param to_user_id 相手ユーザーのid
+  def pair_flg(from_user_id, to_user_id)
+    room = Room.where(from_user_id: [from_user_id, to_user_id])
+               .where(to_user_id: [from_user_id, to_user_id])
+               .where.not('from_user_status = ? and to_user_status = ?', '9', '9')
+    if room.blank?
+      return false
+    end
+    room.each {|r| room = r}
+    fu_status = room.from_user_status
+    tu_status = room.to_user_status
+    p_fu_status = room.from_user_pair_status
+    p_tu_status = room.to_user_pair_status
+    if not fu_status == '1' && tu_status == '1' && p_fu_status == '2' && p_tu_status == '2'
+      return false
+    end
+    return true
+  end
+
   # 文字列をBase64エンコードする
   def encode(str)
     Base64.encode64(str)

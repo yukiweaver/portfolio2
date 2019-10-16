@@ -17,8 +17,7 @@
                 <% @users.each do |user| %>
                 <tr>
                   <td class="td">
-                    <!-- Todo:ペア状態でのみ画像表示（条件入れずに初期画像固定でもあり） -->
-                    <% if user.image? %>
+                    <% if pair_flg(@user.id, user.id) %>
                       <%= image_tag(user.image.url, size: "50x50") %>
                     <% else %>
                       <%= image_tag("/images/icon1.jpg", size: "50x50") %>
@@ -43,8 +42,7 @@
               <% @talk_users.each do |t_user| %>
                 <tr>
                   <td class="td">
-                    <!-- Todo:ペア状態でのみ画像表示（条件入れずに初期画像固定でもあり） -->
-                    <% if t_user.image? %>
+                    <% if pair_flg(@user.id, t_user.id) %>
                       <%= image_tag(t_user.image.url, size: "50x50") %>
                     <% else %>
                       <%= image_tag("/images/icon1.jpg", size: "50x50") %>
@@ -71,8 +69,7 @@
               <% @exit_users.each do |e_user| %>
               <tr>
                 <td class="td">
-                  <!-- Todo:ペア状態でのみ画像表示（条件入れずに初期画像固定でもあり） -->
-                  <% if e_user.image? %>
+                  <% if pair_flg(@user.id, e_user.id) %>
                     <%= image_tag(e_user.image.url, size: "50x50") %>
                   <% else %>
                     <%= image_tag("/images/icon1.jpg", size: "50x50") %>
