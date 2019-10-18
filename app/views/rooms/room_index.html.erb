@@ -97,7 +97,7 @@
             </div>
             <div class="modal-body">
               <!-- Todo:ペア状態でのみ画像表示（条件入れずに初期画像固定でもあり） -->
-              <% if user.image? %>
+              <% if pair_flg(@user.id, user.id) %>
                 <%= image_tag(user.image.url, size: "50x50") %>
               <% else %>
                 <%= image_tag("/images/icon1.jpg", size: "50x50") %>

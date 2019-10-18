@@ -32,6 +32,9 @@ class RoomsController < ApplicationController
   # ペア情報
   def pair_info
     @user = User.find(user_id)
+
+    # 自分がペアリクエストを申請しているユーザーを取得
+    @apply_users = Room.get_apply_users(@user.id)
   end
 
   # トークルームから入室処理

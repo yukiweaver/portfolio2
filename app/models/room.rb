@@ -126,4 +126,32 @@ class Room < ApplicationRecord
   def update_pair_approval
     return self.update_attributes!(from_user_pair_status: '2', to_user_pair_status: '2')
   end
+
+  # ログインユーザーがペアリクエストしているルームを取得
+  # @param user_id ログインユーザーのid
+  def self.get_apply_rooms(user_id)
+    rooms = Room.where(from_user_id: user_id, from_user_pair_status: '1', to_user_pair_status: '0')
+            .or(Room.where(to_user_id: user_id, from_user_pair_status: '0', to_user_pair_status: '1'))
+            .order(updated_at: 'DESC')
+    if rooms.blank?
+      return []
+    end
+    return rooms
+  end
+
+  # ログインしているユーザーがペアリクエストしているユーザーを配列で取得
+  # @param user_id ログインユーザーのid
+  def self.get_apply_users(user_id)
+    rooms = Room.get_apply_rooms(user_id)
+    if rooms.blank?
+      return []
+    end
+    users_id = []
+    rooms.each do |r|
+      users_id << r.from_user_id if user_id == r.to_user_id
+      users_id << r.to_user_id if user_id == r.from_user_id
+    end
+    users = users_id.map {|user_id| User.find(user_id)}
+    return users
+  end
 end
