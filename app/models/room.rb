@@ -154,4 +154,30 @@ class Room < ApplicationRecord
     users = users_id.map {|user_id| User.find(user_id)}
     return users
   end
+
+  # ログインしているユーザーにペアリクエストがきているルームを取得
+  def self.get_approval_rooms(user_id)
+    rooms = Room.where(from_user_id: user_id, from_user_pair_status: '0', to_user_pair_status: '1')
+            .or(Room.where(to_user_id: user_id, from_user_pair_status: '1', to_user_pair_status: '0'))
+            .order(updated_at: 'DESC')
+    if rooms.blank?
+      return []
+    end
+    return rooms
+  end
+
+  # ログインしているユーザーにペアリクエストを申請しているユーザーを配列で取得
+  def self.get_approval_users(user_id)
+    rooms = Room.get_approval_rooms(user_id)
+    if rooms.blank?
+      return []
+    end
+    users_id = []
+    rooms.each do |r|
+      users_id << r.from_user_id if user_id == r.to_user_id
+      users_id << r.to_user_id if user_id == r.from_user_id
+    end
+    users = users_id.map {|user_id| User.find(user_id)}
+    return users
+  end
 end

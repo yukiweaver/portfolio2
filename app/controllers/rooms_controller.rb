@@ -35,6 +35,9 @@ class RoomsController < ApplicationController
 
     # 自分がペアリクエストを申請しているユーザーを取得
     @apply_users = Room.get_apply_users(@user.id)
+
+    # 自分にペアリクエストを申請しているユーザーを取得
+    @approval_users = Room.get_approval_users(@user.id)
   end
 
   # トークルームから入室処理

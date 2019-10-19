@@ -13,10 +13,18 @@
               </tr>
             </thead>
             <tbody>
+              <% @approval_users.each do |approval_user| %>
               <tr>
                 <td class="td">
+                  <% if pair_flg(@user.id, approval_user.id) %>
+                    <%= image_tag(approval_user.image.url, size: "50x50") %>
+                  <% else %>
+                    <%= image_tag("/images/icon1.jpg", size: "50x50") %>
+                  <% end %>
+                  &emsp;<%= link_to approval_user.name, user_page_path(approval_user), class: 'user_name' %>
                 </td>
               </tr>
+              <% end %>
             </tbody>
           </table>
 
