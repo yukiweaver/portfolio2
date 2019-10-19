@@ -127,6 +127,11 @@ class Room < ApplicationRecord
     return self.update_attributes!(from_user_pair_status: '2', to_user_pair_status: '2')
   end
 
+  # ペア解除
+  def update_unpair
+    return self.update_attributes!(from_user_pair_status: '0', to_user_pair_status: '0')
+  end
+
   # ログインユーザーがペアリクエストしているルームを取得
   # @param user_id ログインユーザーのid
   def self.get_apply_rooms(user_id)

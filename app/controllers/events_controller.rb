@@ -182,7 +182,35 @@ class EventsController < ApplicationController
     @to_user = User.find(decode(params[:encoded_id]))
     room = Room.get_room_info(@user.id, @to_user.id)
     return redirect_to user_page_path(@to_user), flash: {danger: 'ルームが存在しません。'} if room.blank?
+
     room.each {|r| room = r}
+    fu_id = room.from_user_id  # ルーム作成者のid
+    fu_status = room.from_user_status  # 作成者ステータス
+    tu_status = room.to_user_status  # 招待者ステータス
+    p_fu_status = room.from_user_pair_status  # 作成者のペアステータス
+    p_tu_status = room.to_user_pair_status  # 招待者のペアステータス
+    is_from_user = (@user.id == fu_id) ? true : false
+
+    # ステータスが誤っていればエラー
+    if not fu_status == '1' && tu_status == '1' && p_fu_status == '2' && p_tu_status == '2'
+      return redirect_to user_page_path(@to_user), flash: {danger: 'ペア解除に失敗しました。'}
+    end
+
+    # 更新
+    begin
+      ActiveRecord::Base.transaction {
+        room.update_unpair()
+        unpair = Event.event_data(room.id, @user.id, '29', @to_user.id)
+        unpair.save!
+        p 'Success'
+      }
+      return redirect_to user_page_path(@to_user), flash: {success: 'ペア解除しました。'}
+    rescue => exception
+      p 'Failed'
+      p exception
+      return redirect_to user_page_path(@to_user), flash: {danger: 'ペア解除に失敗しました。'}
+    end
+
   end
 
 
