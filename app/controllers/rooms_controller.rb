@@ -38,6 +38,9 @@ class RoomsController < ApplicationController
 
     # 自分にペアリクエストを申請しているユーザーを取得
     @approval_users = Room.get_approval_users(@user.id)
+
+    # 自分とペアのユーザーを取得
+    @pair_users = Room.get_pair_users(@user.id)
   end
 
   # トークルームから入室処理

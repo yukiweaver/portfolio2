@@ -62,10 +62,18 @@
               </tr>
             </thead>
             <tbody>
+              <% @pair_users.each do |p_user| %>
               <tr>
                 <td class="td">
+                <% if pair_flg(@user.id, p_user.id) %>
+                  <%= image_tag(p_user.image.url, size: "50x50") %>
+                <% else %>
+                  <%= image_tag("/images/icon1.jpg", size: "50x50") %>
+                <% end %>
+                &emsp;<%= link_to p_user.name, user_page_path(p_user), class: 'user_name' %>
                 </td>
               <tr>
+              <% end %>
             </tbody>
           </table>
         </div>

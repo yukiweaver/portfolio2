@@ -176,6 +176,15 @@ class EventsController < ApplicationController
     end
   end
 
+  # ペア解消
+  def unpair
+    @user = User.find(user_id)
+    @to_user = User.find(decode(params[:encoded_id]))
+    room = Room.get_room_info(@user.id, @to_user.id)
+    return redirect_to user_page_path(@to_user), flash: {danger: 'ルームが存在しません。'} if room.blank?
+    room.each {|r| room = r}
+  end
+
 
 
   private
