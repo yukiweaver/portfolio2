@@ -63,16 +63,26 @@ class Room < ApplicationRecord
   end
 
   # 退出処理更新（from_user_status、to_user_statusどちらか一方が「１」、一方が「0」の場合）
-  # 修正必要あり 1,9or9,1があり得る
-  def update_exit_1
-    self.update_attributes!(
-      from_user_status: '9',
-      to_user_status: '9',
-      exit_date: Time.now,
-      close_date: Time.now,
-      from_user_pair_status: '0',
-      to_user_pair_status: '0'
-    )
+  # @param is_from_user: boolean
+  def update_exit_1(is_from_user)
+    if is_from_user
+      self.update_attributes!(
+        from_user_status: '9',
+        to_user_status: '9',
+        exit_date: Time.now,
+        close_date: Time.now,
+        from_user_pair_status: '0',
+        to_user_pair_status: '0'
+      )
+    else
+      self.update_attributes!(
+        from_user_status: '1',
+        to_user_status: '9',
+        exit_date: Time.now,
+        from_user_pair_status: '0',
+        to_user_pair_status: '0'
+      )
+    end
   end
 
   # 退出処理更新（from_user_status、to_user_statusともに「１」の場合）
@@ -95,6 +105,18 @@ class Room < ApplicationRecord
         to_user_pair_status: '0'
       )
     end
+  end
+
+  # 退出処理更新（from_user_status、to_user_statusどちらか一方が「9」のとき）
+  def update_exit_3
+    self.update_attributes!(
+      from_user_status: '9',
+      to_user_status: '9',
+      exit_date: Time.now,
+      close_date: Time.now,
+      from_user_pair_status: '0',
+      to_user_pair_status: '0'
+    )
   end
 
   # 退出中のユーザーを取得（単数あり）

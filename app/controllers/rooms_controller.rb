@@ -114,14 +114,13 @@ class RoomsController < ApplicationController
     tu_id = room.to_user_id
     room_id = room.id
     is_from_user = (@user.id == fu_id) ? true : false
-
-    # Todo:退出処理　ペアを考慮していない。Eventの動きが変わってくる。
+    pair_status = is_pair_status(fup_status, tup_status)
     
-    # 一方が1、一方が0のパターン（ペアは両方必ず0しかあり得ない）完全退出
+    # 一方が1、一方が0のパターン（ペアは両方必ず0しかあり得ない）
     if fu_status == '0' || tu_status == '0'
       begin
         ActiveRecord::Base.transaction {
-          room.update_exit_1()
+          room.update_exit_1(is_from_user)
           exit_event = Event.event_data(room_id, @user.id, '19')
           exit_event.save!
           p 'Success!'
@@ -139,8 +138,18 @@ class RoomsController < ApplicationController
       begin
         ActiveRecord::Base.transaction {
           room.update_exit_2(is_from_user)
+          events = []
+          cancel_event = Event.event_data(room_id, @user.id, '28') if pair_status == '1'
+          unpair_event = Event.event_data(room_id, @user.id, '29', @to_user.id) if pair_status == '2'
           exit_event = Event.event_data(room_id, @user.id, '19')
-          exit_event.save!
+          events.push(cancel_event, unpair_event, exit_event)
+          events = events.compact # 配列にnilがあった場合に取り除く
+          # BULK INSERT
+          result = Event.import events
+          # failed_instances : validationに失敗したり、commit失敗でインスタンスを配列にして返す
+          if !result.failed_instances.blank?
+            raise 'RollBack!!'
+          end
           p 'Success!'
         }
         return redirect_to room_index_path, flash: {info: '退出しました。'}
@@ -155,7 +164,7 @@ class RoomsController < ApplicationController
     if (fu_status == '1' && tu_status == '9') || (fu_status == '9' && tu_status == '1')
       begin
         ActiveRecord::Base.transaction {
-          room.update_exit_1()
+          room.update_exit_3()
           exit_event = Event.event_data(room_id, @user.id, '19')
           exit_event.save!
           p 'Success!'
@@ -181,5 +190,17 @@ class RoomsController < ApplicationController
     params.require(:event).permit(
       :event_kbn, :data
     )
+  end
+
+  # ルームのペア状況を取得
+  def is_pair_status(from_user_pair_status, to_user_pair_status)
+    if from_user_pair_status == '2' && to_user_pair_status == '2'
+      is_pair_status = '2'
+    elsif from_user_pair_status == '1' && to_user_pair_status == '0' || from_user_pair_status == '0' && to_user_pair_status == '1'
+      is_pair_status = '1'
+    elsif from_user_pair_status == '0' && to_user_pair_status == '0'
+      is_pair_status = '0'
+    end
+    return is_pair_status
   end
 end
