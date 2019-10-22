@@ -1,5 +1,5 @@
 class CreateNotification
-  include HTTParty
+  # include HTTParty
 
   API_URI = 'https://onesignal.com/api/v1/notifications'.freeze
 
