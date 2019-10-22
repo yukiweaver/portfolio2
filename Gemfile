@@ -14,6 +14,7 @@ gem 'carrierwave'
 gem 'rmagick'
 gem 'data-confirm-modal'
 gem 'activerecord-import'  # BULK INSERTを可能に
+gem 'httparty'  # 通知
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
 # Use Puma as the app server
