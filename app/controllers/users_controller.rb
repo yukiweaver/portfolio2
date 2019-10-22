@@ -6,6 +6,10 @@ class UsersController < ApplicationController
     if @user.save
       session[:login] = {'user_id' => @user.id, 'sex_kbn' => @user.sex_kbn}
       flash[:success] = '新規登録しました。'
+      CreateNotification.call(
+        contents: { 'en' => 'User created!', 'ja' => 'ユーザー登録を行いました！' },
+        type: 'users#create'
+      )
       redirect_to search_path
     else
       flash[:danger] = "登録に失敗しました。"
