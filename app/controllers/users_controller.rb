@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  require 'create_notification'
   before_action :logged_out_user, only:[:search, :mypage, :edit, :update]
   # 新規登録処理
   def create

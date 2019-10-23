@@ -22,7 +22,7 @@ class CreateNotification
 
   def headers
     {
-      'Authorization' => 'MDYxZGFiZDEtZDUxMi00MGQ5LTljY2MtYzcxY2FhMzgyNzFh', # rest_api_key
+      'Authorization' => 'Basic MDYxZGFiZDEtZDUxMi00MGQ5LTljY2MtYzcxY2FhMzgyNzFh', # rest_api_key
       'Content-Type'  => 'application/json'
     }
   end
@@ -30,7 +30,8 @@ class CreateNotification
   def body
     {
       'app_id' => '97cc47fd-6eb0-4d36-ab4e-10948fa02037', # app_id
-      'url'    => 'https://rails-portfolio2.herokuapp.com',
+      # 'url'    => 'https://rails-portfolio2.herokuapp.com',
+      'url'    => 'http://localhost:3000',
       'data'   => { 'type': type },
       'included_segments' => ['All'],
       'contents' => contents
