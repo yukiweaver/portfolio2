@@ -46,12 +46,22 @@ $myTextColor:  #8de055; // 吹き出しの色
 
     /* 相手の会話 */
     .line__left {
-      width: 100%;
+      // width: 100%;
+      // position: relative;
+      // display: block;
+      // margin-bottom: 5px;
+      // max-width: 80%;
+      // clear: both;
+
       position: relative;
       display: block;
-      margin-bottom: 5px;
-      max-width: 80%;
+      margin: -20px 0;
+      max-width: 75%;
+      float: left;
+      margin-right: 15px;
       clear: both;
+      word-break: break-all;
+      white-space: pre-line;
 
       /* アイコン画像 */
       figure {
@@ -75,6 +85,7 @@ $myTextColor:  #8de055; // 吹き出しの色
         .name {
           font-size: 80%;
           color: #ffffff;
+          margin-top: -55px;
         }
       }
       /* コメントエリア */
@@ -84,6 +95,7 @@ $myTextColor:  #8de055; // 吹き出しの色
         padding: 10px;
         border-radius: 20px;
         background-color: #ffffff;
+        margin-top: -20px;
         /* 吹き出し */
         &::after {
           content: '';
@@ -104,11 +116,13 @@ $myTextColor:  #8de055; // 吹き出しの色
       .line__right {
         position: relative;
         display: block;
-        margin: 5px 0;
+        margin: -20px 0;
         max-width: 75%;
         float: right;
         margin-right: 15px;
         clear: both;
+        word-break: break-all;
+        white-space: pre-line;
         /* コメントエリア */
         .text {
           padding: 10px;
@@ -124,7 +138,7 @@ $myTextColor:  #8de055; // 吹き出しの色
             width: 0;
             height: 0;
             right: -10px;
-            top: 10px;
+            top: 35px;
             border-left: 20px solid $myTextColor;
             border-top: 10px solid transparent;
             border-bottom: 10px solid transparent;
@@ -144,7 +158,7 @@ $myTextColor:  #8de055; // 吹き出しの色
           width: 100px;
           text-align: right;
           left: -30px;
-          bottom: 0px;
+          bottom: 40px;
           font-size: 80%;
           color: #ffffff;
         }

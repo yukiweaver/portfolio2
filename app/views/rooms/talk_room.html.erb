@@ -1,7 +1,7 @@
 <% provide(:title, 'トークルーム') %>
 <div class="row">
   <div class="col-md-10 col-md-offset-1">
-    <!-- ▼LINE風ここから -->
+    <!-- ここから -->
     <div class="line__container">
       <!-- タイトル -->
       <div class="line__title">
@@ -45,12 +45,12 @@
       <div style="text-align: center;">
         <%= form_with model: @event, url: send_message_path(@to_user), method: :post, local: true do |f| %>
           <%= render 'shared/error_messages', object: f.object %>
-          <%= f.text_area :data, size: '1x1', class: 'form-control' %>
+          <%= f.text_area :data, size: '1x1', class: 'form-control', wrap: 'hard' %>
           <%= f.submit '送信', class: 'btn btn-primary' %>
         <% end %>
       </div>
     </div>
-    <!--　▲LINE風ここまで -->
+    <!-- ここまで -->
   </div>
 
   <!-- モーダル・退出 -->
