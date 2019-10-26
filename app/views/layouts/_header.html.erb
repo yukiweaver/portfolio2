@@ -10,31 +10,61 @@
 						<ul>
 							<%# <li class="active"><a href="index.html">Home</a></li> %>
               <% if current_user %>
-              <li class="active"><%= link_to 'ホーム', search_path %></li>
-              <li><%= link_to 'マイページ', mypage_path %></li>
+                <li class="header-menu active" id="home"><%= link_to 'ホーム', search_path %></li>
+                <li class="header-menu" id="mypage"><%= link_to 'マイページ', mypage_path %></li>
               <% else %>
-              <li class="active"><%= link_to 'ホーム', root_path %></li>
+                <li class="header-menu active" id="home"><%= link_to 'ホーム', root_path %></li>
               <% end %>
-							<li class="has-dropdown">
-								<%= link_to 'トークルーム一覧', room_index_path %>
-							</li>
-							<li>
-                <%= link_to 'ペア情報', pair_info_path %>
-              </li>
-							<li><a href="contact.html">Contact</a></li>
+              <% if login_flg() %>
+                <li class="header-menu" id="index">
+                  <%= link_to 'トークルーム一覧', room_index_path %>
+                </li>
+                <li class="header-menu" id="pair">
+                  <%= link_to 'ペア情報', pair_info_path %>
+                </li>
+              <% end %>
               <% if current_user %>
-              <li class="btn-cta">
-                <%= link_to logout_path, method: :delete do %>
-                  <span>ログアウト</span>
-                <% end %>
-              </li>
+                <li class="btn-cta">
+                  <%= link_to logout_path, method: :delete do %>
+                    <span>ログアウト</span>
+                  <% end %>
+                </li>
               <% else %>
-              <button class="btn btn-primary btn-demo" data-toggle="modal" data-target="#sampleModal"></i> ログイン</button>
+                <button class="btn btn-primary btn-demo" data-toggle="modal" data-target="#sampleModal"></i> ログイン</button>
               <% end %>
 						</ul>
 					</div>
 				</div>
-				
 			</div>
 		</div>
 	</nav>
+
+  <script>
+  $(function() {
+    // $('li > a').click(function() {
+    //   $('li').removeClass('active');
+    //   $(this).parent().addClass('active');
+    // });
+    $("li").click(
+      function(event) {
+        $('li').removeClass('active');
+        $(this).addClass('active');
+        event.preventDefault()
+      }
+);
+
+  });
+  // $(document).on('turbolinks:load', function() {
+  //   // $('.header-menu').on('click',function(){
+  //   //   $('.header-menu').removeClass('active');
+  //   //   $('#mypage').addClass('active');
+  //   // });
+
+  //   $(function() {
+  //     $('.header-menu').click(function() {
+  //       $('.active').removeClass('active');
+  //       $(this).addClass('active');
+  //     });
+  //   });
+  // });
+  </script>

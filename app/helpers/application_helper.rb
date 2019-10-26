@@ -74,6 +74,14 @@ module ApplicationHelper
     @sex_kbn ||= session[:login]['sex_kbn']
   end
 
+  # ログイン中であるか判定（ログイン中ならtrue）
+  def login_flg
+    if session[:login].present?
+      return true
+    end
+    return false
+  end
+
   # 現在ログイン中のユーザーを返す
   def current_user
     if session[:login]
