@@ -36,7 +36,7 @@
             <!-- 自分の吹き出し -->
             <div class="line__right">
               <div class="text"><%= event.data %></div>
-              <span class="date">既読<br><%= time_format(event.created_at) %></span>
+              <span class="date"><%= '既読' if read_flg(event.read_flg) %><br><%= time_format(event.created_at) %></span>
             </div>
           <% end %>
         <% end %>

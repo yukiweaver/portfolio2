@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_17_124454) do
+ActiveRecord::Schema.define(version: 2019_10_26_011157) do
 
   create_table "events", force: :cascade do |t|
     t.integer "room_id"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 2019_09_17_124454) do
     t.text "data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "read_flg", default: false
     t.index ["from_user_id"], name: "index_events_on_from_user_id"
     t.index ["room_id"], name: "index_events_on_room_id"
     t.index ["to_user_id"], name: "index_events_on_to_user_id"

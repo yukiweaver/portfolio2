@@ -23,6 +23,31 @@ class Event < ApplicationRecord
          .where(to_user_id: [from_user_id, to_user_id])
   end
 
+  # 自分からのメッセージ内容を返す
+  def self.get_from_user_message(room_id, from_user_id, to_user_id, event_kbn='12')
+    from_user_messages = Event.where(
+                  'room_id = ? and from_user_id = ? and to_user_id = ? and event_kbn = ?',
+                  room_id, from_user_id, to_user_id, event_kbn
+                )
+    if from_user_messages.blank?
+      return []
+    end
+    return from_user_messages
+  end
+
+  # 未読の相手からのメッセージを配列で返す
+  def self.get_nonread_to_user_message(room_id, to_user_id, from_user_id, event_kbn='12')
+    to_user_messages = Event.where(
+                  'room_id = ? and from_user_id = ? and to_user_id = ? and event_kbn = ? and read_flg = ?',
+                  room_id, to_user_id, from_user_id, event_kbn, false
+                )
+    if to_user_messages.blank?
+      return []
+    end
+    return to_user_messages + []
+  end
+
+
   #　ルームidをキーとして特定のルームで最新メッセージを含むレコード一件取得
   def self.get_latest_message(room_id)
     Event.where('room_id = ? and event_kbn = ?', room_id, '12').order(created_at: 'DESC').limit(1)

@@ -65,7 +65,8 @@ class EventsController < ApplicationController
     @to_user = User.find(Base64.decode64(params[:encoded_id]))
     @event = Event.new
     # メッセージ空ならエラー
-    data = params[:event][:data]
+    # data = params[:event][:data]
+    data = event_params[:data]
     if data.empty?
       flash[:danger] = 'メッセージが空です。'
       return redirect_to talk_room_path(@to_user)

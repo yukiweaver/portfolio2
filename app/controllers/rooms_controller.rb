@@ -8,6 +8,27 @@ class RoomsController < ApplicationController
     @event = Event.new
     room_id = Room.get_room_id(@from_user.id, @to_user.id, '9', '9')
     @events = Event.get_talk_content(room_id, @from_user.id, @to_user.id, '12')
+
+    # 未読の相手メッセージを取得してフラグをtrueに変更
+    nonread_to_user_messages = Event.get_nonread_to_user_message(room_id, @to_user.id, @from_user.id)
+    nonread_to_user_messages.map! {|ntu_msg| ntu_msg if ntu_msg.read_flg = true} unless nonread_to_user_messages.blank?
+    
+    begin
+      ActiveRecord::Base.transaction {
+        # BULK UPDATE
+        result = Event.import nonread_to_user_messages, on_duplicate_key_update: [:read_flg]
+        # failed_instances : validationに失敗したり、commit失敗でインスタンスを配列にして返す
+        if !result.failed_instances.blank?
+          raise 'RollBack!!'
+        end
+        p 'Success!'
+      }
+      return render action: :talk_room
+    rescue => exception
+      p 'Failed'
+      p exception
+      return redirect_to room_index_path, flash: {danger: 'システムエラーが発生しました。'}
+    end
   end
 
   # ルーム一覧

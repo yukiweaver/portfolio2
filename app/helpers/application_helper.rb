@@ -149,6 +149,15 @@ module ApplicationHelper
     return true
   end
 
+  # 自分が送信したメッセージが未読か既読か判定（既読ならtrueを返す）
+  # param flg 既読フラグ
+  def read_flg(flg)
+    if flg == true
+      return true
+    end
+    return false
+  end
+
   # 文字列をBase64エンコードする
   def encode(str)
     Base64.encode64(str)
