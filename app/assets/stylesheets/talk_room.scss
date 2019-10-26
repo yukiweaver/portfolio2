@@ -35,6 +35,7 @@ $myTextColor:  #8de055; // 吹き出しの色
 
   /* 会話部分 */
   .line__contents {
+    // position: absolute;
     padding: 10px;
     overflow: hidden;
     line-height: 135%;
