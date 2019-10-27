@@ -80,6 +80,7 @@ class EventsController < ApplicationController
     room_id = Room.get_room_id(@from_user.id, @to_user.id, '9', '9')
     data = params[:event][:data]
     send_message = Event.event_data(room_id, @from_user.id, '12', @to_user.id, data)
+
     if send_message.save
       return redirect_to talk_room_path(@to_user)
     else

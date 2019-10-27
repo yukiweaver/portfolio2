@@ -92,16 +92,18 @@
   $(function() {
 
     function buildMESSAGE(event) {
-      var events = $('.events').append('<div class="text">' + event.data + '</div>');
-      console.log(events);
+      var events = $('.line__contents')
+      .append('<div class="events" data-id='+event.id+'>'+'<div class="line__right">'+'<div class="text">' + event.data + '</div>' + '</div>' + '</div>');
+      // console.log(events);
     }
 
     $(function() {
-      setInterval(update, 10000);
+      setInterval(update, 5000);
     });
 
     function update() {
       var event_id = $('.events:last').data('id');
+      console.log(event_id);
       $.ajax({
         url: location.href,
         type: 'GET',
