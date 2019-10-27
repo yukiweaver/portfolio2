@@ -5,6 +5,8 @@ class Room < ApplicationRecord
   has_many :events, dependent: :destroy
 
   # ２ユーザーのルーム情報を配列で返す（複数レコード取得できた場合、バグなので修正必要）
+  # （whereを用いてクラスオブジェクトで返したい場合は.takeでいける。）
+  # （また、whereで9,9以外を取得してきてから、find_byで一件取得する方法もある。）
   def self.get_room_info(from_user_id, to_user_id, from_user_status='9', to_user_status='9')
     room = Room.where(from_user_id: [from_user_id, to_user_id])
                .where(to_user_id: [from_user_id, to_user_id])
