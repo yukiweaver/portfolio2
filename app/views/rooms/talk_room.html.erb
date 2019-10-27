@@ -17,6 +17,7 @@
       <!-- ▼会話エリア scrollを外すと高さ固定解除 -->
       <div class="line__contents scroll" id="line__contents">
         <% @events.each do |event| %>
+        <div class="events" data-id=<%= event.id %>>
           <% if event.from_user_id != @from_user.id %>
             <!-- 相手の吹き出し -->
             <div class="line__left">
@@ -38,7 +39,13 @@
               <div class="text"><%= event.data %></div>
               <span class="date"><%= '既読' if read_flg(event.read_flg) %><br><%= time_format(event.created_at) %></span>
             </div>
+            <!-- 自分のスタンプ -->
+            <%# <div class="line__right">
+              <div class="stamp"><img src="/images/22.png" /></div>
+              <span class="date">既読<br>0:30</span>
+            </div> %>
           <% end %>
+        </div>
         <% end %>
       </div>
       <!--　▲会話エリア ここまで -->
@@ -81,4 +88,33 @@
 　// 自動でページがロードされたら一番下までスクロール
   var obj = document.getElementById('line__contents');
   obj.scrollTop = obj.scrollHeight;
+
+  $(function() {
+
+    function buildMESSAGE(event) {
+      var events = $('.events').append('<div class="text">' + event.data + '</div>');
+      console.log(events);
+    }
+
+    $(function() {
+      setInterval(update, 10000);
+    });
+
+    function update() {
+      var event_id = $('.events:last').data('id');
+      $.ajax({
+        url: location.href,
+        type: 'GET',
+        data: {
+          event: {id: event_id}
+        },
+        dataType: 'json'
+      })
+      .always(function(data) {
+        $.each(data, function(i, data) {
+          buildMESSAGE(data);
+        })
+      })
+    }
+  });
 </script>
