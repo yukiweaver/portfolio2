@@ -7,6 +7,7 @@ class RoomsController < ApplicationController
     gon.current_user_id = @from_user.id
     @to_user = User.find(Base64.decode64(params[:encoded_id]))
     gon.to_user_image = @to_user.image.url
+    gon.to_user_name = @to_user.name
     @event = Event.new
     room_id = Room.get_room_id(@from_user.id, @to_user.id, '9', '9')
     @events = Event.get_talk_content(room_id, @from_user.id, @to_user.id, '12')

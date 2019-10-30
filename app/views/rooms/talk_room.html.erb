@@ -23,9 +23,9 @@
             <div class="line__left">
               <figure>
                 <% if pair_flg(@from_user.id, @to_user.id) %>
-                  <%= image_tag(@to_user.image.url, size: "70x70") %>
+                  <%= image_tag(@to_user.image.url) %>
                 <% else %>
-                  <%= image_tag("/images/icon1.jpg", size: "70x70") %>
+                  <%= image_tag("/images/icon1.jpg") %>
                 <% end %>
               </figure>
               <div class="line__left-text">
@@ -107,22 +107,34 @@
       var data = event.data ? `${event.data}` : '';
       var to_user_image = gon.to_user_image ? `${gon.to_user_image}` : '/images/icon1.jpg';
       var read = event.read_flg ? '既読' : '';
+      var to_user_name = gon.to_user_name;
       var from_or_to_user = (gon.current_user_id == event.from_user_id) ? true : false;
       if (from_or_to_user == true) {
-        var html = `<div class="event" data-id="${event.id}">
+        var html = `<div class="events" data-id="${event.id}">
                       <div class="line__right">
                         <div class="text">
                           ${data}
                         </div>
-                        <div class="date">
+                        <span class="date">
                           ${read}<br>
                           ${event.created_at}
-                        </div>
+                        </span>
                       </div>
                     </div>`
       } else {
-        
+        var html = `<div class="events" data-id="${event.id}">
+                      <div class="line__left">
+                        <figure>
+                          <img src="${to_user_image}">
+                        </figure>
+                        <div class="line__left-text">
+                          <div class="name">${to_user_name}</div>
+                          <div class="text">${data}</div>
+                        </div>
+                      </div>
+                    </div>`
       }
+      return html;
     }
 
     $(function() {
@@ -141,9 +153,11 @@
         dataType: 'json'
       })
       .always(function(data) {
+        var insertHTML = ''
         $.each(data, function(i, data) {
           console.log(data);
-          buildMESSAGE(data);
+          insertHTML = buildHTML(data);
+          $('.line__contents').append(insertHTML);
         })
       })
     }
