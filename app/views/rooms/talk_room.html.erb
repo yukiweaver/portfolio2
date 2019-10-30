@@ -91,10 +91,38 @@
 
   $(function() {
 
-    function buildMESSAGE(event) {
-      var events = $('.line__contents')
-      .append('<div class="events" data-id='+event.id+'>'+'<div class="line__right">'+'<div class="text">' + event.data + '</div>' + '</div>' + '</div>');
-      // console.log(events);
+    // function buildMESSAGE(event) {
+    //   if (gon.current_user_id == event.from_user_id) {
+    //     var events = $('.line__contents')
+    //     .append('<div class="events" data-id='+event.id+'>'+'<div class="line__right">'+'<div class="text">' + event.data + '</div>' + '</div>' + '</div>');
+    //     console.log(events);
+    //   } else {
+    //     var events = $('.line__contents')
+    //     .append('<div class="events" data-id='+event.id+'>'+'<div class="line__left">'+'<div class="text">' + event.data + '</div>' + '</div>' + '</div>');
+    //     console.log(events);
+    //   }
+    // }
+
+    function buildHTML(event) {
+      var data = event.data ? `${event.data}` : '';
+      var to_user_image = gon.to_user_image ? `${gon.to_user_image}` : '/images/icon1.jpg';
+      var read = event.read_flg ? '既読' : '';
+      var from_or_to_user = (gon.current_user_id == event.from_user_id) ? true : false;
+      if (from_or_to_user == true) {
+        var html = `<div class="event" data-id="${event.id}">
+                      <div class="line__right">
+                        <div class="text">
+                          ${data}
+                        </div>
+                        <div class="date">
+                          ${read}<br>
+                          ${event.created_at}
+                        </div>
+                      </div>
+                    </div>`
+      } else {
+        
+      }
     }
 
     $(function() {
@@ -114,6 +142,7 @@
       })
       .always(function(data) {
         $.each(data, function(i, data) {
+          console.log(data);
           buildMESSAGE(data);
         })
       })

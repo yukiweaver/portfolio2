@@ -4,7 +4,9 @@ class RoomsController < ApplicationController
   # トークルームページ
   def talk_room
     @from_user = User.find(user_id)
+    gon.current_user_id = @from_user.id
     @to_user = User.find(Base64.decode64(params[:encoded_id]))
+    gon.to_user_image = @to_user.image.url
     @event = Event.new
     room_id = Room.get_room_id(@from_user.id, @to_user.id, '9', '9')
     @events = Event.get_talk_content(room_id, @from_user.id, @to_user.id, '12')
