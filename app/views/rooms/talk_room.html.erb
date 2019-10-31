@@ -105,19 +105,18 @@
 
     function buildHTML(event) {
       var data = event.data ? `${event.data}` : '';
-      var to_user_image = gon.to_user_image ? `${gon.to_user_image}` : '/images/icon1.jpg';
+      var to_user_image = gon.pair_flg ? `${gon.to_user_image}` : '/images/icon1.jpg';
       var read = event.read_flg ? '既読' : '';
       var to_user_name = gon.to_user_name;
       var from_or_to_user = (gon.current_user_id == event.from_user_id) ? true : false;
+      var format_time = moment(event.created_at).format('HH:mm');
       if (from_or_to_user == true) {
         var html = `<div class="events" data-id="${event.id}">
                       <div class="line__right">
-                        <div class="text">
-                          ${data}
-                        </div>
+                        <div class="text">${data}</div>
                         <span class="date">
                           ${read}<br>
-                          ${event.created_at}
+                          ${format_time}
                         </span>
                       </div>
                     </div>`

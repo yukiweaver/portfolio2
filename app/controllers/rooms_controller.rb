@@ -8,16 +8,15 @@ class RoomsController < ApplicationController
     @to_user = User.find(Base64.decode64(params[:encoded_id]))
     gon.to_user_image = @to_user.image.url
     gon.to_user_name = @to_user.name
+    gon.pair_flg = pair_flg(@from_user.id, @to_user.id)
     @event = Event.new
     room_id = Room.get_room_id(@from_user.id, @to_user.id, '9', '9')
     @events = Event.get_talk_content(room_id, @from_user.id, @to_user.id, '12')
-    # event_last_id = @events.last.id
 
     respond_to do |format|
       format.html
       format.json {@new_event = Event.where('id > ?', params[:event][:id])}
     end
-    # binding.pry
 
     # 未読の相手メッセージを取得してフラグをtrueに変更
     nonread_to_user_messages = Event.get_nonread_to_user_message(room_id, @to_user.id, @from_user.id)
