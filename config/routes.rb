@@ -21,6 +21,6 @@ Rails.application.routes.draw do
   post   '/event/apply',  to:  'events#apply',  as:  'apply'
   post   '/event/approval',  to:  'events#approval',  as:  'approval'
   get    '/room/pair_info',  to:  'rooms#pair_info',  as:  'pair_info'
-  post   'event/unpair',  to:  'events#unpair',  as:  'unpair'
+  post   '/event/unpair',  to:  'events#unpair',  as:  'unpair'
   resources :users
 end

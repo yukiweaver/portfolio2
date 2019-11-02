@@ -12,7 +12,7 @@ class RoomsController < ApplicationController
     @event = Event.new
     room_id = Room.get_room_id(@from_user.id, @to_user.id, '9', '9')
     @events = Event.get_talk_content(room_id, @from_user.id, @to_user.id, '12')
-
+    
     respond_to do |format|
       format.html
       format.json {@new_event = Event.where('id > ?', params[:event][:id])}
@@ -45,6 +45,8 @@ class RoomsController < ApplicationController
     @user = User.find(user_id)
     # 自分が招待者かつ自分がまだ入室していないルームを取得
     @rooms = Room.get_no_entry_room(@user.id)
+    # @users = test
+
 
     if !@rooms.blank?
       # ルーム作成者のuser_idを配列で取得して、ユーザーを取得(単数の場合もあり得る)

@@ -14,14 +14,6 @@
 <!-- テーブル -->
 <div class="alt-table-responsive">
   <table class="table"> 
-    <!--<thead>
-      <tr>
-        <th class="col-xs-3 col-ms-3 col-md-4 col-lg-4">名前</th>
-        <th class="col-xs-3 col-ms-3 col-md-4 col-lg-4">メールアドレス</th>
-        <%# <th colspan="3"></th> %>
-      </tr>
-    </thead>-->
-
     <tbody>
       <% @users.each do |user| %>
         <tr>
@@ -39,3 +31,26 @@
   </table>
   <%= will_paginate @users %>
 </div>
+
+<script>
+  $(window).on('load',function(){
+    OneSignal.push(function() {
+        OneSignal.getUserId(function(userId) {
+          console.log(userId);
+        // $.ajax({
+        //     url: "users/onesignal_set",
+        //     type: "GET",
+        //     data: {onesignal_id: userId,
+        //     },
+        //     dataType: "html",
+        //     success: function(data) {
+        //         console.log("success");
+        //     },
+        //     error: function(data) {
+        //         console.log("error");
+        //     },
+        //     });   
+        });
+    }); 
+  });
+</script>

@@ -60,6 +60,11 @@ class UsersController < ApplicationController
     @room_status = get_room_status(room, is_approval_from_or_to)
   end
 
+  # お知らせ
+  def notification
+    @users = User.all
+  end
+
 
   private
 

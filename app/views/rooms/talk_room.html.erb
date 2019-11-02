@@ -89,19 +89,8 @@
   var obj = document.getElementById('line__contents');
   obj.scrollTop = obj.scrollHeight;
 
+  // 自動更新
   $(function() {
-
-    // function buildMESSAGE(event) {
-    //   if (gon.current_user_id == event.from_user_id) {
-    //     var events = $('.line__contents')
-    //     .append('<div class="events" data-id='+event.id+'>'+'<div class="line__right">'+'<div class="text">' + event.data + '</div>' + '</div>' + '</div>');
-    //     console.log(events);
-    //   } else {
-    //     var events = $('.line__contents')
-    //     .append('<div class="events" data-id='+event.id+'>'+'<div class="line__left">'+'<div class="text">' + event.data + '</div>' + '</div>' + '</div>');
-    //     console.log(events);
-    //   }
-    // }
 
     function buildHTML(event) {
       var data = event.data ? `${event.data}` : '';
@@ -136,8 +125,9 @@
       return html;
     }
 
+    // 10000ミリ秒ごとにupdate関数を実行
     $(function() {
-      setInterval(update, 5000);
+      setInterval(update, 10000);
     });
 
     function update() {
@@ -151,6 +141,7 @@
         },
         dataType: 'json'
       })
+      // 成功でも失敗でもここの処理が走る
       .always(function(data) {
         var insertHTML = ''
         $.each(data, function(i, data) {
