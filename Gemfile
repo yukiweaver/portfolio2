@@ -16,6 +16,7 @@ gem 'data-confirm-modal'
 gem 'activerecord-import'  # BULK INSERTを可能に
 gem 'httparty'  # 通知
 gem 'gon' # jsでrubyで定義した変数を使う
+gem 'payjp' # クレカ登録
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
 # Use Puma as the app server
