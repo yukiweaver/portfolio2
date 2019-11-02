@@ -1,0 +1,14 @@
+<% provide(:title, 'クレジットカード登録') %>
+<div class="row">
+  <h2>クレジットカード情報入力</h2>
+  <div class="col-md-10 col-md-offset-1 mypage-edit">
+    <div class="content__credit-card">
+      <div class="content__credit-card__inner">
+        <%= form_with url: '#', method: :post, html: { name: "inputForm" }, local: true do |f| %>
+          <%= f.label 'カード番号', class: 'label' %><span>必須</span>
+          <%= f.text_field :card_number, class: 'input-number form-control', placeholder: '半角数字のみ', maxlength: '16' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

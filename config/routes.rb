@@ -22,5 +22,6 @@ Rails.application.routes.draw do
   post   '/event/approval',  to:  'events#approval',  as:  'approval'
   get    '/room/pair_info',  to:  'rooms#pair_info',  as:  'pair_info'
   post   '/event/unpair',  to:  'events#unpair',  as:  'unpair'
+  get    '/card/new_card',   to:  'cards#new',  as:  'new_card'
   resources :users
 end
