@@ -3,9 +3,7 @@ class SessionsController < ApplicationController
   def create
     @user = User.find_by(email: params[:email])
     if @user && @user.authenticate(params[:password])
-      session[:login] = {'user_id' => @user.id, 'sex_kbn' => @user.sex_kbn}
-      # binding.pry
-      flash[:success] = "ログインしました。"
+      session[:login] = {'user_id' => @user.id, 'sex_kbn' => @user.sex_kbn, 'card_regist_flg' => @user.card_regist_flg}
       redirect_to search_path
     else
       flash[:danger] = 'ログインに失敗しました。'
@@ -16,7 +14,6 @@ class SessionsController < ApplicationController
   def destroy
     session.delete(:login)
     @current_user = nil
-    flash[:info] = 'ログアウトしました。'
     redirect_to root_path
   end
 end

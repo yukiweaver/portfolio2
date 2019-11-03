@@ -93,6 +93,11 @@ module ApplicationHelper
     @sex_kbn ||= session[:login]['sex_kbn']
   end
 
+  # ログインユーザーの年齢認証フラグを返す（return boolean）
+  def user_card_regist_flg
+    # @card_regist_flg ||= session[:login]['card_regist_flg']
+  end
+
   # ログイン中であるか判定（ログイン中ならtrue）
   def login_flg
     if session[:login].present?

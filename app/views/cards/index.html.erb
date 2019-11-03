@@ -5,7 +5,7 @@
         <%= form_with url: card_delete_path, method: :delete, html: { name: "deleteForm" }, local: true do |f| %>
           <%= f.hidden_field :card_id, :value => @card.id %>
           <figure>
-            <%= image_tag("/images/#{@card_src}", size: "45x39", alt: @card_brand) %>
+            <%= image_tag("/images/#{@card_src}", size: "65x40", alt: @card_brand) %>
           </figure>
           <div class="content__credit-cards__list--pay-num">
             <%= "**** **** **** " + @card_information.last4 %>
