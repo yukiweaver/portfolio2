@@ -23,5 +23,8 @@ Rails.application.routes.draw do
   get    '/room/pair_info',  to:  'rooms#pair_info',  as:  'pair_info'
   post   '/event/unpair',  to:  'events#unpair',  as:  'unpair'
   get    '/card/new_card',   to:  'cards#new',  as:  'new_card'
+  post   '/card/create',  to:  'cards#create',  as:  'card_create'
+  get    '/card/index',   to:  'cards#index',   as:  'card_index'
+  delete '/card/delete',  to:  'cards#delete',  as:  'card_delete'
   resources :users
 end

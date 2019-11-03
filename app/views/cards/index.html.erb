@@ -1,0 +1,21 @@
+<% provide(:title, 'クレジットカード確認') %>
+<main id="main">
+    <section id="right">
+        <h2>クレジットカード確認</h2>
+        <%= form_with url: card_delete_path, method: :delete, html: { name: "deleteForm" }, local: true do |f| %>
+          <%= f.hidden_field :card_id, :value => @card.id %>
+          <figure>
+            <%= image_tag("/images/#{@card_src}", size: "45x39", alt: @card_brand) %>
+          </figure>
+          <div class="content__credit-cards__list--pay-num">
+            <%= "**** **** **** " + @card_information.last4 %>
+          </div>
+          <div class="content__credit-cards__list--pay-num">
+            <%= @exp_month + " / " + @exp_year %>
+          </div>
+          <%= f.submit '削除する', data: 
+            {confirm: "本当に削除しますか？",
+             cancel: "キャンセル", commit: "削除する"}, title: "クレジットカードの削除" %>
+        <% end %>
+    </section>
+</main>

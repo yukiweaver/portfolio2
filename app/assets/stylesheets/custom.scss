@@ -257,3 +257,113 @@ textarea.form-control {
 .talk_room {
   color: white;
 }
+
+
+
+
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,700");
+
+$gradient: linear-gradient(
+    135deg,
+    rgba(91, 36, 122, 0.45) 0%,
+    rgba(27, 206, 223, 0.55) 100%
+);
+$shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+$primary: #4183d7;
+$secondary: #66cc99;
+
+#main {
+    position: relative;
+    width: 700px;
+    // height: 330px;
+    height: 450px;
+
+    // left: 30px;
+
+    border-radius: 10px;
+    box-shadow: $shadow;
+
+    background-color: white;
+    margin: auto;
+}
+
+#left #head {
+    opacity: 0.95;
+}
+
+#right {
+    position: absolute;
+    width: calc(60% - 40px);
+    height: 100%;
+    top: 0;
+    // left: 40%;
+    left: 23%;
+
+    display: flex;
+    flex-flow: column nowrap;
+
+    // padding-left: 20px;
+    padding-top: 50px;
+}
+
+#right form {
+    display: flex;
+    flex-flow: column nowrap;
+
+    width: 100%;
+}
+
+#right form input,
+#right form select {
+    -moz-appearance:none; /* Firefox */
+    -webkit-appearance:none; /* Safari and Chrome */
+    appearance:none;
+    border: none;
+    border-bottom: 1.5px solid #ccc;
+    
+    padding: 5px;
+    margin-top: 2.5px;
+    position: relative;
+}
+
+#right form .form-field {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    
+    margin-bottom: 12.5px;
+}
+
+#right form #date-val {
+    display: flex;
+    justify-content: space-between;
+}
+
+#right form #date-val select {
+    width: 45%;
+}
+
+#right form input[type="submit"] {
+    background: linear-gradient(
+                                135deg,
+                                $primary 0%,
+                                $secondary 100%
+                            );
+    padding: 5px;
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-weight: 400;
+    font-size: 12pt;
+    margin-top: 10px;
+}
+
+#right form input[type="submit"]:hover {
+    background: transparent;
+    box-shadow: 0 0 0 3px $primary;
+    color: $primary;
+}
+
+.content-bottom {
+  text-align: center;
+}
