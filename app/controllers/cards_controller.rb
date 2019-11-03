@@ -52,10 +52,10 @@ class CardsController < ApplicationController
     Payjp.api_key = "sk_test_5a4363c143c9b9bc97feaa74"
     customer = Payjp::Customer.retrieve(@card.customer_id)
     customer.delete
-    if @card.destroy #削除に成功した時にポップアップを表
-      redirect_to action: "new", flash: {info: '削除しました。'}
-    else #削除に失敗した時にアラートを表示
-      redirect_to action: "index", flash: {danger: '削除に失敗しました。'}
+    if @card.destroy
+      redirect_to new_card_path, flash: {info: '削除しました。'}
+    else
+      redirect_to card_index_path, flash: {danger: '削除に失敗しました。'}
     end
   end
 

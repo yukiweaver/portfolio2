@@ -7,6 +7,14 @@
             <div id="form-card" class="form-field">
                 <%= f.label 'カード番号', for: 'cc-number' %>
                 <%= f.text_field :card_number, class: 'input-number', placeholder: '半角数字のみ', maxlength: '16' %>
+                <ul class="image-card" style="padding: 0px;">
+                  <li><%= image_tag("/images/visa.png", size: "60x40") %></li>
+                  <li><%= image_tag("/images/master_card.png", size: "70x39") %></li>
+                  <li><%= image_tag("/images/jcb.jpeg", size: "60x40") %></li>
+                  <li><%= image_tag("/images/discover.png", size: "60x39") %></li>
+                  <li><%= image_tag("/images/diners_club.png", size: "60x39") %></li>
+                  <li><%= image_tag("/images/american_express.jpeg", size: "60x39") %></li>
+                </ul>
             </div>
 
             <div id="form-date" class="form-field">

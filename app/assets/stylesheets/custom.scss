@@ -276,7 +276,7 @@ $secondary: #66cc99;
     position: relative;
     width: 700px;
     // height: 330px;
-    height: 450px;
+    height: 500px;
 
     // left: 30px;
 
@@ -366,4 +366,9 @@ $secondary: #66cc99;
 
 .content-bottom {
   text-align: center;
+}
+
+.image-card li{
+  float: left;
+  list-style: none;
 }
