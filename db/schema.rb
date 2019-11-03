@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_02_125840) do
+ActiveRecord::Schema.define(version: 2019_11_03_075035) do
 
   create_table "cards", force: :cascade do |t|
     t.string "customer_id", null: false
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 2019_11_02_125840) do
     t.string "password_digest"
     t.string "sex_kbn"
     t.string "image"
+    t.boolean "card_regist_flg", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
