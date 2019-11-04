@@ -5,10 +5,15 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+    <%# <link rel="stylesheet" type="text/css" href="css/layerBoard.css" /> %>
+
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script><!-- 通知 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js"></script>
-    <script src="https://js.pay.jp"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js"></script><!-- jsフォーマット変更 -->
+    <script src="https://js.pay.jp"></script> <!-- 決済 -->
+    
+    <%# <script src="js/jquery.cookie.js"></script> %>
+    <%# <script src="js/jquery.layerBoard.js"></script> %>
     <script>
       var OneSignal = window.OneSignal || [];
       OneSignal.push(function() {
