@@ -26,6 +26,7 @@ class UsersController < ApplicationController
     page = params[:page]
     search = params[:area_kbn]
     @users = User.search(sex_kbn, user_id, page, search)
+    gon.card_regist_flg = @user.card_regist_flg ? true : false
   end
 
   # マイページ

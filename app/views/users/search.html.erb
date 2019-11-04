@@ -70,8 +70,11 @@
 
   // ログイン後、モーダル表示
   $(function(){
-	  $('#layer_board_area').layerBoard({alpha:0.5});
-  })
+    var card_regist_flg = gon.card_regist_flg;
+    if (!card_regist_flg) {
+      $('#layer_board_area').layerBoard({alpha:0.5});
+    }
+  });
 
   $('.close').click(function() {
     window.location.href = $('#close').val();
