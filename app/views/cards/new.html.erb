@@ -38,6 +38,7 @@
 </main>
 
 <script>
+// $(document).on('turbolinks:load', function() {
   document.addEventListener(
   "DOMContentLoaded", (e) => {
     Payjp.setPublicKey("pk_test_5885ed32c3eaadccfeea538a");
@@ -70,5 +71,6 @@
         }
       });
     });
-  },false);
+  },false)
+// });
 </script>
