@@ -15,16 +15,18 @@
                 <li class="header-menu active" id="home"><%= link_to 'ホーム', root_path %></li>
               <% end %>
               <% if login_flg() %>
-                <li class="header-menu" id="index">
-                  <%= link_to 'トークルーム一覧', room_index_path %>
-                </li>
-                <li class="header-menu" id="pair">
-                  <%= link_to 'ペア情報', pair_info_path %>
-                </li>
-                <!--メニューを出すボタン-->
-                <li class="header-menu" id="notification">
-                  <%= link_to 'お知らせ', '#', :data => {:toggle => "modal", :target => "#sampleModal3"} %>
-                </li>
+                <% if card_regist_flg(current_user) %>
+                  <li class="header-menu" id="index">
+                    <%= link_to 'トークルーム一覧', room_index_path %>
+                  </li>
+                  <li class="header-menu" id="pair">
+                    <%= link_to 'ペア情報', pair_info_path %>
+                  </li>
+                  <!--メニューを出すボタン-->
+                  <li class="header-menu" id="notification">
+                    <%= link_to 'お知らせ', '#', :data => {:toggle => "modal", :target => "#sampleModal3"} %>
+                  </li>
+                <% end %>
               <% end %>
               <% if current_user %>
                 <li class="btn-cta">

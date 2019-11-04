@@ -2,12 +2,11 @@
 <%# <h2>マッチング</h2> %>
 <div class="row">
   <div class="col-md-6 col-md-offset-3", style="text-align:center">
-    <%= link_to '年齢認証', new_card_path, class: 'btn btn-primary' %>
     <%= form_with url:'/search', method: :get, local: true do |f| %>
       <%#= render 'shared/error_messages', object: f.object %>
       <%= f.label :area_kbn, 'エリア' %>
       <%= f.select :area_kbn, ApplicationHelper::AREA_KBN, {include_blank: '選択してください'}, class: 'form-control' %>
-      <%= f.submit 'マッチング', class: 'btn btn-primary btn-lg matching-btn', style: 'font-size:18px' %>
+      <%= f.submit 'マッチング', class: 'btn btn-primary btn-lg matching-btn', style: 'font-size:18px',  disabled: !card_regist_flg(@user) ? true : false %>
     <% end %>
   </div>
 
@@ -38,6 +37,7 @@
   <!-- ここまで -->
 
   <!-- テーブル -->
+  <% if card_regist_flg(@user) %>
   <div class="alt-table-responsive">
     <table class="table"> 
       <tbody>
@@ -58,6 +58,7 @@
     <%= will_paginate @users %>
   </div>
 </div>
+<% end %>
 
 <script>
   $(window).on('load',function(){

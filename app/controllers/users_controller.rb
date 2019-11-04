@@ -53,6 +53,8 @@ class UsersController < ApplicationController
   # ユーザーページ
   def user_page
     @from_user = User.find(user_id)
+    return redirect_to new_card_path unless @from_user.card_regist_flg
+    
     @user = @to_user = User.find(Base64.decode64(params[:encoded_id]))
     @first_msg_flag = is_first_msg?(@from_user.id, @to_user.id, '9', '9')
     room = Room.get_room_info(@from_user.id, @to_user.id)

@@ -1,5 +1,7 @@
 class RoomsController < ApplicationController
-  before_action :logged_out_user
+  before_action -> {
+    logged_out_user || card_regist_check(current_user)
+  }
 
   # トークルームページ
   def talk_room

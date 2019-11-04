@@ -1,5 +1,7 @@
 class EventsController < ApplicationController
-  before_action :logged_out_user
+  before_action -> {
+    logged_out_user || card_regist_check(current_user)
+  }
   # 初回メッセージページ
   def first_msg
     @from_user = User.find(user_id)

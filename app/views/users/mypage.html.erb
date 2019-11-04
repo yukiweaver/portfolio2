@@ -18,6 +18,11 @@
     </div>
     <%= render partial: 'user_info', locals: { user: @user } %>
     <div class="edit-mypage-btn">
+      <% if card_regist_flg(@user) %>
+        <%= link_to 'クレジットカード確認', card_index_path, class: 'btn btn-primary' %>
+      <% else %>
+        <%= link_to '年齢認証', new_card_path, class: 'btn btn-primary' %>
+      <% end %>
       <%= link_to 'マイページ編集', mypage_edit_path, class: 'btn btn-primary'%>　　
     </div>
   </div>

@@ -94,8 +94,8 @@ module ApplicationHelper
   end
 
   # ログインユーザーの年齢認証フラグを返す（return boolean）
-  def user_card_regist_flg
-    @card_regist_flg ||= session[:login]['card_regist_flg']
+  def card_regist_flg(current_user)
+    @card_regist_flg = current_user.card_regist_flg
   end
 
   # ログイン中であるか判定（ログイン中ならtrue）
@@ -123,6 +123,11 @@ module ApplicationHelper
   def logged_out_user
     redirect_to root_path if session[:login].nil?
   end
+
+  # before_action：年齢認証未実施ならリダイレクト
+  def card_regist_check(current_user)
+    return redirect_to new_card_path unless current_user.card_regist_flg
+  end 
 
   # 初回メッセージ送信済みか判定
   # 9 9 以外のルームが存在するということは、どちらかが初回メッセージをすでに送っているということ
