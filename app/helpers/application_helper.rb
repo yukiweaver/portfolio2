@@ -204,4 +204,14 @@ module ApplicationHelper
   def decode(str)
     Base64.decode64(str)
   end
+
+  # 現在のパスを確認（headerのactiveクラス付与に使用）
+  def check_current_path
+    path = request.fullpath
+    return 'search' if !!(path =~ /^\/search/)
+    return 'mypage' if !!(path =~ /^\/mypage/)
+    return 'index' if !!(path =~ /^\/room\/room_index/)
+    return 'pair' if !!(path =~ /^\/room\/pair_info/)
+    return false
+  end
 end

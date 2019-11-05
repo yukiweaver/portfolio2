@@ -4,28 +4,24 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-xs-2">
-						<div id="fh5co-logo"><a href="index.html">A<span></span>i<span></span>r<span>.</span></a></div>
+						<div id="fh5co-logo"><a href="">A<span></span>i<span></span>r<span>.</span></a></div>
 					</div>
 					<div class="col-xs-10 text-right menu-1">
 						<ul>
               <% if current_user %>
-                <li class="header-menu active" id="home"><%= link_to 'ホーム', search_path %></li>
-                <li class="header-menu" id="mypage"><%= link_to 'マイページ', mypage_path %></li>
+                <li class="header-menu <%= 'active' if check_current_path() == 'search' %>" id="home"><%= link_to 'ホーム', search_path %></li>
+                <li class="header-menu <%= 'active' if check_current_path() == 'mypage' %>" id="mypage"><%= link_to 'マイページ', mypage_path %></li>
               <% else %>
                 <li class="header-menu active" id="home"><%= link_to 'ホーム', root_path %></li>
               <% end %>
               <% if login_flg() %>
                 <% if card_regist_flg(current_user) %>
-                  <li class="header-menu" id="index">
+                  <li class="header-menu <%= 'active' if check_current_path() == 'index' %>" id="index">
                     <%= link_to 'トークルーム一覧', room_index_path %>
                   </li>
-                  <li class="header-menu" id="pair">
+                  <li class="header-menu <%= 'active' if check_current_path() == 'pair' %>" id="pair">
                     <%= link_to 'ペア情報', pair_info_path %>
                   </li>
-                  <!--メニューを出すボタン-->
-                  <%# <li class="header-menu" id="notification"> %>
-                    <%#= link_to 'お知らせ', '#', :data => {:toggle => "modal", :target => "#sampleModal3"} %>
-                  <%# </li> %>
                 <% end %>
               <% end %>
               <% if current_user %>
@@ -44,27 +40,6 @@
 		</div>
 	</nav>
 
-    <!-- モーダル・ダイアログ -->
-<div class="modal fade" id="sampleModal3" tabindex="-1">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-				<h4 class="modal-title">タイトル</h4>
-			</div>
-			<div class="modal-body">
-			  <%# @users.each do |user| %>
-          <%#= user.name %><br>
-          <%#= link_to '確認', '#', class: 'btn btn-primary' %><br>
-        <%# end %>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
-				<button type="button" class="btn btn-primary">ボタン</button>
-			</div>
-		</div>
-	</div>
-</div>
 
   <script>
   $(function() {
@@ -79,6 +54,19 @@
     //     event.preventDefault();
     //   }
     // );
+
+    // var cookie = $.cookie('cookie');
+    // if(!cookie){
+    //     $('li#home.header-menu').addClass('active');
+    // } else {
+    //   $(this).addClass('active');
+    // }
+    // $('li').on('click',function(){
+    //     $('li').removeClass('active');
+    //     $(this).addClass('active');
+    //     $.cookie('cookie','active');
+    // });
+    // console.log(cookie);
 
   });
   $(document).on('turbolinks:load', function() {

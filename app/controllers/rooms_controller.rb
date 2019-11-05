@@ -47,8 +47,6 @@ class RoomsController < ApplicationController
     @user = User.find(user_id)
     # 自分が招待者かつ自分がまだ入室していないルームを取得
     @rooms = Room.get_no_entry_room(@user.id)
-    # @users = test
-
 
     if !@rooms.blank?
       # ルーム作成者のuser_idを配列で取得して、ユーザーを取得(単数の場合もあり得る)
