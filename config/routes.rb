@@ -26,5 +26,6 @@ Rails.application.routes.draw do
   post   '/card/create',  to:  'cards#create',  as:  'card_create'
   get    '/card/index',   to:  'cards#index',   as:  'card_index'
   delete '/card/delete',  to:  'cards#delete',  as:  'card_delete'
+  get    '/top/explain',  to:  'tops#explain',  as:  'explain'
   resources :users
 end

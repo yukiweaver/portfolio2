@@ -4,4 +4,7 @@ class TopsController < ApplicationController
   def top
     @user = User.new
   end
+
+  def explain
+  end
 end

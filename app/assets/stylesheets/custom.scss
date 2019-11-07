@@ -119,10 +119,26 @@ p {
 }
 
 header {
+  // position: relative;
+  // background-image: url("/images/d-ai2.jpg");
+  // height: 500px;
+  // background-size: cover;
+  // background: rgba(255,255,255,0.5);
+}
+
+.animate-box {
+  position: relative;
   background-image: url("/images/d-ai2.jpg");
   height: 500px;
+  width: 1000px;
+  margin-left: -135px;
   background-size: cover;
-  // background: rgba(255,255,255,0.5);
+}
+
+.title {
+  background: rgba(255,255,255,0.3);
+  height: 100%;
+  padding-top: 100px;
 }
 
 .matching-btn {
