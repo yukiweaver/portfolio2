@@ -30,10 +30,10 @@
           <div class="col-md-6 col-md-offset-3">
             <%= form_with model: @user, method: :post, local: true do |f| %>
               <%= render 'shared/error_messages', object: f.object %>
-              <%= f.label :name %>
+              <%= f.label '名前' %>
               <%= f.text_field :name, class: 'form-control', required: true %>
 
-              <%= f.label :email %>
+              <%= f.label 'メールアドレス' %>
               <%= f.email_field :email, class: 'form-control', required: true %>
 
               <%= f.radio_button :sex_kbn, '1' %>
@@ -41,16 +41,16 @@
               <%= f.radio_button :sex_kbn, '2' %>
               <%= f.label :sex_kbn, '女性', {value: :female, style: "display: inline-block;"} %><br>
 
-              <%= f.label :age %>
+              <%= f.label '年齢' %>
               <%= f.number_field :age, class: 'form-control', required: true %>
 
-              <%= f.label :area_kbn %>
+              <%= f.label 'エリア' %>
               <%= f.select :area_kbn, ApplicationHelper::AREA_KBN, {include_blank: '選択してください'}, class: 'form-control', required: true %><br>
 
-              <%= f.label :password %>
+              <%= f.label 'パスワード' %>
               <%= f.password_field :password, class: 'form-control', required: true %>
 
-              <%= f.label :password_confirmation %>
+              <%= f.label 'パスワード確認' %>
               <%= f.password_field :password_confirmation, class: 'form-control', required: true %> 
             
               <div class="modal-footer" style="text-align: center">
@@ -79,10 +79,10 @@
             <%= form_with url: login_path, method: :post, local: true do |f| %>
               <%#= render 'shared/error_messages', object: f.object %>
 
-              <%= f.label :email %>
+              <%= f.label 'メールアドレス' %>
               <%= f.email_field :email, class: 'form-control', required: true %>
 
-              <%= f.label :password %>
+              <%= f.label 'パスワード' %>
               <%= f.password_field :password, class: 'form-control', required: true %>
             
               <div class="modal-footer" style="text-align: center">

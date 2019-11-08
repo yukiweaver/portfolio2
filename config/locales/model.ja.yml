@@ -1,0 +1,15 @@
+ja:
+  activerecord:
+    models:
+      user: ユーザー # view側： User.model_name.human => "ユーザ" / t("activerecord.models.user")と同じ
+      # board: 掲示板
+    attributes:
+        user:
+          # id: ID
+          profile: 自己紹介
+          name: 名前 # view側： User.human_attribute_name :name => "名前" /　t("activerecord.attributes.user.name")と同じ
+          age: 年齢
+          area_kbn: 居住区
+          business_kbn: 職業
+          income_kbn: 年収
+          free_entry: 自由記入欄
