@@ -6,7 +6,6 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       session[:login] = {'user_id' => @user.id, 'sex_kbn' => @user.sex_kbn}
-      flash[:success] = '新規登録しました。'
       CreateNotification.call(
         contents: { 'en' => 'User created!', 'ja' => 'ユーザー登録を行いました！' },
         type: 'users#create'
@@ -27,7 +26,6 @@ class UsersController < ApplicationController
     search = params[:area_kbn]
     @users = User.search(sex_kbn, user_id, page, search)
     gon.card_regist_flg = @user.card_regist_flg ? true : false
-    # binding.pry
   end
 
   # マイページ
