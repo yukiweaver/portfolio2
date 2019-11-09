@@ -37,15 +37,15 @@ class User < ApplicationRecord
   def self.search(sex_kbn, user_id, page, search)
     if sex_kbn == '1'
       if search.present?
-        User.paginate(page: page, per_page: 10).where('sex_kbn = ? and area_kbn = ?', '2', search).where.not(id: user_id)
+        User.paginate(page: page, per_page: 10).where('sex_kbn = ? and area_kbn = ?', '2', search).where.not(id: user_id).order(id: "DESC")
       else
-        User.paginate(page: page, per_page: 10).where(sex_kbn: '2').where.not(id: user_id)
+        User.paginate(page: page, per_page: 10).where(sex_kbn: '2').where.not(id: user_id).order(id: "DESC")
       end
     elsif sex_kbn == '2'
       if search.present?
-        User.paginate(page: page, per_page: 10).where('sex_kbn = ? and area_kbn = ?', '1', search).where.not(id: user_id)
+        User.paginate(page: page, per_page: 10).where('sex_kbn = ? and area_kbn = ?', '1', search).where.not(id: user_id).order(id: "DESC")
       else
-        User.paginate(page: page, per_page: 10).where(sex_kbn: '1').where.not(id: user_id)
+        User.paginate(page: page, per_page: 10).where(sex_kbn: '1').where.not(id: user_id).order(id: "DESC")
       end
     end
   end
