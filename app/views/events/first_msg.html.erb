@@ -8,7 +8,7 @@
         <div class="login-logo">
           <!-- Todo：ペア状態でのみ画像表示 -->
           <!-- Todo：初回メッセージでペアになっていることはありえないか。。-->
-          <% if @to_user.image? %>
+          <% if pair_flg(@from_user.id, @to_user.id) %>
             <%= image_tag(@to_user.image.url) %>
           <% else %>
             <%= image_tag("/images/icon1.jpg", size: "150x150") %>
