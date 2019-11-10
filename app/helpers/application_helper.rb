@@ -195,6 +195,34 @@ module ApplicationHelper
     return false
   end
 
+  # トーク中のユーザーのルームidを返す
+  # param from_user_id ログインユーザーのid
+  # param to_user_id 相手ユーザーのid
+  def talk_room_id(from_user_id, to_user_id)
+    room = Room.where(from_user_id: [from_user_id, to_user_id])
+               .where(to_user_id: [from_user_id, to_user_id])
+               .where.not('from_user_status = ? and to_user_status = ?', '9', '9')
+    if room.blank?
+      return nil
+    end
+    return room.take.id
+  end
+
+  # トーク中のユーザーから、未読メッセージがあるか判定（未読メッセージがあるならtrueを返す）
+  # param user_id ログインユーザーのid
+  # param to_user_id トーク中の相手ユーザーのid
+  def check_unread_message(user_id, to_user_id)
+    room_id = talk_room_id(user_id, to_user_id)
+    if room_id.blank?
+      return false
+    end
+    receive_messages = Event.where(room_id: room_id, from_user_id: to_user_id, to_user_id: user_id, event_kbn: '12', read_flg: false)
+    if receive_messages.blank?
+      return false
+    end
+    return true
+  end
+
   # 文字列をBase64エンコードする
   def encode(str)
     Base64.encode64(str)

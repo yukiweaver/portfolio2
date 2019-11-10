@@ -48,6 +48,7 @@
                       <%= image_tag("/images/icon1.jpg", size: "50x50") %>
                     <% end %>
                     &emsp;<%= link_to t_user.name, talk_room_path(t_user), class: 'user_name' %>
+                    &emsp;<%= image_tag("/images/new019_06.gif", size: "35x20") if check_unread_message(@user.id, t_user.id) %>
                   </td>
                 </tr>
               <% end %>

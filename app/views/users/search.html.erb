@@ -1,5 +1,4 @@
 <% provide(:title, '検索ページ') %>
-<%# <h2>マッチング</h2> %>
 <div class="row">
   <div class="col-md-6 col-md-offset-3", style="text-align:center">
     <%= form_with url:'/search', method: :get, local: true do |f| %>
@@ -10,7 +9,7 @@
     <% end %>
   </div>
 
-  <!-- 初回ログイン時のみ表示 -->
+  <!-- 年齢認証未実施時のみ表示 -->
   <div id="layer_board_area">
     <div class="layer_board_bg"></div>
     <div class="layer_board">
