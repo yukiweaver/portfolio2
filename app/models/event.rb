@@ -53,5 +53,15 @@ class Event < ApplicationRecord
     Event.where('room_id = ? and event_kbn = ?', room_id, '12').order(created_at: 'DESC').limit(1)
   end
 
+  # 2ユーザー間の最新のメッセージを取得（自動更新で使用）
+  # param event_id イベントid
+  # param user_id ログインユーザーのid
+  # param to_user_id 相手ユーザーのid
+  def self.get_new_message(event_id, user_id, to_user_id)
+    new_message = Event.where(from_user_id: [user_id, to_user_id])
+                       .where(to_user_id: [user_id, to_user_id])
+                       .where('id > ? and event_kbn = ?', event_id, '12')
+  end
+
 
 end

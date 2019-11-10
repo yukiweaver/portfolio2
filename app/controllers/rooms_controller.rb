@@ -14,10 +14,11 @@ class RoomsController < ApplicationController
     @event = Event.new
     room_id = Room.get_room_id(@from_user.id, @to_user.id, '9', '9')
     @events = Event.get_talk_content(room_id, @from_user.id, @to_user.id, '12')
+    # binding.pry
     
     respond_to do |format|
       format.html
-      format.json {@new_event = Event.where('id > ?', params[:event][:id])}
+      format.json {@new_event = Event.get_new_message(params[:event][:id], @from_user.id, @to_user.id)}
     end
 
     # 未読の相手メッセージを取得してフラグをtrueに変更
