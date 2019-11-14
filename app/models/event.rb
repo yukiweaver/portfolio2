@@ -19,8 +19,9 @@ class Event < ApplicationRecord
   # ２ユーザーのメッセージ内容を返す
   def self.get_talk_content(room_id, from_user_id, to_user_id, event_kbn)
     Event.where('room_id = ? and event_kbn = ?', room_id, event_kbn)
-         .where(from_user_id: [from_user_id, to_user_id])
+         .where(from_user_id: [from_user_id, to_user_id]
          .where(to_user_id: [from_user_id, to_user_id])
+         .order(:created_at)
   end
 
   # 自分からのメッセージ内容を返す
