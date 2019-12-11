@@ -15,7 +15,8 @@
           </div>
           <%= f.submit '削除する', data: 
             {confirm: "本当に削除しますか？",
-             cancel: "キャンセル", commit: "削除する"}, title: "クレジットカードの削除" %>
+             cancel: "キャンセル", commit: "削除する"}, title: "クレジットカードの削除" %><br>
+          <%= link_to '戻る', mypage_path, class: 'btn btn-primary' %>
         <% end %>
     </section>
 </main>
