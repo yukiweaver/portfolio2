@@ -1,4 +1,14 @@
 <% provide(:title, 'クレジットカード確認') %>
+<style type="text/css">
+  .btn-primary {
+    background-color: #4183d7;
+    border: 2px solid #4183d7;
+  }
+  .btn-primary:hover {
+    background: #4183d7 !important;
+    border-color: #4183d7 !important;
+  }
+</style>
 <main id="main">
     <section id="right">
         <h2>クレジットカード確認</h2>
@@ -13,7 +23,7 @@
           <div class="content__credit-cards__list--pay-num">
             <%= @exp_month + " / " + @exp_year %>
           </div>
-          <%= f.submit '削除する', data: 
+          <%= f.submit '削除する', style: 'background-color:#DD356E', data: 
             {confirm: "本当に削除しますか？",
              cancel: "キャンセル", commit: "削除する"}, title: "クレジットカードの削除" %><br>
           <%= link_to '戻る', mypage_path, class: 'btn btn-primary' %>
